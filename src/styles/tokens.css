@@ -1,0 +1,81 @@
+/* ═══════════════════════════════════════════════════
+   DESIGN TOKENS — Shubh Panda Cinematic Portfolio
+   ═══════════════════════════════════════════════════ */
+
+:root {
+  /* ── Colour Palette ── */
+  --paper:        #ECE8DF;
+  --paper-dark:   #121212;
+  --ink:          #0D0D0D;
+  --bone:         #F4F1EA;
+  --signal:       #FF2B1C;
+  --acid:         #C8FF2E;
+  --volt:         #2E3BFF;
+  --bubblegum:    #FF62C8;
+  --sun:          #FFD83A;
+  --chrome:       linear-gradient(180deg, #fff 0%, #9aa0a6 45%, #fff 52%, #5f6368 100%);
+
+  /* ── Section Backgrounds ── */
+  --bg-hero:       #F6F3EC;
+  --bg-logos:      #ECE8DF;
+  --bg-branding:   #0B0F2E;
+  --bg-web:        #D9CDB8;
+  --bg-smm:        #ECE8DF;
+  --bg-packaging:  #F0E6CC;
+  --bg-outro:      #000;
+
+  /* ── Typography Scale ── */
+  --font-display:    'Anton', sans-serif;
+  --font-heading:    'Archivo', sans-serif;
+  --font-body:       'Archivo', sans-serif;
+  --font-meta:       'Space Mono', monospace;
+  --font-handwritten:'Caveat', cursive;
+
+  --fs-hero:    clamp(5rem, 24vw, 22rem);
+  --fs-chapter: clamp(3rem, 16vw, 16rem);
+  --fs-h1:      clamp(2.5rem, 8vw, 8rem);
+  --fs-h2:      clamp(1.8rem, 4vw, 4rem);
+  --fs-h3:      clamp(1.2rem, 2.5vw, 2.5rem);
+  --fs-body:    clamp(0.875rem, 1vw, 1.125rem);
+  --fs-meta:    clamp(0.625rem, 0.75vw, 0.75rem);
+  --fs-marquee: clamp(0.875rem, 1.2vw, 1.5rem);
+
+  /* ── Spacing ── */
+  --space-xs:  0.25rem;
+  --space-sm:  0.5rem;
+  --space-md:  1rem;
+  --space-lg:  2rem;
+  --space-xl:  4rem;
+  --space-2xl: 8rem;
+
+  /* ── Motion ── */
+  --ease-enter:   cubic-bezier(0.16, 1, 0.3, 1);   /* expo.out */
+  --ease-exit:    cubic-bezier(0.32, 0, 0.67, 0);   /* power3.in */
+  --ease-bounce:  cubic-bezier(0.34, 1.56, 0.64, 1); /* back.out(1.7) */
+  --duration-enter: 1s;
+  --duration-exit:  0.5s;
+  --stagger-default: 0.06s;
+  --stagger-chars:   0.02s;
+
+  /* ── Z-Index Stack ── */
+  --z-bg:         1;
+  --z-content:    10;
+  --z-marquee:    20;
+  --z-nav:        100;
+  --z-cursor:     200;
+  --z-grain:      150;
+  --z-preloader:  300;
+  --z-lightbox:   250;
+
+  /* ── Misc ── */
+  --border-hairline: 1px solid var(--ink);
+  --radius-sticker:  8px;
+  --shadow-card:     0 8px 32px rgba(0,0,0,0.18);
+  --shadow-sticker:  4px 4px 0 var(--ink);
+}
+
+/* ── Dark section overrides ── */
+[data-theme="dark"] {
+  --ink:  #F4F1EA;
+  --bone: #0D0D0D;
+}

@@ -1,0 +1,247 @@
+/* ═══════════════════════════════════════════════════
+   GLOBALS — Shubh Panda Cinematic Portfolio
+   ═══════════════════════════════════════════════════ */
+
+/* ── Google Fonts ── */
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Space+Mono:wght@400;700&family=Caveat:wght@400;700&display=swap');
+
+@import './tokens.css';
+@import "tailwindcss";
+
+/* ── Reset + Base ── */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: auto; /* Lenis handles smoothing */
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+html {
+  overflow-x: clip;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--bg-hero);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── Selection ── */
+::selection {
+  background: var(--signal);
+  color: var(--bone);
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* ── Typography Classes ── */
+.font-display {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.85;
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-stretch: 125%;
+  text-transform: uppercase;
+}
+
+.font-meta {
+  font-family: var(--font-meta);
+  font-size: var(--fs-meta);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.font-handwritten {
+  font-family: var(--font-handwritten);
+}
+
+/* ── Utility Classes ── */
+.text-signal { color: var(--signal); }
+.text-acid   { color: var(--acid); }
+.text-volt   { color: var(--volt); }
+.text-pink   { color: var(--bubblegum); }
+.text-sun    { color: var(--sun); }
+.text-bone   { color: var(--bone); }
+.text-ink    { color: var(--ink); }
+.bg-signal   { background: var(--signal); }
+.bg-acid     { background: var(--acid); }
+
+/* ── Chrome gradient text ── */
+.chrome-text {
+  background: var(--chrome);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ── Selection Box (recurring motif) ── */
+.selection-box {
+  position: relative;
+  border: 2px solid var(--signal);
+}
+
+.selection-box__handle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--signal);
+  border: 1px solid var(--bone);
+}
+
+/* ── Sticker ── */
+.sticker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.3em 0.8em;
+  font-family: var(--font-meta);
+  font-size: var(--fs-meta);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: var(--radius-sticker);
+  transform: rotate(var(--sticker-rotate, -3deg));
+  transition: transform 0.3s var(--ease-bounce);
+  cursor: pointer;
+}
+
+.sticker:hover {
+  transform: rotate(0deg) scale(1.05);
+}
+
+.sticker--acid {
+  background: var(--acid);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  box-shadow: var(--shadow-sticker);
+}
+
+.sticker--chrome {
+  background: var(--chrome);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  box-shadow: var(--shadow-sticker);
+}
+
+.sticker--signal {
+  background: var(--signal);
+  color: var(--bone);
+}
+
+/* ── Tape strip ── */
+.tape {
+  position: absolute;
+  width: 80px;
+  height: 24px;
+  background: var(--sun);
+  opacity: 0.6;
+  transform: rotate(var(--tape-rotate, 35deg));
+  mix-blend-mode: multiply;
+}
+
+/* ── Overflow hidden line for text reveal ── */
+.line-mask {
+  overflow: hidden;
+  display: block;
+}
+
+/* ── Section wrapper ── */
+.section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* ── Pin wrapper ── */
+.pin-spacer {
+  position: relative;
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  body {
+    cursor: auto;
+  }
+}
+
+/* ── Mobile touch devices: no custom cursor ── */
+@media (hover: none) and (pointer: coarse) {
+  body {
+    cursor: auto;
+  }
+}
+
+/* ── Custom cursor active: never show the native one on top of it ── */
+.has-custom-cursor,
+.has-custom-cursor * {
+  cursor: none !important;
+}
+
+/* ── Image defaults ── */
+img, video {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}

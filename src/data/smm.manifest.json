@@ -1,0 +1,104 @@
+{
+  "alright-tv": {
+    "avatar": null,
+    "posts": [
+      "/assets/smm/alright-tv/post-01.webp",
+      "/assets/smm/alright-tv/post-02.webp",
+      "/assets/smm/alright-tv/post-03.webp",
+      "/assets/smm/alright-tv/post-04.webp",
+      "/assets/smm/alright-tv/post-05.webp",
+      "/assets/smm/alright-tv/post-06.webp",
+      "/assets/smm/alright-tv/post-07.webp"
+    ],
+    "stories": []
+  },
+  "elan-wallcovers": {
+    "avatar": null,
+    "posts": [
+      "/assets/smm/elan-wallcovers/post-01.webp",
+      "/assets/smm/elan-wallcovers/post-02.webp",
+      "/assets/smm/elan-wallcovers/post-03.webp",
+      "/assets/smm/elan-wallcovers/post-04.webp",
+      "/assets/smm/elan-wallcovers/post-05.webp",
+      "/assets/smm/elan-wallcovers/post-06.webp"
+    ],
+    "stories": [
+      "/assets/smm/elan-wallcovers/story-01.webp",
+      "/assets/smm/elan-wallcovers/story-02.webp",
+      "/assets/smm/elan-wallcovers/story-03.webp",
+      "/assets/smm/elan-wallcovers/story-04.webp",
+      "/assets/smm/elan-wallcovers/story-05.webp",
+      "/assets/smm/elan-wallcovers/story-06.webp",
+      "/assets/smm/elan-wallcovers/story-07.webp"
+    ]
+  },
+  "vareeka": {
+    "avatar": null,
+    "posts": [
+      "/assets/smm/vareeka/post-01.webp",
+      "/assets/smm/vareeka/post-02.webp",
+      "/assets/smm/vareeka/post-03.webp",
+      "/assets/smm/vareeka/post-04.webp",
+      "/assets/smm/vareeka/post-05.webp"
+    ],
+    "stories": []
+  },
+  "udman-square": {
+    "avatar": "/assets/smm/udman-square/avatar.webp",
+    "posts": [
+      "/assets/smm/udman-square/post-01.webp",
+      "/assets/smm/udman-square/post-02.webp",
+      "/assets/smm/udman-square/post-03.webp",
+      "/assets/smm/udman-square/post-04.webp",
+      "/assets/smm/udman-square/post-05.webp"
+    ],
+    "stories": [
+      "/assets/smm/udman-square/story-01.webp",
+      "/assets/smm/udman-square/story-02.webp",
+      "/assets/smm/udman-square/story-03.webp",
+      "/assets/smm/udman-square/story-04.webp"
+    ]
+  },
+  "senquira": {
+    "avatar": "/assets/smm/senquira/avatar.webp",
+    "posts": [
+      "/assets/smm/senquira/post-01.webp",
+      "/assets/smm/senquira/post-02.webp",
+      "/assets/smm/senquira/post-03.webp",
+      "/assets/smm/senquira/post-04.webp",
+      "/assets/smm/senquira/post-05.webp"
+    ],
+    "stories": []
+  },
+  "stories-for-you": {
+    "avatar": null,
+    "posts": [
+      "/assets/smm/stories-for-you/post-01.webp",
+      "/assets/smm/stories-for-you/post-02.webp",
+      "/assets/smm/stories-for-you/post-03.webp"
+    ],
+    "stories": [
+      "/assets/smm/stories-for-you/story-01.webp",
+      "/assets/smm/stories-for-you/story-02.webp",
+      "/assets/smm/stories-for-you/story-03.webp",
+      "/assets/smm/stories-for-you/story-04.webp",
+      "/assets/smm/stories-for-you/story-05.webp",
+      "/assets/smm/stories-for-you/story-06.webp",
+      "/assets/smm/stories-for-you/story-07.webp",
+      "/assets/smm/stories-for-you/story-08.webp"
+    ]
+  },
+  "blink-brand-solutions": {
+    "avatar": null,
+    "posts": [
+      "/assets/smm/blink-brand-solutions/post-01.webp",
+      "/assets/smm/blink-brand-solutions/post-02.webp",
+      "/assets/smm/blink-brand-solutions/post-03.webp",
+      "/assets/smm/blink-brand-solutions/post-04.webp",
+      "/assets/smm/blink-brand-solutions/post-05.webp",
+      "/assets/smm/blink-brand-solutions/post-06.webp",
+      "/assets/smm/blink-brand-solutions/post-07.webp"
+    ],
+    "stories": []
+  }
+}
