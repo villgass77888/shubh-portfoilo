@@ -129,6 +129,11 @@ export type PackagingFeatured = {
   year: number;
   colors: string[];
   logo?: string;
+  /** What the flat artwork is called: 'Dieline' for a carton or pouch, 'Label' for a jar */
+  flatName?: string;
+  /** CSS aspect-ratio of the flat artwork and of the use-case photo */
+  flatAspect?: string;
+  usecaseAspect?: string;
   dieline: string;
   mockup: string;
   usecase: string;
@@ -183,14 +188,20 @@ export const contacts: ContactChannel[] = [
 
 // ── Chapter Meta ──
 
+export const TOTAL_CHAPTERS = 8;
+
+/** Section ids in page order (`#section-<id>`), one per chapter. */
+export const sectionIds = ['hero', 'logos', 'branding', 'web', 'smm', 'packaging', 'streetwear', 'outro'] as const;
+
 export const chapters = [
-  { num: 1, total: 7, title: 'HERO', label: 'THE REEL' },
-  { num: 2, total: 7, title: 'LOGOS & MARKS', label: 'LOGOS' },
-  { num: 3, total: 7, title: 'BRANDING / VISUAL IDENTITY', label: 'BRANDING' },
-  { num: 4, total: 7, title: 'WEB DESIGN & DEVELOPMENT', label: 'WEB' },
-  { num: 5, total: 7, title: 'SOCIAL MEDIA CREATIVES', label: 'SOCIAL' },
-  { num: 6, total: 7, title: 'PACKAGING DESIGN', label: 'PACKAGING' },
-  { num: 7, total: 7, title: 'OUTRO', label: 'FIN' },
+  { num: 1, total: TOTAL_CHAPTERS, title: 'HERO', label: 'INTRO' },
+  { num: 2, total: TOTAL_CHAPTERS, title: 'LOGOS & MARKS', label: 'LOGOS' },
+  { num: 3, total: TOTAL_CHAPTERS, title: 'BRANDING / VISUAL IDENTITY', label: 'BRANDING' },
+  { num: 4, total: TOTAL_CHAPTERS, title: 'WEB DESIGN & DEVELOPMENT', label: 'WEB' },
+  { num: 5, total: TOTAL_CHAPTERS, title: 'SOCIAL MEDIA CREATIVES', label: 'SOCIAL' },
+  { num: 6, total: TOTAL_CHAPTERS, title: 'PACKAGING DESIGN', label: 'PACKAGING' },
+  { num: 7, total: TOTAL_CHAPTERS, title: 'STREETWEAR', label: 'STREETWEAR' },
+  { num: 8, total: TOTAL_CHAPTERS, title: 'OUTRO', label: 'FIN' },
 ];
 
 // ── Logos (11 + 1 CTA) ──
@@ -466,27 +477,31 @@ export const smm: SmmEntry[] = smmCopy.map((entry) => {
 
 export const packaging = {
   featured: {
-    brand: 'ProFoods Makhana',
-    slug: 'profoods-makhana',
-    briefText: 'A superfood makhana brand for people who count calories but refuse to snack boring.',
-    conceptText: 'A confident yellow pouch that reads "healthy" from across the aisle without looking like medicine.',
-    dielineText: 'Every panel planned flat first: front story, nutrition, folds and seal zones, so nothing breaks once it\'s printed and filled.',
-    onShelfText: 'The use-case shot proves it: the pouch holds its own in a real snacking moment.',
-    story: 'Brief → Concept → Dieline → On shelf',
-    product: 'Makhana Snack Pouch',
-    client: 'ProFoods',
+    brand: 'Croppd Honey',
+    slug: 'croppd-honey',
+    briefText: 'Raw, unprocessed honey with zero preservatives, for a shelf full of jars that all claim to be pure.',
+    conceptText: 'A hand-drawn wordmark, watercolour blossoms and dripping comb on warm cream paper, so the jar feels poured rather than manufactured.',
+    dielineText: 'One wrap-around label planned flat first: the story on the left, the wordmark up front, nutrition and legal on the right, so nothing lands on the seam.',
+    onShelfText: 'On the table it reads the way it should: honest, warm and straight from the hive.',
+    story: 'Brief → Concept → Label → On shelf',
+    product: 'Raw Honey Jar, 250 g',
+    client: 'Croppd',
     year: 2025,
-    colors: ['#F5C518', '#2D2D2D', '#FFFFFF'],
-    dieline: '/assets/packaging/profoods-makhana/dieline.webp',
-    mockup: '/assets/packaging/profoods-makhana/mockup.webp',
-    usecase: '/assets/packaging/profoods-makhana/usecase.webp',
+    colors: ['#F6EFD9', '#E9A21B', '#5A2E1B'],
+    flatName: 'Label',
+    flatAspect: '3 / 1',
+    usecaseAspect: '1 / 1',
+    dieline: '/assets/packaging/croppd-honey/label.webp',
+    mockup: '/assets/packaging/croppd-honey/hero.webp',
+    usecase: '/assets/packaging/croppd-honey/studio.webp',
   } as PackagingFeatured,
   more: [
     { brand: 'Milletopia', slug: 'milletopia', product: 'Ready-to-eat millet khichdi, noodles and pasta', mockup: '/assets/packaging/milletopia/mockup.webp', dieline: '/assets/packaging/milletopia/dieline.webp', size: '2x1' as const },
     { brand: 'Milletopia', slug: 'milletopia-2', product: 'Studio shot', mockup: '/assets/packaging/milletopia/studio.webp', size: '1x1' as const },
     { brand: 'Milletopia', slug: 'milletopia-3', product: 'Supermarket shelf display', mockup: '/assets/packaging/milletopia/shelf.webp', size: '1x1' as const },
-    { brand: 'Croppd Honey', slug: 'croppd-honey', product: 'Raw natural honey — zero preservatives', mockup: '/assets/packaging/croppd-honey/hero.webp', size: '1x2' as const },
-    { brand: 'Croppd Honey', slug: 'croppd-honey-2', product: 'Studio shot', mockup: '/assets/packaging/croppd-honey/studio.webp', hoverImage: '/assets/packaging/croppd-honey/label.webp', size: '1x1' as const },
+    { brand: 'ProFoods Makhana', slug: 'profoods-makhana', product: 'Makhana snack pouch', mockup: '/assets/packaging/profoods-makhana/mockup.webp', dieline: '/assets/packaging/profoods-makhana/dieline.webp', size: '1x2' as const },
+    { brand: 'ProFoods Makhana', slug: 'profoods-makhana-2', product: 'Pouch dieline', mockup: '/assets/packaging/profoods-makhana/dieline.webp', size: '2x1' as const },
+    { brand: 'ProFoods Makhana', slug: 'profoods-makhana-3', product: 'In the wild', mockup: '/assets/packaging/profoods-makhana/usecase.webp', size: '1x1' as const },
     { brand: 'Croppd Honey', slug: 'croppd-honey-3', product: 'Store shelf', mockup: '/assets/packaging/croppd-honey/shelf.webp', size: '1x1' as const },
     { brand: 'Arban Beauty', slug: 'arban-beauty', product: 'Vitamin C skincare packaging', mockup: '/assets/packaging/arban-beauty/mockup.webp', size: '2x1' as const },
     { brand: 'Arban Beauty', slug: 'arban-beauty-2', product: 'Product lineup', mockup: '/assets/packaging/arban-beauty/lineup.webp', size: '1x1' as const },

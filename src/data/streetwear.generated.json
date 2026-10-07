@@ -1,0 +1,183 @@
+{
+  "intro": {
+    "available": true,
+    "duration": 1.866
+  },
+  "designs": [
+    {
+      "id": "autism-712945",
+      "order": 1,
+      "name": "Autism",
+      "model": "/assets/streetwear/models/autism-712945.webp",
+      "card": "/assets/streetwear/cards/autism-712945.webp",
+      "cardAspect": 0.8743,
+      "modelAspect": 0.7541,
+      "art": {
+        "single": "/assets/streetwear/art/autism-712945-art.webp"
+      },
+      "print": "FRONT PRINT",
+      "teeColor": "white",
+      "accent": "#C20807",
+      "artBg": "white",
+      "sampled": true
+    },
+    {
+      "id": "dont-kill-my-vibe-688252",
+      "order": 2,
+      "name": "Don't Kill My Vibe",
+      "model": "/assets/streetwear/models/dont-kill-my-vibe-688252.webp",
+      "card": "/assets/streetwear/cards/dont-kill-my-vibe-688252.webp",
+      "cardAspect": 0.8743,
+      "modelAspect": 0.6577,
+      "art": {
+        "single": "/assets/streetwear/art/dont-kill-my-vibe-688252-art.webp"
+      },
+      "print": "FRONT PRINT",
+      "teeColor": "white",
+      "accent": "#8D2337",
+      "artBg": "white",
+      "sampled": true
+    },
+    {
+      "id": "fallen-angels-684528",
+      "order": 3,
+      "name": "Fallen Angels",
+      "model": "/assets/streetwear/models/fallen-angels-684528.webp",
+      "card": "/assets/streetwear/cards/fallen-angels-684528.webp",
+      "cardAspect": 0.8762,
+      "modelAspect": 0.7432,
+      "art": {
+        "front": "/assets/streetwear/art/fallen-angels-684528-front.webp",
+        "back": "/assets/streetwear/art/fallen-angels-684528-back.webp"
+      },
+      "print": "FRONT + BACK PRINT",
+      "teeColor": "black",
+      "accent": "#B88651",
+      "artBg": "black",
+      "sampled": true
+    },
+    {
+      "id": "fallen-angels-699361",
+      "order": 4,
+      "name": "Fallen Angels",
+      "model": "/assets/streetwear/models/fallen-angels-699361.webp",
+      "card": "/assets/streetwear/cards/fallen-angels-699361.webp",
+      "cardAspect": 0.8762,
+      "modelAspect": 0.7021,
+      "art": {
+        "front": "/assets/streetwear/art/fallen-angels-699361-front.webp",
+        "back": "/assets/streetwear/art/fallen-angels-699361-back.webp"
+      },
+      "print": "FRONT + BACK PRINT",
+      "teeColor": "black",
+      "accent": "#FF7F3A",
+      "artBg": "black",
+      "sampled": true
+    },
+    {
+      "id": "i-wipe-my-tears-with-money-691784",
+      "order": 5,
+      "name": "I Wipe My Tears With Money",
+      "model": "/assets/streetwear/models/i-wipe-my-tears-with-money-691784.webp",
+      "card": "/assets/streetwear/cards/i-wipe-my-tears-with-money-691784.webp",
+      "cardAspect": 0.8743,
+      "modelAspect": 0.6936,
+      "art": {
+        "single": "/assets/streetwear/art/i-wipe-my-tears-with-money-691784-art.webp"
+      },
+      "print": "FRONT PRINT",
+      "teeColor": "black",
+      "accent": "#FF2B1C",
+      "artBg": "black",
+      "sampled": true
+    },
+    {
+      "id": "in-glock-we-trust-684562",
+      "order": 6,
+      "name": "In Glock We Trust",
+      "model": "/assets/streetwear/models/in-glock-we-trust-684562.webp",
+      "card": "/assets/streetwear/cards/in-glock-we-trust-684562.webp",
+      "cardAspect": 0.8762,
+      "modelAspect": 0.7609,
+      "art": {
+        "front": "/assets/streetwear/art/in-glock-we-trust-684562-front.webp",
+        "back": "/assets/streetwear/art/in-glock-we-trust-684562-back.webp"
+      },
+      "print": "FRONT + BACK PRINT",
+      "teeColor": "white",
+      "accent": "#008E24",
+      "artBg": "white",
+      "sampled": true
+    },
+    {
+      "id": "money-talk-689934",
+      "order": 7,
+      "name": "Money Talk",
+      "model": "/assets/streetwear/models/money-talk-689934.webp",
+      "card": "/assets/streetwear/cards/money-talk-689934.webp",
+      "cardAspect": 0.8743,
+      "modelAspect": 0.6579,
+      "art": {
+        "single": "/assets/streetwear/art/money-talk-689934-art.webp"
+      },
+      "print": "FRONT PRINT",
+      "teeColor": "white",
+      "accent": "#FF2B1C",
+      "artBg": "white",
+      "sampled": true
+    },
+    {
+      "id": "troublemakers-686922",
+      "order": 8,
+      "name": "TroubleMakers",
+      "model": "/assets/streetwear/models/troublemakers-686922.webp",
+      "card": "/assets/streetwear/cards/troublemakers-686922.webp",
+      "cardAspect": 0.8743,
+      "modelAspect": 0.7481,
+      "art": {
+        "single": "/assets/streetwear/art/troublemakers-686922-art.webp"
+      },
+      "print": "FRONT PRINT",
+      "teeColor": "white",
+      "accent": "#DA0C0B",
+      "artBg": "white",
+      "sampled": true
+    },
+    {
+      "id": "trust-no-bitch-686250",
+      "order": 9,
+      "name": "Trust No Bitch",
+      "model": "/assets/streetwear/models/trust-no-bitch-686250.webp",
+      "card": "/assets/streetwear/cards/trust-no-bitch-686250.webp",
+      "cardAspect": 0.8762,
+      "modelAspect": 0.7053,
+      "art": {
+        "front": "/assets/streetwear/art/trust-no-bitch-686250-front.webp",
+        "back": "/assets/streetwear/art/trust-no-bitch-686250-back.webp"
+      },
+      "print": "FRONT + BACK PRINT",
+      "teeColor": "white",
+      "accent": "#FF2B1C",
+      "artBg": "white",
+      "sampled": true
+    },
+    {
+      "id": "wasted-694330",
+      "order": 10,
+      "name": "Wasted",
+      "model": "/assets/streetwear/models/wasted-694330.webp",
+      "card": "/assets/streetwear/cards/wasted-694330.webp",
+      "cardAspect": 0.8762,
+      "modelAspect": 0.7118,
+      "art": {
+        "front": "/assets/streetwear/art/wasted-694330-front.webp",
+        "back": "/assets/streetwear/art/wasted-694330-back.webp"
+      },
+      "print": "FRONT + BACK PRINT",
+      "teeColor": "black",
+      "accent": "#CB0A0D",
+      "artBg": "black",
+      "sampled": true
+    }
+  ]
+}

@@ -18,6 +18,7 @@ import Branding from './components/sections/Branding';
 import WebDesigns from './components/sections/WebDesigns';
 import SmmCreatives from './components/sections/SmmCreatives';
 import Packaging from './components/sections/Packaging';
+import Streetwear from './components/sections/Streetwear';
 import Outro from './components/sections/Outro';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -33,6 +34,8 @@ export default function App() {
       smoothWheel: true,
     });
     lenisRef.current = lenis;
+    // Scenes that need to hold the scroll (e.g. the streetwear intro) reach Lenis through this
+    (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
 
     lenis.on('scroll', ScrollTrigger.update);
 
@@ -74,6 +77,7 @@ export default function App() {
         <WebDesigns />
         <SmmCreatives />
         <Packaging />
+        <Streetwear />
         <Outro />
       </main>
     </>

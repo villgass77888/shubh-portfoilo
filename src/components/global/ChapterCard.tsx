@@ -8,15 +8,17 @@ import { siteInfo, chapters } from '../../data/portfolio';
 gsap.registerPlugin(ScrollTrigger);
 
 interface ChapterCardProps {
-  chapterIndex: number; // 1-6 (sections 2-6 use chapter cards)
+  chapterIndex: number; // index into `chapters`
   title: string;
+  /** Optional second line, set as large as the first; when given, `title` stays on one line */
+  subtitle?: string;
 }
 
 /**
  * Chapter Title Card — full-screen title with selection box,
  * kicker, meta corners. Timed entrance, then a pinned hold and scrubbed exit.
  */
-export default function ChapterCard({ chapterIndex, title }: ChapterCardProps) {
+export default function ChapterCard({ chapterIndex, title, subtitle }: ChapterCardProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useIsomorphicLayoutEffect(() => {
@@ -70,8 +72,8 @@ export default function ChapterCard({ chapterIndex, title }: ChapterCardProps) {
   const ch = chapters[chapterIndex] || chapters[0];
   const titleWords = title.split(' ');
   const midPoint = Math.ceil(titleWords.length / 2);
-  const topLine = titleWords.slice(0, midPoint).join(' ');
-  const bottomLine = titleWords.slice(midPoint).join(' ');
+  const topLine = subtitle ? title : titleWords.slice(0, midPoint).join(' ');
+  const bottomLine = subtitle ?? titleWords.slice(midPoint).join(' ');
 
   return (
     <div
@@ -109,7 +111,8 @@ export default function ChapterCard({ chapterIndex, title }: ChapterCardProps) {
               className="chapter-title-char"
               style={{
                 fontFamily: 'var(--font-display)',
-                fontSize: 'var(--fs-chapter)',
+                fontSize: subtitle ? 'calc(var(--fs-chapter) * 0.82)' : 'var(--fs-chapter)',
+                whiteSpace: subtitle ? 'nowrap' : undefined,
                 color: 'var(--signal)',
                 display: 'inline-block',
                 lineHeight: 0.85,
@@ -124,7 +127,8 @@ export default function ChapterCard({ chapterIndex, title }: ChapterCardProps) {
                 className="chapter-title-char"
                 style={{
                   fontFamily: 'var(--font-display)',
-                  fontSize: 'var(--fs-chapter)',
+                  fontSize: subtitle ? 'calc(var(--fs-chapter) * 0.82)' : 'var(--fs-chapter)',
+                  whiteSpace: subtitle ? 'nowrap' : undefined,
                   color: 'var(--signal)',
                   display: 'inline-block',
                   lineHeight: 0.85,

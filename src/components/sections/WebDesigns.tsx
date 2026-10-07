@@ -426,7 +426,6 @@ export default function WebDesigns() {
                 const slot = SLOTS[i % SLOTS.length];
                 const isShown = i < shown;
                 const isHover = hov === i;
-                const dim = hov !== null && !isHover;
                 // Right-column cards bleed off the right edge: hang their sticker on the left so it stays readable.
                 const labelLeft = slot.x > 0;
                 return (
@@ -465,8 +464,7 @@ export default function WebDesigns() {
                         style={{
                           position: 'relative',
                           transform: isHover ? 'scale(1.04)' : 'scale(1)',
-                          opacity: dim ? 0.6 : 1,
-                          transition: 'transform 0.45s var(--ease-bounce), opacity 0.35s ease',
+                          transition: 'transform 0.45s var(--ease-bounce)',
                         }}
                       >
                         {/* Resting shadow (fades in as the card lands) */}

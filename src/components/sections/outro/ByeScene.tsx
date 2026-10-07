@@ -7,10 +7,18 @@ import { siteInfo } from '../../../data/portfolio';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const LETTERS = ['B', 'Y', 'E'];
-const WORDS = ['UNTIL', 'WE', 'WORK', 'TOGETHER', 'SOON'];
+const HEAD = ['WORTH SAYING', 'A HI!!'];
+/** The two lines under the headline; a segment with `href` is a link */
+const LINES: { text: string; href?: string; label?: string }[][] = [
+  [
+    { text: 'DROP A MAIL,', href: `mailto:${siteInfo.email}`, label: `Email ${siteInfo.email}` },
+    { text: 'OR JUST' },
+    { text: 'SHOOT A CALL', href: `tel:${siteInfo.phone.replace(/[^+\d]/g, '')}`, label: `Call ${siteInfo.phone}` },
+  ],
+  [{ text: 'LET’S GET STARTED DESIGNING BOOMMSSS!' }],
+];
 /** Hover tilt per letter, in degrees — fixed so the card is identical on every load */
-const TILTS = [-1.4, 1.1, -1.1];
+const TILTS = [-1.4, 1.1, -1.1, 0.9, -0.8];
 
 const css = `
   .bye-root {
@@ -40,7 +48,7 @@ const css = `
   /* The cinema frame — exactly one viewport tall, the last thing on the page */
   .bye-frame {
     --bye-bar: 9vh;
-    --bye-size: min(34vw, 50vh);
+    --bye-size: min(15vw, 25vh);
     position: relative;
     isolation: isolate;
     overflow: hidden;
@@ -54,7 +62,7 @@ const css = `
   @supports (height: 100svh) {
     .bye-frame {
       --bye-bar: 9svh;
-      --bye-size: min(34vw, 50svh);
+      --bye-size: min(15vw, 25svh);
       min-height: 100svh;
     }
   }
@@ -122,7 +130,7 @@ const css = `
   .bye-kicker {
     display: block;
     padding-left: 0.5em;
-    margin-bottom: calc(var(--bye-size) * 0.075);
+    margin-bottom: calc(var(--bye-size) * 0.16);
     font-family: var(--font-meta);
     font-size: clamp(0.6rem, 0.8vw, 0.74rem);
     letter-spacing: 0.5em;
@@ -132,14 +140,19 @@ const css = `
   }
   .bye-word {
     position: relative;
-    display: inline-flex;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
     font-family: var(--font-display);
+    font-weight: 400;
     font-size: var(--bye-size);
-    line-height: 0.85;
+    line-height: 0.88;
     color: var(--bone);
     user-select: none;
     -webkit-user-select: none;
   }
+  .bye-head-line { display: inline-flex; white-space: pre; }
   .bye-letter,
   .bye-gl {
     display: inline-block;
@@ -164,8 +177,8 @@ const css = `
     flex-direction: column;
     align-items: center;
     max-width: 100%;
-    margin-top: calc(var(--bye-size) * 0.085);
-    font-size: clamp(0.8rem, 2.1vw, 1.9rem);
+    margin-top: calc(var(--bye-size) * 0.2);
+    font-size: clamp(0.75rem, 1.7vw, 1.6rem);
   }
   .bye-rule {
     display: block;
@@ -178,7 +191,7 @@ const css = `
   }
   .bye-line {
     display: block;
-    margin-block: 0.82em;
+    margin: 0.82em 0 0;
     font-family: var(--font-heading);
     font-weight: 900;
     font-stretch: 125%;
@@ -188,6 +201,12 @@ const css = `
     color: var(--bone);
     opacity: 0.9;
   }
+  .bye-line + .bye-line { margin-top: 0.3em; }
+  .bye-line:last-of-type { margin-bottom: 0.82em; }
+  .bye-line--loud { color: var(--acid); opacity: 1; }
+  .bye-link { color: inherit; text-decoration: none; }
+  .bye-link .bye-w { box-shadow: inset 0 -0.09em 0 var(--signal); transition: color 0.3s ease; }
+  .bye-link:hover .bye-w, .bye-link:focus-visible .bye-w { color: var(--signal); }
   .bye-mask {
     display: inline-block;
     overflow: hidden;
@@ -199,30 +218,30 @@ const css = `
     display: inline-block;
   }
 
-  /* Phones — bigger BYE, thinner bars, the line breaks into two balanced rows */
+  /* Phones — bigger headline, thinner bars, the lines break into balanced rows */
   @media (max-width: 640px) {
     .bye-frame {
       --bye-bar: 6vh;
-      --bye-size: min(56vw, 42vh);
+      --bye-size: min(17.5vw, 20vh);
     }
     @supports (height: 100svh) {
       .bye-frame {
         --bye-bar: 6svh;
-        --bye-size: min(56vw, 42svh);
+        --bye-size: min(17.5vw, 20svh);
       }
     }
     .bye-sub {
-      font-size: clamp(0.9rem, 4.3vw, 1.2rem);
+      font-size: clamp(0.8rem, 3.6vw, 1.1rem);
     }
     .bye-rule { margin-inline: 0; }
-    .bye-line { max-width: 16.4em; }
+    .bye-line { max-width: 21em; letter-spacing: 0.18em; }
   }
 `;
 
 /**
  * Outro scene 3 — the end card.
  * Fade to black out of the contact footer, then a letterboxed frame:
- * "BYE" / "UNTIL WE WORK TOGETHER SOON", revealed like the closing card of a film.
+ * "WORTH SAYING A HI!!" and the nudge to mail or call, revealed like the closing card of a film.
  */
 export default function ByeScene() {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -271,17 +290,17 @@ export default function ByeScene() {
         // 2 — letterbox closes in
         .fromTo('.bye-bar--top', { yPercent: -101 }, { yPercent: 0, duration: 1.1, ease: 'power3.out' }, 0.2)
         .fromTo('.bye-bar--bottom', { yPercent: 101 }, { yPercent: 0, duration: 1.1, ease: 'power3.out' }, 0.2)
-        // 3 — BYE comes out of a vertical blur, letter by letter
+        // 3 — the headline comes out of a vertical blur, letter by letter
         .fromTo(
           '.bye-letter',
           { filter: 'blur(28px)', scaleY: 1.7, opacity: 0 },
-          { filter: 'blur(0px)', scaleY: 1, opacity: 1, duration: 1.2, ease: 'expo.out', stagger: 0.14 },
+          { filter: 'blur(0px)', scaleY: 1, opacity: 1, duration: 1.1, ease: 'expo.out', stagger: 0.05 },
           0.6,
         )
         // 4 — hairlines draw outward from the centre
         .fromTo('.bye-rule', { scaleX: 0 }, { scaleX: 1, duration: 1.1, ease: 'expo.inOut', stagger: 0.12 }, 1.45)
         // 5 — the line rises word by word from behind its masks
-        .fromTo('.bye-w', { yPercent: 110 }, { yPercent: 0, duration: 0.95, ease: 'power3.out', stagger: 0.09 }, 1.95)
+        .fromTo('.bye-w', { yPercent: 110 }, { yPercent: 0, duration: 0.95, ease: 'power3.out', stagger: 0.06 }, 1.95)
         // 6 — kicker and credit
         .fromTo('.bye-kicker, .bye-credit', { opacity: 0 }, { opacity: 1, duration: 1.2, ease: 'power1.out', stagger: 0.18 }, 2.7);
 
@@ -319,32 +338,52 @@ export default function ByeScene() {
 
         {/* Title */}
         <div className="bye-push">
-          <h2 className="bye-title" aria-label="Bye — until we work together soon">
-            <span className="bye-kicker" aria-hidden="true">✦ FIN ✦</span>
+          <div className="bye-title">
+            <span className="bye-kicker" aria-hidden="true">✦ BEFORE YOU GO ✦</span>
 
-            <span className="bye-word" aria-hidden="true">
-              {LETTERS.map((char, i) => (
-                <span key={char} className="bye-letter" style={{ '--bye-tilt': `${TILTS[i]}deg` } as CSSProperties}>
-                  <span className="bye-letter-in">{char}</span>
+            <h2 className="bye-word" aria-label={HEAD.join(' ')}>
+              {HEAD.map((line, l) => (
+                <span key={line} className="bye-head-line" aria-hidden="true">
+                  {[...line].map((char, i) => (
+                    <span key={i} className="bye-letter" style={{ '--bye-tilt': `${TILTS[(i + l * 2) % TILTS.length]}deg` } as CSSProperties}>
+                      <span className="bye-letter-in">{char}</span>
+                    </span>
+                  ))}
                 </span>
               ))}
-            </span>
+            </h2>
 
-            <span className="bye-sub" aria-hidden="true">
-              <span className="bye-rule" />
-              <span className="bye-line">
-                {WORDS.map((word, i) => (
-                  <span key={word}>
-                    <span className="bye-mask">
-                      <span className="bye-w">{word}</span>
-                    </span>
-                    {i < WORDS.length - 1 ? ' ' : null}
-                  </span>
-                ))}
-              </span>
-              <span className="bye-rule" />
-            </span>
-          </h2>
+            <div className="bye-sub">
+              <span className="bye-rule" aria-hidden="true" />
+              {LINES.map((segments, l) => (
+                <p key={l} className={`bye-line${l === LINES.length - 1 ? ' bye-line--loud' : ''}`}>
+                  {segments.map((seg, k) => {
+                    const words = seg.text.split(' ').map((word, i, all) => (
+                      <span key={i}>
+                        <span className="bye-mask">
+                          <span className="bye-w">{word}</span>
+                        </span>
+                        {i < all.length - 1 ? ' ' : null}
+                      </span>
+                    ));
+                    return (
+                      <span key={k}>
+                        {seg.href ? (
+                          <a className="bye-link" href={seg.href} aria-label={seg.label} data-cursor="SAY HI">
+                            {words}
+                          </a>
+                        ) : (
+                          words
+                        )}
+                        {k < segments.length - 1 ? ' ' : null}
+                      </span>
+                    );
+                  })}
+                </p>
+              ))}
+              <span className="bye-rule" aria-hidden="true" />
+            </div>
+          </div>
         </div>
 
         {/* Film finish */}

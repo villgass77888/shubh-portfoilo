@@ -17,6 +17,7 @@ const sectionBgs: SectionBg[] = [
   { color: '#D9CDB8', id: 'web' },
   { color: '#ECE8DF', id: 'smm' },
   { color: '#F0E6CC', id: 'packaging' },
+  { color: '#F3F0E8', id: 'streetwear' },
   { color: '#000', id: 'outro' },
 ];
 

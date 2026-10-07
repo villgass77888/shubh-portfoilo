@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
-import { chapters } from '../../data/portfolio';
+import { chapters, sectionIds } from '../../data/portfolio';
 
 /**
  * Scroll Progress — thin vertical bar on the right edge with chapter ticks.
@@ -67,7 +67,6 @@ export default function ScrollProgress() {
           onMouseEnter={() => setHoveredTick(i)}
           onMouseLeave={() => setHoveredTick(null)}
           onClick={() => {
-            const sectionIds = ['hero', 'logos', 'branding', 'web', 'smm', 'packaging', 'outro'];
             document.getElementById(`section-${sectionIds[i]}`)?.scrollIntoView({ behavior: 'smooth' });
           }}
         >

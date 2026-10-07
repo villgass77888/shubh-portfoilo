@@ -86,13 +86,6 @@ function setFloodOrigin(cell: HTMLElement, clientX?: number, clientY?: number) {
   flood.style.transition = '';
 }
 
-const HANDLES: CSSProperties[] = [
-  { top: -4, left: -4 },
-  { top: -4, right: -4 },
-  { bottom: -4, left: -4 },
-  { bottom: -4, right: -4 },
-];
-
 /**
  * Logos Section — Swiss specimen grid of 11 logos + CTA cell.
  * At rest every mark is a uniform ink silhouette; on hover / focus / tap the
@@ -326,17 +319,6 @@ export default function Logos() {
                       draggable={false}
                       style={{ ...layer, objectFit: 'contain' }}
                     />
-
-                    {/* Selection box with handles */}
-                    <div className="logo-select" aria-hidden="true">
-                      {HANDLES.map((pos, hi) => (
-                        <span
-                          key={hi}
-                          className="logo-handle"
-                          style={{ ...pos, transitionDelay: active ? `${0.08 + hi * 0.03}s` : '0s' }}
-                        />
-                      ))}
-                    </div>
                   </div>
                 </div>
 

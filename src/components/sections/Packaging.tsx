@@ -42,6 +42,7 @@ const CONTAIN_TILES: Record<string, { flat: boolean; bg: string; position?: stri
   milletopia: { flat: false, bg: 'linear-gradient(to right, #f4f4f4 45%, #efefef 85%)', position: '88% 50%' },
   // the carton dieline itself, in a 2x1 tile
   'arban-beauty': { flat: true, bg: '#fff' },
+  'profoods-makhana-2': { flat: true, bg: '#fff' },
 };
 
 /** Paper tone of this section (same as the page backdrop for the packaging chapter). */
@@ -323,6 +324,7 @@ export default function Packaging() {
   const sectionRef = useRef<HTMLElement>(null);
   const feat = packaging.featured;
   const reduced = useReducedMotion();
+  const flatName = feat.flatName ?? 'Dieline';
   const [lightbox, setLightbox] = useState<LightboxState | null>(null);
   const closeLightbox = useCallback(() => setLightbox(null), []);
 
@@ -353,9 +355,9 @@ export default function Packaging() {
 
   const openFeatured = (which: 'dieline' | 'mockup' | 'usecase') => {
     const map: Record<typeof which, LightboxImage> = {
-      dieline: { src: feat.dieline, alt: `${feat.brand} pouch dieline with cut, fold and bleed lines`, label: 'Dieline', flat: true },
-      mockup: { src: feat.mockup, alt: `${feat.brand} stand-up pouch mockup`, label: 'Mockup' },
-      usecase: { src: feat.usecase, alt: `${feat.brand} pouch on a wooden table beside a bowl of makhana`, label: 'Use case' },
+      dieline: { src: feat.dieline, alt: `${feat.brand} ${flatName.toLowerCase()}, flat artwork`, label: flatName, flat: true },
+      mockup: { src: feat.mockup, alt: `${feat.brand} packaging mockup`, label: 'Mockup' },
+      usecase: { src: feat.usecase, alt: `${feat.brand} in use`, label: 'Use case' },
     };
     setLightbox({ title: feat.brand, subtitle: `${feat.product} ✦ ${feat.client} ✦ ${feat.year}`, images: [map[which]] });
   };
@@ -491,7 +493,7 @@ export default function Packaging() {
   const phases: Array<[string, string]> = [
     ['Brief', feat.briefText],
     ['Concept', feat.conceptText],
-    ['Dieline', feat.dielineText],
+    [flatName, feat.dielineText],
     ['On shelf', feat.onShelfText],
   ];
 
@@ -533,7 +535,7 @@ export default function Packaging() {
               <button
                 type="button"
                 data-cursor="MEASURE"
-                aria-label={`${feat.brand} dieline. Open larger view`}
+                aria-label={`${feat.brand} ${flatName.toLowerCase()}. Open larger view`}
                 onClick={() => openFeatured('dieline')}
                 className="pkg-lift"
                 style={plainButton}
@@ -549,12 +551,10 @@ export default function Packaging() {
                     boxShadow: '0 10px 30px rgba(0,0,0,0.18)',
                   }}
                 >
-                  <span className="pkg-dieline-reveal" style={{ display: 'block', aspectRatio: '5 / 4' }}>
+                  <span className="pkg-dieline-reveal" style={{ display: 'block', aspectRatio: feat.flatAspect ?? '5 / 4' }}>
                     <img
                       src={feat.dieline}
-                      alt={`${feat.brand} pouch dieline: back panel, gussets and front panel laid flat with cut, fold and bleed lines`}
-                      width={3000}
-                      height={2400}
+                      alt={`${feat.brand} ${flatName.toLowerCase()} laid flat`}
                       loading="lazy"
                       decoding="async"
                       style={{ display: 'block', width: '100%', height: '100%', objectFit: 'contain' }}
@@ -601,7 +601,7 @@ export default function Packaging() {
                 style={{ bottom: -10, right: -18, '--tape-rotate': '-28deg', pointerEvents: 'none' } as CSSProperties}
               />
             </div>
-            <div style={{ ...metaStyle, opacity: 0.55, marginTop: '1.5rem' }}>01 — Dieline, flat</div>
+            <div style={{ ...metaStyle, opacity: 0.55, marginTop: '1.5rem' }}>01 — {flatName}, flat</div>
           </div>
         </div>
 
@@ -681,7 +681,7 @@ export default function Packaging() {
               style={{ flex: 1, height: 1, backgroundColor: 'var(--ink)', opacity: 0.45, transformOrigin: 'left center' }}
             />
             <span style={{ fontFamily: 'var(--font-handwritten)', fontSize: '1.35rem', lineHeight: 1, whiteSpace: 'nowrap' }}>
-              folds into →
+              {flatName === 'Label' ? 'wraps around →' : 'folds into →'}
             </span>
           </div>
         </div>
@@ -694,7 +694,7 @@ export default function Packaging() {
                 <button
                   type="button"
                   data-cursor="SPIN"
-                  aria-label={`${feat.brand} pouch mockup. Open larger view`}
+                  aria-label={`${feat.brand} mockup. Open larger view`}
                   onClick={() => openFeatured('mockup')}
                   style={{
                     ...plainButton,
@@ -707,9 +707,7 @@ export default function Packaging() {
                 >
                   <img
                     src={feat.mockup}
-                    alt={`${feat.brand} stand-up pouch mockup, front panel`}
-                    width={1024}
-                    height={1536}
+                    alt={`${feat.brand} packaging mockup`}
                     loading="lazy"
                     decoding="async"
                     style={{ display: 'block', width: '100%', height: '100%', objectFit: 'cover' }}
@@ -731,7 +729,7 @@ export default function Packaging() {
             className="pkg-usecase-curtain"
             style={{
               ...plainButton,
-              aspectRatio: '2 / 3',
+              aspectRatio: feat.usecaseAspect ?? '2 / 3',
               borderRadius: 8,
               overflow: 'hidden',
               backgroundColor: '#c9a877',
@@ -741,12 +739,10 @@ export default function Packaging() {
             <img
               className="pkg-usecase-img"
               src={feat.usecase}
-              alt={`${feat.brand} pouch standing on a wooden table next to a bowl of makhana`}
-              width={1024}
-              height={1536}
+              alt={`${feat.brand} in use`}
               loading="lazy"
               decoding="async"
-              style={{ display: 'block', width: '100%', height: '100%', objectFit: 'cover', objectPosition: '40% 50%' }}
+              style={{ display: 'block', width: '100%', height: '100%', objectFit: 'cover' }}
             />
           </button>
         </div>

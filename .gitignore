@@ -26,3 +26,6 @@ dist-ssr
 # References & temporary dumps
 /references
 *.txt
+
+# Raw source assets for the streetwear chapter (large; processed copies live in public/assets/streetwear)
+/raw-assets

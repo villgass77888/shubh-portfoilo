@@ -60,3 +60,11 @@ Section 4 above was inaccurate: Branding, Web, SMM and Packaging were still rend
 - **Hero**: video left (nudged up), name + tool icons + intro right, name slightly smaller.
 - **Chapter titles**: entrance now plays on its own clock as the card comes into view; the card then pins for ~110vh with a hold and a slow scrubbed exit. (The old `end: '+=80vh'` was read as 80px, which is why titles were late and abrupt.)
 - **Branding**: page colour per brand (`stage` / `accent` in `portfolio.ts`): Senquira faded blood orange, DBKD rich maroon, Swaroop navy, Chemist Box green. Board sits on the left, brand story in a column on the right (desktop).
+
+## 9. Update — 7 Oct 2026: Streetwear chapter (07 / 08)
+- New chapter between Packaging and the Outro: `src/components/sections/Streetwear.tsx` + `streetwear/` (StreetwearIntro, ModelCanvas, CardWheel, ArtworkView, styles). Spec: `STREETWEAR_SECTION.md` (in Downloads/Fallen Angels).
+- Chapters are now 8 everywhere via `TOTAL_CHAPTERS` and `sectionIds` in `portfolio.ts`.
+- Assets: raw files in `raw-assets/streetwear/` (git-ignored), processed by `scripts/prepare-streetwear.ts` (also called from `prepare-assets.ts`) into `public/assets/streetwear/` and `src/data/streetwear.generated.json`. Hand-editable settings and per-design overrides live in `src/data/streetwear.ts`.
+- The model swap is a WebGL horizontal motion-blur with ghost copies, matched to `effect.jpg` (which is an example frame, not a grunge texture). Interrupted swaps continue from the frame on screen.
+- Not built from the spec: Safari/iOS stacked-alpha video (those browsers get the kinetic-type intro instead), shared `<AlphaVideo />` refactor of the hero, the CSS-mask fallback (non-WebGL gets a plain crossfade), idle hint flicker on the wheel, per-design one-liners, meta corners in the showroom, AVIF outputs.
+- Outro was split into `outro/ThankYouScene`, `ContactScene`, `ByeScene` (viewfinder lens, switchable contact line, cinematic end card) and `Marquee.tsx` was fixed (both strips loop, readable hover).

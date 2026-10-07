@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import sharp from 'sharp';
 import { execSync } from 'child_process';
+import { prepareStreetwear } from './prepare-streetwear';
 
 const RAW_DIR = path.join(process.cwd(), 'public/assets/portfolio assets');
 const OUT_DIR = path.join(process.cwd(), 'public/assets');
@@ -225,6 +226,9 @@ async function run() {
   const heroSrc = path.join(RAW_DIR, 'hero video.webm');
   const heroDest = path.join(OUT_DIR, 'hero', 'shubh-360.webm');
   copyFile(heroSrc, heroDest);
+
+  // 7. Streetwear chapter (models, cards, artwork, intro video)
+  await prepareStreetwear();
 
   console.log('Asset preparation complete.');
 }

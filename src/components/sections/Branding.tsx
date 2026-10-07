@@ -615,7 +615,6 @@ export default function Branding() {
         .bk-flash i:nth-child(4) { bottom: -4px; right: -4px; }
 
         @media (hover: hover) {
-          .bk-board:has(.bk-frame:hover) .bk-card { opacity: 0.55; }
           .bk-board .bk-frame:hover { z-index: 60; }
           .bk-board .bk-frame:hover .bk-card {
             opacity: 1;

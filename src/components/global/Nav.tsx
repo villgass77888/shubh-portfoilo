@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { chapters, siteInfo } from '../../data/portfolio';
+import { chapters, sectionIds, siteInfo } from '../../data/portfolio';
 import { useIsomorphicLayoutEffect } from '../../hooks/useIsomorphicLayoutEffect';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -27,11 +27,26 @@ export default function Nav() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // While the menu is open: the page behind stays put, ESC closes
+  useEffect(() => {
+    if (!menuOpen) return;
+    const lenis = (window as unknown as { __lenis?: { stop: () => void; start: () => void } }).__lenis;
+    lenis?.stop();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      lenis?.start();
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [menuOpen]);
+
   // Track current chapter
   useIsomorphicLayoutEffect(() => {
     const ctx = gsap.context(() => {
       chapters.forEach((_ch, i) => {
-        const sectionId = ['hero', 'logos', 'branding', 'web', 'smm', 'packaging', 'outro'][i];
+        const sectionId = sectionIds[i];
         const el = document.getElementById(`section-${sectionId}`);
         if (!el) return;
 
@@ -49,7 +64,6 @@ export default function Nav() {
   }, []);
 
   const scrollToSection = (index: number) => {
-    const sectionIds = ['hero', 'logos', 'branding', 'web', 'smm', 'packaging', 'outro'];
     const el = document.getElementById(`section-${sectionIds[index]}`);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
@@ -73,9 +87,10 @@ export default function Nav() {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          transform: hidden ? 'translateY(-100%)' : 'translateY(0)',
+          transform: hidden && !menuOpen ? 'translateY(-100%)' : 'translateY(0)',
           transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-          mixBlendMode: 'difference',
+          // over the red menu the difference blend turned the bar cyan
+          mixBlendMode: menuOpen ? 'normal' : 'difference',
         }}
       >
         {/* Logo */}
@@ -140,7 +155,7 @@ export default function Nav() {
             href="#section-outro"
             className="sticker sticker--acid"
             style={{ '--sticker-rotate': '-2deg', fontSize: '0.65rem', mixBlendMode: 'normal' } as any}
-            onClick={(e) => { e.preventDefault(); scrollToSection(6); }}
+            onClick={(e) => { e.preventDefault(); scrollToSection(sectionIds.length - 1); }}
             data-cursor="TALK"
           >
             LET'S TALK
@@ -160,36 +175,26 @@ export default function Nav() {
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'flex-start',
-            padding: '4rem',
+            // room for the bar on top; the list is sized to fit the height that is left
+            padding: '5.5rem clamp(1.25rem, 4vw, 4rem) 2rem',
+            overflow: 'hidden',
             animation: 'wipeDown 0.5s ease forwards',
           }}
         >
-          <button
-            onClick={() => setMenuOpen(false)}
-            style={{
-              position: 'absolute',
-              top: '2rem',
-              right: '2rem',
-              fontFamily: 'var(--font-heading)',
-              fontSize: '1rem',
-              color: 'var(--bone)',
-              cursor: 'pointer',
-            }}
-          >
-            CLOSE ✕
-          </button>
-
           {chapters.map((ch, i) => (
             <button
               key={i}
               onClick={() => scrollToSection(i)}
               style={{
                 fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(2rem, 8vw, 6rem)',
+                // every chapter has to fit on one screen, whatever its height or width
+                fontSize: `clamp(1.25rem, min(6.4vw, calc((100svh - 10.5rem) / ${chapters.length})), 6rem)`,
                 color: 'var(--bone)',
                 textTransform: 'uppercase',
+                textAlign: 'left',
+                whiteSpace: 'nowrap',
                 lineHeight: 1,
-                marginBottom: '0.5rem',
+                marginBottom: '0.35rem',
                 cursor: 'pointer',
                 transition: 'opacity 0.2s, transform 0.2s',
                 opacity: currentChapter === i ? 1 : 0.5,
