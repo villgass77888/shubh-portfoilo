@@ -121,7 +121,7 @@ export default function BrandPage({ brand, nav }: Props) {
       </div>
 
       <footer className="ar-next-wrap">
-        <button type="button" className="ar-next ar-sel ar-sel--hover" data-cursor="NEXT" style={{ '--c': next.color } as CSSProperties} onClick={() => nav.swap({ page: 'brand', slug: next.slug })}>
+        <button type="button" className="ar-next ar-sel is-on" data-cursor="NEXT" style={{ '--c': next.color } as CSSProperties} onClick={() => nav.swap({ page: 'brand', slug: next.slug })}>
           <span className="ar-next-plate" aria-hidden="true" />
           <span className="ar-next-kicker">Next brand →</span>
           <span className="ar-next-name">{next.name}</span>
@@ -203,11 +203,12 @@ export const brandCss = `
 /* three of the next brand's creatives peek over the top edge and rise on hover */
 .ar-next-fan {
   position: absolute;
-  right: clamp(1.5rem, 9vw, 9rem);
+  right: clamp(4.5rem, 13vw, 13rem);
   bottom: 100%;
   width: clamp(5.5rem, 12vw, 11rem);
   aspect-ratio: 4 / 5;
-  clip-path: inset(-100% -100% 0 -100%);
+  /* cut only along the block's top edge; wide enough sideways for the fanned cards and their shadows */
+  clip-path: inset(-150% -250% 0 -250%);
   pointer-events: none;
 }
 .ar-next-card {
@@ -219,7 +220,7 @@ export const brandCss = `
   object-fit: cover;
   border: 2px solid var(--ink);
   border-radius: 8px;
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
   transform-origin: 50% 120%;
   transition: transform 0.6s var(--ease-enter);
 }
@@ -230,6 +231,6 @@ export const brandCss = `
 .ar-next:hover .ar-next-card--1, .ar-next:focus-visible .ar-next-card--1 { transform: translateY(8%) rotate(12deg) translateX(70%); transition-delay: 0.05s; }
 .ar-next:hover .ar-next-card--2, .ar-next:focus-visible .ar-next-card--2 { transform: translateY(0%); transition-delay: 0.1s; }
 @media (max-width: 768px) {
-  .ar-next-fan { right: 1.25rem; width: 4.6rem; }
+  .ar-next-fan { right: 4rem; width: 4.6rem; }
 }
 `;

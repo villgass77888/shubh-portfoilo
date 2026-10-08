@@ -44,10 +44,11 @@ function ShelfBook({ brochure: b, hidden, onOpen }: BookProps) {
   const tag = b.kind === 'gatefold' ? 'GATEFOLD' : b.kind === 'scroll' ? 'LONG SCROLL' : null;
 
   return (
-    <div ref={reveal} className={`ar-book-cell${hidden ? ' is-away' : ''}`}>
+    // the reveal adds `is-in` to this element by hand, so its className must never change
+    <div ref={reveal} className="ar-book-cell">
       <button
         type="button"
-        className="ar-book"
+        className={`ar-book${hidden ? ' is-away' : ''}`}
         data-cursor="READ"
         data-slug={b.slug}
         style={vars}
@@ -242,7 +243,7 @@ export const brochuresCss = `
   transition: opacity 0.6s ease var(--rd, 0ms), transform 0.8s var(--ease-enter) var(--rd, 0ms);
 }
 .ar-book-cell.is-in { opacity: 1; transform: none; }
-.ar-book-cell.is-away .ar-book { visibility: hidden; }
+.ar-book.is-away { visibility: hidden; }
 
 .ar-book {
   --d: calc(24px * var(--k));
