@@ -11,6 +11,7 @@ import SmmPhone, { imgLoad, smmRatio } from './smm/SmmPhone';
 import type { ImgLoad } from './smm/SmmPhone';
 import SmmLightbox, { creativeLabel } from './smm/SmmLightbox';
 import SmmWall from './smm/SmmWall';
+import SmmArchive from './smm/archive/SmmArchive';
 import { smmCss } from './smm/smmStyles';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -639,6 +640,9 @@ export default function SmmCreatives() {
           onStep={step}
         />
       )}
+
+      {/* EXPLORE ALL CREATIVES → the full archive (its own overlay, loaded on demand) */}
+      <SmmArchive tint={smm[N - 1]?.primary} />
 
       {wallBrand && (
         <SmmWall brand={wallBrand} suspended={!!lightbox} onOpen={(index) => setLightbox({ slug: wallBrand.slug, index })} onClose={closeWall} />
