@@ -26,7 +26,7 @@ const nearest = (from: number, target: number) => from + (mod(target - from + 18
 /**
  * The card wheel — ten tee cards fanned like a hand of playing cards bent into a full circle.
  * Every card has its bottom-left corner on the hub; card i is rotated i × step − 90°, later cards
- * sit on top, and the last card is clipped to its own wedge so the first one shows under it.
+ * sit on top, and the cards that wrap back round are cut along the first card's edges so it shows over them.
  * Hover is resolved from the pointer's angle around the hub (DOM hover flickers on overlapping,
  * rotating cards).
  */
@@ -65,31 +65,37 @@ export default function CardWheel({ designs, selected, onSelect, dealt, reduced 
 
   // ── poses ──
   const fullClip = 'polygon(0% 100%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 100%)';
+  /** Cards far enough round the fan to wrap back onto the first card (stacking order alone can't close the circle) */
+  const wraps = (i: number) => i > 0 && i * step > 270;
   /**
-   * The last card is cut along the first card's left and top edges, exactly as if the first card
-   * lay on top of it — so nothing pokes out past the first card's corner. Follows the selected
-   * card's nudge and scale.
+   * A wrapping card is cut along the first card's left and top edges, exactly as if the first card
+   * lay on top of it — so nothing pokes out over the first card. Follows the selected card's
+   * nudge and scale.
    */
-  const restClip = (sel: number, r: number, w: number, h: number) => {
-    const last = N - 1;
+  const restClip = (k: number, sel: number, r: number, w: number, h: number) => {
     const off = (i: number): [number, number] => {
       const d = i === sel ? wheelCfg.selectedNudge * r : 0;
       return [d * Math.cos(wedgeMid(i) * DEG), d * Math.sin(wedgeMid(i) * DEG)];
     };
     const sc = (i: number) => (i === sel ? 1.06 : 1);
     const [fx, fy] = off(0);
-    const [lx, ly] = off(last);
-    // wheel coordinates → the last card's own box (origin bottom-left, y down)
+    const [kx, ky] = off(k);
+    // wheel coordinates → card k's own box (origin bottom-left, y down)
     const local = (x: number, y: number): [number, number] => {
-      const [u, v] = rot(x - lx, y - ly, -theta(last));
-      return [u / sc(last), v / sc(last)];
+      const [u, v] = rot(x - kx, y - ky, -theta(k));
+      return [u / sc(k), v / sc(k)];
     };
     const up = (theta(0) - 90) * DEG;
     const a = local(fx, fy);
     const c = local(fx + sc(0) * h * Math.cos(up), fy + sc(0) * h * Math.sin(up));
-    const [du, dv] = rot(Math.cos(theta(0) * DEG), Math.sin(theta(0) * DEG), -theta(last));
-    const e: [number, number] = [w, c[1] + ((w - c[0]) / du) * dv];
     const pct = ([u, v]: [number, number]) => `${((u / w) * 100).toFixed(2)}% ${(((h + v) / h) * 100).toFixed(2)}%`;
+    // the first card's left edge leaves this card's right side before it reaches its corner
+    if (c[0] >= w) {
+      const e: [number, number] = [w, a[1] + ((w - a[0]) / (c[0] - a[0])) * (c[1] - a[1])];
+      return `polygon(0% 100%, 0% 0%, 100% 0%, ${pct(e)}, ${pct(e)}, ${pct(a)})`;
+    }
+    const [du, dv] = rot(Math.cos(theta(0) * DEG), Math.sin(theta(0) * DEG), -theta(k));
+    const e: [number, number] = [w, c[1] + ((w - c[0]) / du) * dv];
     return `polygon(0% 100%, 0% 0%, 100% 0%, ${pct(e)}, ${pct(c)}, ${pct(a)})`;
   };
 
@@ -98,7 +104,7 @@ export default function CardWheel({ designs, selected, onSelect, dealt, reduced 
     const { W, R: r, cw: w, ch: h, selected: sel } = live.current;
     if (!el || r === 0) return;
     const current = Number(gsap.getProperty(el, 'rotation')) || 0;
-    const isLast = i === N - 1;
+    const isLast = wraps(i);
 
     if (kind === 'open') {
       const s = wheelCfg.popScale;
@@ -128,7 +134,7 @@ export default function CardWheel({ designs, selected, onSelect, dealt, reduced 
       y: d * Math.sin(wedgeMid(i) * DEG),
       scale: nudged ? 1.06 : 1,
       rotation: nearest(current, theta(i)),
-      clipPath: isLast ? restClip(sel, r, w, h) : undefined,
+      clipPath: isLast ? restClip(i, sel, r, w, h) : undefined,
       duration: instant ? 0 : 0.55,
       ease: 'power3.inOut',
       overwrite: 'auto',
@@ -162,7 +168,7 @@ export default function CardWheel({ designs, selected, onSelect, dealt, reduced 
       if (!el) return;
       gsap.set(el, { transformOrigin: '0% 100%', zIndex: i + 1 });
       if (!live.current.dealt && !reduced) {
-        gsap.set(el, { rotation: 0, x: 0, y: 0, scale: 0.6, opacity: 0, clipPath: i === N - 1 ? fullClip : undefined });
+        gsap.set(el, { rotation: 0, x: 0, y: 0, scale: 0.6, opacity: 0, clipPath: wraps(i) ? fullClip : undefined });
       } else {
         gsap.set(el, { opacity: 1 });
         pose(i, live.current.open === i ? 'open' : 'rest', true);
@@ -186,7 +192,7 @@ export default function CardWheel({ designs, selected, onSelect, dealt, reduced 
         x: d * Math.cos(wedgeMid(i) * DEG),
         y: d * Math.sin(wedgeMid(i) * DEG),
         scale: nudged ? 1.06 : 1,
-        clipPath: i === N - 1 ? restClip(live.current.selected, R, cw, ch) : undefined,
+        clipPath: wraps(i) ? restClip(i, live.current.selected, R, cw, ch) : undefined,
         duration: 0.8,
         delay: i * 0.06,
         ease: 'back.out(1.4)',
