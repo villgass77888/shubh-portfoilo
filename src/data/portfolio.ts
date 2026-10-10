@@ -116,39 +116,6 @@ export type SmmEntry = {
   stats?: string;
 };
 
-export type PackagingFeatured = {
-  brand: string;
-  slug: string;
-  story: string;
-  briefText: string;
-  conceptText: string;
-  dielineText: string;
-  onShelfText: string;
-  product: string;
-  client: string;
-  year: number;
-  colors: string[];
-  logo?: string;
-  /** What the flat artwork is called: 'Dieline' for a carton or pouch, 'Label' for a jar */
-  flatName?: string;
-  /** CSS aspect-ratio of the flat artwork and of the use-case photo */
-  flatAspect?: string;
-  usecaseAspect?: string;
-  dieline: string;
-  mockup: string;
-  usecase: string;
-};
-
-export type PackagingTile = {
-  brand: string;
-  slug: string;
-  product: string;
-  mockup: string;
-  dieline?: string;
-  hoverImage?: string;
-  size: '2x1' | '1x1' | '1x2';
-};
-
 // ── Site Info ──
 
 export const siteInfo = {
@@ -473,42 +440,8 @@ export const smm: SmmEntry[] = smmCopy.map((entry) => {
   };
 });
 
-// ── Packaging ──
+// ── Packaging ── lives in src/data/packaging.ts
 
-export const packaging = {
-  featured: {
-    brand: 'Croppd Honey',
-    slug: 'croppd-honey',
-    briefText: 'Raw, unprocessed honey with zero preservatives, for a shelf full of jars that all claim to be pure.',
-    conceptText: 'A hand-drawn wordmark, watercolour blossoms and dripping comb on warm cream paper, so the jar feels poured rather than manufactured.',
-    dielineText: 'One wrap-around label planned flat first: the story on the left, the wordmark up front, nutrition and legal on the right, so nothing lands on the seam.',
-    onShelfText: 'On the table it reads the way it should: honest, warm and straight from the hive.',
-    story: 'Brief → Concept → Label → On shelf',
-    product: 'Raw Honey Jar, 250 g',
-    client: 'Croppd',
-    year: 2025,
-    colors: ['#F6EFD9', '#E9A21B', '#5A2E1B'],
-    flatName: 'Label',
-    flatAspect: '3 / 1',
-    usecaseAspect: '1 / 1',
-    dieline: '/assets/packaging/croppd-honey/label.webp',
-    mockup: '/assets/packaging/croppd-honey/hero.webp',
-    usecase: '/assets/packaging/croppd-honey/studio.webp',
-  } as PackagingFeatured,
-  more: [
-    { brand: 'Milletopia', slug: 'milletopia', product: 'Ready-to-eat millet khichdi, noodles and pasta', mockup: '/assets/packaging/milletopia/mockup.webp', dieline: '/assets/packaging/milletopia/dieline.webp', size: '2x1' as const },
-    { brand: 'Milletopia', slug: 'milletopia-2', product: 'Studio shot', mockup: '/assets/packaging/milletopia/studio.webp', size: '1x1' as const },
-    { brand: 'Milletopia', slug: 'milletopia-3', product: 'Supermarket shelf display', mockup: '/assets/packaging/milletopia/shelf.webp', size: '1x1' as const },
-    { brand: 'ProFoods Makhana', slug: 'profoods-makhana', product: 'Makhana snack pouch', mockup: '/assets/packaging/profoods-makhana/mockup.webp', dieline: '/assets/packaging/profoods-makhana/dieline.webp', size: '1x2' as const },
-    { brand: 'ProFoods Makhana', slug: 'profoods-makhana-2', product: 'Pouch dieline', mockup: '/assets/packaging/profoods-makhana/dieline.webp', size: '2x1' as const },
-    { brand: 'ProFoods Makhana', slug: 'profoods-makhana-3', product: 'In the wild', mockup: '/assets/packaging/profoods-makhana/usecase.webp', size: '1x1' as const },
-    { brand: 'Croppd Honey', slug: 'croppd-honey-3', product: 'Store shelf', mockup: '/assets/packaging/croppd-honey/shelf.webp', size: '1x1' as const },
-    { brand: 'Arban Beauty', slug: 'arban-beauty', product: 'Vitamin C skincare packaging', mockup: '/assets/packaging/arban-beauty/mockup.webp', size: '2x1' as const },
-    { brand: 'Arban Beauty', slug: 'arban-beauty-2', product: 'Product lineup', mockup: '/assets/packaging/arban-beauty/lineup.webp', size: '1x1' as const },
-    { brand: 'Arban Beauty', slug: 'arban-beauty-3', product: 'Collection display', mockup: '/assets/packaging/arban-beauty/collection.webp', size: '1x1' as const },
-    { brand: 'Arban Beauty', slug: 'arban-beauty-4', product: 'On the shelf', mockup: '/assets/packaging/arban-beauty/shelf.webp', size: '1x1' as const },
-  ] as PackagingTile[],
-};
 
 // ── Helper: board data from a layout.json (scripts/extract-moodboard-layouts.mjs) ──
 

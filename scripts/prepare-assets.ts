@@ -4,6 +4,7 @@ import sharp from 'sharp';
 import { execSync } from 'child_process';
 import { prepareStreetwear } from './prepare-streetwear';
 import { prepareArchive } from './prepare-archive';
+import { preparePackaging } from './prepare-packaging';
 
 const RAW_DIR = path.join(process.cwd(), 'public/assets/portfolio assets');
 const OUT_DIR = path.join(process.cwd(), 'public/assets');
@@ -230,6 +231,9 @@ async function run() {
 
   // 7. Streetwear chapter (models, cards, artwork, intro video)
   await prepareStreetwear();
+
+  // 5b. Packaging: Croppd Honey videos, responsive photos, palettes
+  await preparePackaging();
 
   // 8. SMM creatives archive (brand masonry pages, flyers, emailers, brochure pages)
   await prepareArchive();

@@ -1,0 +1,137 @@
+{
+ "video": {
+  "available": true,
+  "croppd-1": {
+   "src": "/assets/packaging/croppd-honey/croppd-1",
+   "duration": 4.042,
+   "first": "/assets/packaging/croppd-honey/croppd-1-first.webp",
+   "last": "/assets/packaging/croppd-honey/croppd-1-last.webp"
+  },
+  "croppd-2": {
+   "src": "/assets/packaging/croppd-honey/croppd-2",
+   "duration": 4.042,
+   "first": "/assets/packaging/croppd-honey/croppd-2-first.webp",
+   "last": "/assets/packaging/croppd-honey/croppd-2-last.webp"
+  },
+  "w": 1280,
+  "h": 720
+ },
+ "images": {
+  "croppd-honey/label": {
+   "src": "/assets/packaging/croppd-honey/label-1600.webp",
+   "srcset": "/assets/packaging/croppd-honey/label-1000.webp 1000w, /assets/packaging/croppd-honey/label-1600.webp 1600w, /assets/packaging/croppd-honey/label-2400.webp 2400w, /assets/packaging/croppd-honey/label-2948.webp 2948w",
+   "w": 2948,
+   "h": 982,
+   "lqip": "data:image/webp;base64,UklGRpwAAABXRUJQVlA4WAoAAAAQAAAAFwAABwAAQUxQSBcAAAABF/D5/4iIQSyY4qEFV0T/AwyAAAAAAABWUDggXgAAAFAEAJ0BKhgACAA/AWisTqslpCIwCAFgIAlAE6ZQAGhlMZ5wDJr/t9VDBgAA/ufSn6ETiVxfeG/hb5tYJ6ynzoJrPKLYgzuqKyt3lpMbkKbYZKtN4JZNnHCRB/fWoAA="
+  },
+  "croppd-honey/studio": {
+   "src": "/assets/packaging/croppd-honey/studio-1024.webp",
+   "srcset": "/assets/packaging/croppd-honey/studio-1000.webp 1000w, /assets/packaging/croppd-honey/studio-1024.webp 1024w",
+   "w": 1024,
+   "h": 1024,
+   "lqip": "data:image/webp;base64,UklGRqoAAABXRUJQVlA4IJ4AAABwBACdASoYABgAPwFys1GrJqSiqAqpYCAJQBXDgaSRvdtiV9Ejgp1UJyGMQAD3Jsjj/2UuuACIDkgWS2wrG1WBRm5/B7Rfd5hMejTirqKLBHW3c2P2mxFIXBnTO/4iQ8V4UUuWHF1EXudqmKvqb1DpmIoeG825pUsPih37kii8wfepmSWDOk8pTTUgEdFwgjkkGChfLjMfnmMnSS4wAA=="
+  },
+  "croppd-honey/shelf": {
+   "src": "/assets/packaging/croppd-honey/shelf-1200.webp",
+   "srcset": "/assets/packaging/croppd-honey/shelf-1000.webp 1000w, /assets/packaging/croppd-honey/shelf-1200.webp 1200w",
+   "w": 1200,
+   "h": 896,
+   "lqip": "data:image/webp;base64,UklGRvAAAABXRUJQVlA4IOQAAADwBQCdASoYABIAPwF0rlKrJqQiqAqpYCAJZACdMoSCm8AVxOaPFGAIC64JeoEHVML6TJptS3+egAD+SJOTDljXvtW73+svn4g+U+xVWz2aYzyLCmyQK83scjRR9QtctWwc50QyoSlHy7V3QjIeOfWekdTRPkhcxrCIR7KJqNfsaSAZedSblsYPIIqQ6AOr6qbc1zQ3Tkg5GpRNgPx9jtlhOZQr8Cb5Ju8yVXvqDY/Ds9AqA4aBLyZ8kdN6MTjM70ayyCQsmrKUSmZdYwVvDjTy64pwV8oTLR8RjutyKZXexidggAA="
+  },
+  "croppd-honey/hero": {
+   "src": "/assets/packaging/croppd-honey/hero-1600.webp",
+   "srcset": "/assets/packaging/croppd-honey/hero-1000.webp 1000w, /assets/packaging/croppd-honey/hero-1600.webp 1600w, /assets/packaging/croppd-honey/hero-2000.webp 2000w",
+   "w": 2000,
+   "h": 2000,
+   "lqip": "data:image/webp;base64,UklGRqQAAABXRUJQVlA4IJgAAAAQBQCdASoYABgAPwF0rlMrJqOiqAqpYCAJaADH5BEdGcDxHtslOrK2N5SrtwdA64QAAP7vw2WqEm4m+SrTY3C+J6/MgWS9EKID4SHcb8hfCSZqDZVYjun2nVAWsZJ8wznWk8As89BCM2wnZM2u94zW/Vyih9R1geDUyE08/TWCwkd9hX/8HERw1t//kZwJxXbuPa1XoKMAAA=="
+  },
+  "arban-beauty/collection": {
+   "src": "/assets/packaging/arban-beauty/collection.webp",
+   "w": 1024,
+   "h": 1024,
+   "lqip": "data:image/webp;base64,UklGRrwAAABXRUJQVlA4ILAAAABQBQCdASoYABgAPvVqqU6qpiOiMAwBUB6JZAC7MyGCLsJhWLBQ4TLv10BFTU8iD6R6LAAA2z5Zw/W/HbQILr4c6Sf83AOgssUwZYMvEL8T1Uk7yOuWiXgtOJHsn2FTXy3rJPh3Qr3Tyr+/gZc6btqKBiizCXByIW3VLn/yEBjR+hbG7zOrWwUaJkKR8qowsG7BoDQJeG3kZ4TMvDm46LYRQM5wgdWVmQ7CJkpR6gAAAA=="
+  },
+  "arban-beauty/lineup": {
+   "src": "/assets/packaging/arban-beauty/lineup.webp",
+   "w": 1024,
+   "h": 1024,
+   "lqip": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAAAwBACdASoYABgAPwFurE8rJqQiMAgBYCAJQAALfUgW4VdR8f0dsoATGAAA/t6KFYxpjdpvQx1r5BlIa1Rdd5h30ilafjH39DGKsx8yz0Sg4XbPiOzfA89AlfHKqAEz24xyZAAA"
+  },
+  "arban-beauty/mockup": {
+   "src": "/assets/packaging/arban-beauty/mockup.webp",
+   "w": 1403,
+   "h": 1121,
+   "lqip": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAABQAwCdASoYABMAPwF2s1OrJySiqAgBYCAJZ2iTABtox7hOAAD+77RM26z6x4cBVSTtAKRA2n7vtr8Ybv01+UoBMMYWn08eOQFGwaRFw/SsnxUBu6Tf5oerF+IxN8C9cRU1gAAA"
+  },
+  "arban-beauty/shelf": {
+   "src": "/assets/packaging/arban-beauty/shelf.webp",
+   "w": 1200,
+   "h": 896,
+   "lqip": "data:image/webp;base64,UklGRs4AAABXRUJQVlA4IMIAAABQBQCdASoYABIAPwFyr1KrJqQiqAqpYCAJYwDM0AphxypyrB+GclnCRWxtS8nmoCbZ44AA3IhdLxNkYkhlXk9EL6kUMEXcir+/Faek7/kgORV1ifEvnQ/8rKKQYMMU1MmQG3W4wcw6n+BHbOYSufgumwhbDiKw6hhnkWAhhesG1wvj+LGXrGm7odmo1aTeg97s7PbICvDlXuHdRNP3LdvpgA9TUO+buioqi1PYloZxBVlbo8ce6+43fGTjg2ID8NAAAA=="
+  },
+  "milletopia/dieline": {
+   "src": "/assets/packaging/milletopia/dieline.webp",
+   "w": 4961,
+   "h": 3508,
+   "lqip": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAAAQBACdASoYABEAPwFur1ErJiQisBgIAWAgCUAZEwIeAn7ArbZdOokDEAD+5+3T60Lg7kwFXHVgNchlPLD2RcXb3JB7vfRTUZG+AlciMfOG3P5Yr16BHkMDDZfR0AAA"
+  },
+  "milletopia/mockup": {
+   "src": "/assets/packaging/milletopia/mockup.webp",
+   "w": 1024,
+   "h": 1024,
+   "lqip": "data:image/webp;base64,UklGRrAAAABXRUJQVlA4IKQAAACwBACdASoYABgAPwFssE8rJiSiKA1RYCAJbACdH8ABkVI1LoAKV0y6SD9Xm7rYAP7tYccyzXuEP8hd+RtIbN9PhUKPZYlZLE8RjzVhpPbFour+f2S1XAnQWz643aY7Z0xN68yFx9A/wCd6ffQf8Dz+VbRtv4GgpCU/xp1Uae0QZDBSs7DX4lU5uGpN5fex5pmjDVcAn4NKE7ZQJCfq7g8mTOAAAA=="
+  },
+  "milletopia/shelf": {
+   "src": "/assets/packaging/milletopia/shelf.webp",
+   "w": 1200,
+   "h": 896,
+   "lqip": "data:image/webp;base64,UklGRtAAAABXRUJQVlA4IMQAAACwBACdASoYABIAPwF0rlKrJqQiqAqpYCAJYgCxH2QBUc4ZNOjGh16cWo/hOLYAAM3ubyh5TbL5C5QxyzF0C2QTqa4Flzx96d82Xj6f7EYbHQ2QiyZpbLlC/hHfTKmoUchS1raZrAecdwJ8QwSohnI3OkAagTl1fxO3l10Hsgt5JvQvUsKPQubIEVlu5WKplgQoVS4GKJlDvD+ZhDoTYFEbTujvFpiZvYEb1yNk4wR6Nus2W07SdDyzVmHa+28ZQvS0AAAA"
+  },
+  "milletopia/studio": {
+   "src": "/assets/packaging/milletopia/studio.webp",
+   "w": 1024,
+   "h": 1024,
+   "lqip": "data:image/webp;base64,UklGRuoAAABXRUJQVlA4IN4AAACwBQCdASoYABgAPwF2s1QrJySjKAgBYCAJbACdM1AEABKjH0ncHcwkhdDSFc3cN9MQP8TcXgAA/uWz5COrFanusH/XoYE6bm52EQ+SFr4BD7vZ0uHkLba+XmG++xAMZgEI7VvbwlIQiDDiZ4oTwKUKrKjBwPFl3ma1+7P9qp0a19JTqPcQ9GUOQRFKnxPw7iXPRG5WQE41pKad+M7faa37EZPBE3ZxuzZpneWoFjwVmN5CcO3aXA4kBJ3ckNDYAKjYMk65kzvKrinDFRYvBL9rA8xp0WvcHq2HFR0EAAA="
+  },
+  "profoods-makhana/dieline": {
+   "src": "/assets/packaging/profoods-makhana/dieline.webp",
+   "w": 3000,
+   "h": 2400,
+   "lqip": "data:image/webp;base64,UklGRqAAAABXRUJQVlA4IJQAAADwBACdASoYABMAPwFysFIrJqSiqAqpYCAJbAC/OBEc7u34HCuxAiye/f3Xw7L3J4AA/u3hf9JwgYX2pS/EOHMrq0VGSKQPSdM3B7GRyPtrRM+ZwFMDTrZ5e6hgCzIvA0Jb6Zmq5YnmM0XJOehXSgWmYKlECbGZw+5gomVGEGdJeq29wx31XKtYdZKwXAmFNojmUwAA"
+  },
+  "profoods-makhana/mockup": {
+   "src": "/assets/packaging/profoods-makhana/mockup.webp",
+   "w": 1024,
+   "h": 1536,
+   "lqip": "data:image/webp;base64,UklGRlwBAABXRUJQVlA4IFABAADwBwCdASoYACQAPwFqq1ArJaOiqqwBYCAJbACdMzQ9R5A9RtnvEzyUYcqIs4jVbYM+yFlqqPcM41VekB0pubKHRpfQtBbKdQAA/uCl4vpPwUAZ46CPclGRFwvFKZsfMM8WRRx436tmNcv66d9NtczpCSKnCSfj6FwwejKaJovL2wihObHhC1PDNSIZy7plx1h/KE7Y3tfq1omd+FK3k7ooddA22r5dwux3v3Vn4eoN+U4BS7HkCUd76AP4DSwBuK7wgawxYbC6HyM4gLC5JybStGyxt4usVXGGolXim6MrnPYAcHw/DmyCUtRJeVRuiuZXAOmfAj84M+qHMdVzVaNoisQjCMkmCBJtM3yIx+fDpd7LC8+QO45kUVSpnM/Ah+whhN57HRHEo7pCmC7jgbc4exK58NVJ9gMoCpDzeFSCtIjl68IKbUz+5esPuBrNAAA="
+  },
+  "profoods-makhana/usecase": {
+   "src": "/assets/packaging/profoods-makhana/usecase.webp",
+   "w": 1024,
+   "h": 1536,
+   "lqip": "data:image/webp;base64,UklGRmYBAABXRUJQVlA4IFoBAAAwBwCdASoYACQAPwFsrFArJaQiqqwBYCAJbACdMsb/uLk5uApmIWV6GeTwMCX4JYfayM9Aro6c9DwaU9ZniKeCKwAA/F5VQGuctingYwEMVaoDlP8ZerGZ7/0t7NCat0UL7sjiHtabvgRSvR8J8cQ8zJRQvR0TPse7XnK6sId3KAjdcI/WJMV57C3IgPLXwJdhc/NVhIuso9jmt119vKjbmVJbygOwqUXUvpipxMwYREtZM+i2EZ5U1CbWc++agIMMlJo+WlsMp4O2PdcgdjgfHNB/1I9gh8Fh0RuhuK4ISEAlIVOoKMV9f7jJD63i+agwhaWFAgS9cmiD8OgIIFuJDFH/IBDC4pMSU79CNBPBfIp3lhNQWPOZjMBDwa6UlpfjqyTeT4fOuPmkBphPpYCd3zqTVB5twnrkjCh8O/mBMz56R6X6U3xOIDxlzoYZ+UmSmEkpLN5q4AAA"
+  }
+ },
+ "swatches": {
+  "arban-beauty": [
+   "#F9FAF9",
+   "#FB9819",
+   "#B9C8B7"
+  ],
+  "milletopia": [
+   "#F2F2F1",
+   "#CF6759",
+   "#D2AB32"
+  ],
+  "profoods-makhana": [
+   "#EDB20B",
+   "#D7D4D4",
+   "#F2D170"
+  ],
+  "croppd-honey": [
+   "#F3EED8",
+   "#C7BBA8",
+   "#F5CE70"
+  ]
+ }
+}
