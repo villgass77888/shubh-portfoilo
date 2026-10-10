@@ -42,6 +42,8 @@ export type LogoEntry = {
 
 export type MoodboardFrame = {
   src: string;
+  /** Half-size + full-size candidates, when the board was drawn at 2x */
+  srcset?: string;
   x: number;
   y: number;
   w: number;
@@ -275,7 +277,7 @@ export const brands: BrandEntry[] = [
     theBrief: 'A luxury perfume brand that wanted its identity to own the room before the wearer even walks in.',
     theIdea: 'Treat each visual like a fragrance note — dark, layered, impossible to ignore.',
     theIdentity: 'Moody typography, gold foil accents and packaging that whispers luxury from arm\'s length.',
-    brief: 'Luxury perfume branding', industry: 'Fragrance', year: 2024, primary: '#8B6F4E', stage: '#A64B2E', accent: '#FFE2C4',
+    brief: 'Luxury perfume branding', industry: 'Fragrance', year: 2024, primary: '#7B0F15', secondary: '#0F1723', stage: '#A64B2E', accent: '#FFE2C4',
     ...boardFrom(senquiraLayout),
   },
   {
@@ -284,7 +286,7 @@ export const brands: BrandEntry[] = [
     theBrief: 'A premium Indian ethnic wear brand needed an identity rich enough to match its fabrics.',
     theIdea: 'Blend royal Indian motifs with clean modern type — traditional craftsmanship, contemporary confidence.',
     theIdentity: 'Golden palette, ornamental patterns and typography that reads like an invitation to a royal feast.',
-    brief: 'Ethnic fashion branding', industry: 'Fashion', year: 2024, primary: '#C7A34F', stage: '#560D1B', accent: '#E9C47C',
+    brief: 'Ethnic fashion branding', industry: 'Fashion', year: 2024, primary: '#570B12', secondary: '#E5BE7E', stage: '#560D1B', accent: '#E9C47C',
     ...boardFrom(dbkdLayout),
   },
   {
@@ -293,7 +295,7 @@ export const brands: BrandEntry[] = [
     theBrief: 'A Vrindavan real estate company selling plots, land, villas and large projects needed an identity as rooted as the city it builds in.',
     theIdea: 'Treat property like heritage, not inventory. Sculpted forms, a navy-led palette and calm, confident type.',
     theIdentity: 'One system carried from the primary mark to signage, business cards, a brand book and property hoardings.',
-    brief: 'Real estate identity', industry: 'Real Estate', year: 2024, primary: '#1A2744', stage: '#0B0F2E', accent: '#FF2B1C',
+    brief: 'Real estate identity', industry: 'Real Estate', year: 2024, primary: '#173A87', secondary: '#C1A168', stage: '#0B0F2E', accent: '#FF2B1C',
     ...boardFrom(swaroopLayout),
   },
   {
@@ -302,7 +304,7 @@ export const brands: BrandEntry[] = [
     theBrief: 'An Indian pharmacy chain expanding across India needed a brand that said affordable quality at first glance.',
     theIdea: 'A clean, trustworthy system — green for health, sharp for retail, warm for the neighbourhood chemist vibe.',
     theIdentity: 'From store signage to digital, one green-and-white system that scales from a Bihar shopfront to a national chain.',
-    brief: 'Pharmacy chain branding', industry: 'Healthcare Retail', year: 2025, primary: '#2AAE4A', stage: '#0E5A34', accent: '#C8FF2E',
+    brief: 'Pharmacy chain branding', industry: 'Healthcare Retail', year: 2025, primary: '#008747', secondary: '#0064FE', stage: '#0E5A34', accent: '#C8FF2E',
     ...boardFrom(chemistBoxLayout),
   },
 ];

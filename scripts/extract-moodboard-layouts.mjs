@@ -1,10 +1,12 @@
 /**
- * Rebuilds each brand moodboard layout from its reference image.
+ * Rebuilds each brand moodboard from its designer files.
  *
- * Every card PNG is a 1:1 pixel crop of "whole image sequence layout understanding.png",
- * so each card is located by template matching (coarse pass at 1/4 scale, then a
- * full-resolution refine) and written, normalised to the reference width, to
- * src/data/branding/<slug>.layout.json.
+ * Every brand folder holds the arranged board (00_Full_Board.png) and its cards as
+ * numbered cutouts (01_Logo.png …), each a 1:1 pixel crop of the board. Each card is
+ * located on the board by template matching (coarse pass on a ~420px-wide copy, then a
+ * full-resolution refine), written as WebP to public/assets/branding/<slug>/, and its
+ * box, normalised to the board width, goes to src/data/branding/<slug>.layout.json.
+ * Boards drawn at 2x also get a half-size copy of every card (NN-sm.webp) for 1x screens.
  *
  * Run: node scripts/extract-moodboard-layouts.mjs
  */
@@ -12,18 +14,22 @@ import fs from 'fs';
 import path from 'path';
 import sharp from 'sharp';
 
-const RAW = path.join(process.cwd(), 'public/assets/portfolio assets/brand guidelines moodboard');
+const RAW = path.join(process.cwd(), 'raw-assets/brand moodboards');
 const OUT = path.join(process.cwd(), 'src/data/branding');
-const REFERENCE = 'whole image sequence layout understanding.png';
+const PUBLIC = path.join(process.cwd(), 'public/assets/branding');
+const REFERENCE = '00_Full_Board.png';
 
 const BRANDS = {
-  senquira_cards: 'senquira',
-  do_bhaion_ki_dukan_cards: 'dbkd',
-  swaroop_realty_cards: 'swaroop-realty',
-  chemistbox_cards: 'chemist-box',
+  Senquira: 'senquira',
+  'Do Bhaiyo Ki Dukaan': 'dbkd',
+  'Swaroop Realty': 'swaroop-realty',
+  'Chemist Box': 'chemist-box',
 };
 
-const COARSE = 4;
+/** Width the coarse search runs at */
+const COARSE_W = 420;
+/** Boards wider than this are 2x artwork: their cards get a half-size copy too */
+const HIDPI_W = 2400;
 
 async function raw(input, scale = 1) {
   let img = sharp(input).ensureAlpha();
@@ -56,25 +62,31 @@ function score(ref, card, ox, oy, step) {
 }
 
 function categoryOf(words) {
-  if (words === 'primary_logo') return 'logo';
-  if (/logo|monogram/.test(words)) return 'variation';
-  if (/colour|color/.test(words)) return 'color';
-  if (/typography|tagline|values/.test(words)) return 'type';
-  if (/pattern|icons/.test(words)) return 'pattern';
-  if (/interior|exterior|building|property|outfit|storefront/.test(words)) return 'photo';
+  if (words === 'logo') return 'logo';
+  if (/logo|symbol/.test(words)) return 'variation';
+  if (/colour|color|palette/.test(words)) return 'color';
+  if (/typography/.test(words)) return 'type';
+  if (/pattern|graphic system/.test(words)) return 'pattern';
+  if (/exterior|storefront|gate|villa|resort|river|fashion|heritage|pharmacist|macro|hero/.test(words)) return 'photo';
   return 'mockup';
 }
 
-/** Corner radius: transparent run length along the top-left corner of the card. */
+function labelOf(words) {
+  if (words === 'logo') return 'PRIMARY LOGO';
+  if (words === 'palette') return 'COLOUR PALETTE';
+  return words.toUpperCase();
+}
+
+/** Corner radius: transparent run along the top-left corner of the card. */
 function cornerRadius(card) {
   let r = 0;
   while (r < card.w && card.data[r * 4 + 3] < 128) r++;
   return r;
 }
 
-async function locate(refFull, refCoarse, file) {
+async function locate(refFull, refCoarse, scale, file) {
   const full = await raw(file);
-  const coarse = await raw(file, COARSE);
+  const coarse = await raw(file, scale);
 
   let best = { s: Infinity, x: 0, y: 0 };
   for (let y = 0; y <= refCoarse.h - coarse.h + 1; y++) {
@@ -85,9 +97,11 @@ async function locate(refFull, refCoarse, file) {
   }
 
   let fine = { s: Infinity, x: 0, y: 0 };
-  const pad = COARSE * 2;
-  for (let y = best.y * COARSE - pad; y <= best.y * COARSE + pad; y++) {
-    for (let x = best.x * COARSE - pad; x <= best.x * COARSE + pad; x++) {
+  const pad = Math.ceil(scale * 2);
+  const cx = Math.round(best.x * scale);
+  const cy = Math.round(best.y * scale);
+  for (let y = cy - pad; y <= cy + pad; y++) {
+    for (let x = cx - pad; x <= cx + pad; x++) {
       const s = score(refFull, full, x, y, 3);
       if (s < fine.s) fine = { s, x, y };
     }
@@ -100,19 +114,34 @@ async function run() {
 
   for (const [folder, slug] of Object.entries(BRANDS)) {
     const dir = path.join(RAW, folder);
+    const dest = path.join(PUBLIC, slug);
     const refPath = path.join(dir, REFERENCE);
     const refFull = await raw(refPath);
-    const refCoarse = await raw(refPath, COARSE);
+    const scale = refFull.w / COARSE_W;
+    const refCoarse = await raw(refPath, scale);
     const W = refFull.w;
 
-    const files = fs.readdirSync(dir).filter((f) => /^\d+_.+\.png$/i.test(f)).sort();
+    // the board is re-published from scratch: old cards must not linger
+    fs.rmSync(dest, { recursive: true, force: true });
+    fs.mkdirSync(dest, { recursive: true });
+
+    const files = fs.readdirSync(dir).filter((f) => /^\d+_.+\.png$/i.test(f) && f !== REFERENCE).sort();
     const frames = [];
     for (const f of files) {
-      const hit = await locate(refFull, refCoarse, path.join(dir, f));
+      const hit = await locate(refFull, refCoarse, scale, path.join(dir, f));
       const [, num, words] = f.match(/^(\d+)_(.+)\.png$/i);
       if (hit.s > 12) console.warn(`  ! weak match for ${slug}/${f} (diff ${hit.s.toFixed(1)})`);
-      frames.push({ num, words, ...hit });
+      const webp = { quality: 82, alphaQuality: 90, effort: 6 };
+      await sharp(path.join(dir, f)).webp(webp).toFile(path.join(dest, `${num}.webp`));
+      let srcset;
+      if (W > HIDPI_W) {
+        const half = Math.round(hit.w / 2);
+        await sharp(path.join(dir, f)).resize({ width: half }).webp(webp).toFile(path.join(dest, `${num}-sm.webp`));
+        srcset = `/assets/branding/${slug}/${num}-sm.webp ${half}w, /assets/branding/${slug}/${num}.webp ${hit.w}w`;
+      }
+      frames.push({ num, words: words.replace(/_/g, ' ').toLowerCase(), srcset, ...hit });
     }
+    await sharp(refPath).resize({ width: 1920, withoutEnlargement: true }).webp({ quality: 78, effort: 6 }).toFile(path.join(dest, 'board.webp'));
 
     // Column structure for the mobile reflow: 6 equal columns across the board.
     const COLS = 6;
@@ -121,7 +150,7 @@ async function run() {
 
     const out = {
       slug,
-      reference: `/assets/branding/${slug}/${String(files.length + 1).padStart(2, '0')}.webp`,
+      reference: `/assets/branding/${slug}/board.webp`,
       refWidth: W,
       refHeight: refFull.h,
       aspect: r4(W / refFull.h),
@@ -131,6 +160,7 @@ async function run() {
         const near = Math.abs(cx - 0.5) < 0.1;
         return {
           src: `/assets/branding/${slug}/${f.num}.webp`,
+          ...(f.srcset ? { srcset: f.srcset } : {}),
           x: r4(f.x / W),
           y: r4(f.y / W),
           w: r4(f.w / W),
@@ -140,13 +170,13 @@ async function run() {
           order: i,
           from: near ? (i % 2 === 0 ? 'left' : 'right') : cx < 0.5 ? 'left' : 'right',
           category: categoryOf(f.words),
-          label: f.words.replace(/_/g, ' ').toUpperCase(),
+          label: labelOf(f.words),
         };
       }),
     };
 
     fs.writeFileSync(path.join(OUT, `${slug}.layout.json`), JSON.stringify(out, null, 2) + '\n');
-    console.log(`${slug}: ${frames.length} frames, radius ${radius}px`);
+    console.log(`${slug}: ${frames.length} frames, board ${W}x${refFull.h}, radius ${radius}px`);
     for (const f of frames) console.log(`  ${f.num} ${f.words.padEnd(26)} x=${String(f.x).padStart(4)} y=${String(f.y).padStart(4)} ${f.w}x${f.h} diff=${f.s.toFixed(2)}`);
   }
 }

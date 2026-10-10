@@ -80,29 +80,7 @@ async function run() {
     }
   }
 
-  // 2. Branding (Moodboards)
-  const brandingMap: Record<string, string> = {
-    'senquira_cards': 'senquira',
-    'do_bhaion_ki_dukan_cards': 'dbkd',
-    'swaroop_realty_cards': 'swaroop-realty',
-    'chemistbox_cards': 'chemist-box'
-  };
-
-  const brandingDir = path.join(RAW_DIR, 'brand guidelines moodboard');
-  if (fs.existsSync(brandingDir)) {
-    for (const [folder, slug] of Object.entries(brandingMap)) {
-      const folderPath = path.join(brandingDir, folder);
-      if (fs.existsSync(folderPath)) {
-        const files = fs.readdirSync(folderPath).filter(f => f.endsWith('.png'));
-        files.sort();
-        for (let i = 0; i < files.length; i++) {
-          const src = path.join(folderPath, files[i]);
-          const dest = path.join(OUT_DIR, 'branding', slug, `${String(i + 1).padStart(2, '0')}.webp`);
-          await processImage(src, dest);
-        }
-      }
-    }
-  }
+  // 2. Branding (Moodboards): cards + layouts come from scripts/extract-moodboard-layouts.mjs
 
   // 3. Web
   const webMap: Record<string, string> = {

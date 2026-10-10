@@ -401,6 +401,9 @@ export default function Branding() {
                       >
                         <img
                           src={frame.src}
+                          srcSet={frame.srcset}
+                          // the board is ~170vw wide on phones (it scrolls), ~92vw on tablets, ~76vw beside the story column
+                          sizes={frame.srcset ? `(max-width: 639px) ${(frame.w * 170).toFixed(1)}vw, (max-width: 899px) ${(frame.w * 92).toFixed(1)}vw, ${(frame.w * 76).toFixed(1)}vw` : undefined}
                           alt={`${brand.name} brand identity — ${label.toLowerCase()}`}
                           loading={armed[bIdx] ? 'eager' : 'lazy'}
                           decoding="async"
