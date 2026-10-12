@@ -533,6 +533,8 @@ export const packagingCss = `
 @media (max-width: 768px) {
   .pkf { height: auto; grid-template-columns: minmax(0, 1fr); padding-bottom: 3rem; }
   .pkf-stage { --bw: min(96cqw, calc(60cqh * 1.7778)); height: 60vh; height: 60svh; }
+  /* the pinned stage fills the screen while the two beats play */
+  .pkf--pin .pkf-stage { height: 100vh; height: 100svh; }
   .pkf-info { max-width: none; padding: 0 1.25rem; }
   .pki-text { font-size: 0.95rem; }
 

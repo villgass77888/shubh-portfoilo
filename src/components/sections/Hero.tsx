@@ -482,20 +482,38 @@ export default function Hero() {
           0%, 100% { transform: translateY(0); }
           50%      { transform: translateY(8px); }
         }
+        /* Phones: the figure stands in front of the name, tools and intro follow underneath */
         @media (max-width: 800px) {
           .hero-grid {
-            grid-template-columns: 1fr;
-            padding: 5.5rem 1.25rem 2rem;
-            gap: 1.5rem;
+            grid-template-columns: minmax(0, 1fr);
+            grid-template-rows: auto auto auto auto;
+            align-items: start;
+            padding: 5.25rem 1.25rem 2rem;
+            gap: 0;
           }
-          .hero-left { order: 1; padding-left: 0; }
-          .hero-right { order: 2; translate: none; }
-          .hero-name { font-size: 24vw; }
-          .hero-intro { max-width: none; }
-          .hero-intro-text { font-size: 0.82rem; }
+          .hero-left { display: contents; }
+          .hero-left > .hero-fade:first-child { grid-row: 1; margin-bottom: 0.5rem !important; }
+          .hero-name {
+            grid-area: 2 / 1;
+            align-self: end;
+            margin-bottom: 9vw;
+            font-size: 31.5vw;
+            text-align: center;
+            white-space: nowrap;
+          }
+          .hero-right {
+            grid-area: 2 / 1;
+            order: 0;
+            translate: none;
+            z-index: 1;
+            pointer-events: none;
+          }
+          .hero-video-wrap { height: min(104vw, 62svh); pointer-events: auto; }
+          .hero-note { top: 3%; right: 0; left: 55%; z-index: -1; font-size: 0.9rem; white-space: nowrap; }
+          .hero-tools { grid-row: 3; justify-content: center; margin-top: 0.4rem; }
           .hero-tool { width: clamp(34px, 11.5vw, 48px); height: clamp(34px, 11.5vw, 48px); }
-          .hero-video-wrap { height: 62vh; }
-          .hero-note { top: 4%; font-size: 1rem; }
+          .hero-intro { grid-row: 4; max-width: none; margin-top: 1.1rem; }
+          .hero-intro-text { font-size: 0.86rem; }
           .hero-scroll { display: none; }
         }
         @media (prefers-reduced-motion: reduce) {

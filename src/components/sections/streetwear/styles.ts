@@ -452,12 +452,15 @@ export const streetwearCss = `
   /* ── Phones / tablets ── */
   @media (max-width: 900px) {
     .sw-showroom { grid-template-columns: minmax(0, 1fr); min-height: 0; }
-    .sw-stage { min-height: 0; height: 54vh; height: 54svh; }
+    .sw-stage { min-height: 0; height: 58vh; height: 58svh; }
+    /* a small, soft shadow that ends inside the stage instead of being cut by its edge */
+    .sw-floor { height: 2.4vh; filter: blur(3px); }
     .sw-ghost { font-size: 30vw; }
     .sw-info { left: 1rem; bottom: 0.8rem; max-width: 62%; }
     .sw-name { font-size: clamp(1.6rem, 8vw, 2.6rem); }
     .sw-kicker { display: none; }
-    .sw-hint { left: auto !important; right: 0.8rem; top: 0.8rem !important; translate: none; }
+    /* above the models' heads, centred, never on top of them */
+    .sw-hint { left: 50% !important; top: 0.55rem !important; translate: -50% 0; }
     .sw-hint .sticker { font-size: 0.5rem; }
     .sw-rail { padding: 1.5rem 0 1rem; }
     .sw-wheel { height: min(88vw, 44vh); height: min(88vw, 44svh); }

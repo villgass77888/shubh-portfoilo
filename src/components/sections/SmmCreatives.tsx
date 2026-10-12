@@ -45,12 +45,12 @@ function gathered(slot: number, desktop: boolean): gsap.TweenVars {
       { xPercent: -188, yPercent: 0, rotation: -11, scale: 1 },
     ][slot];
   }
-  // 2×2 cluster: towards its centre
+  // two posts each side of the phone: back behind it
   return {
-    xPercent: slot % 2 ? -47 : 47,
-    yPercent: slot > 1 ? -47 : 47,
-    rotation: slot % 2 ? 8 : -8,
-    scale: 0.82,
+    xPercent: slot < 2 ? 105 : -105,
+    yPercent: slot % 2 ? -52 : 52,
+    rotation: slot < 2 ? 10 : -10,
+    scale: 0.8,
   };
 }
 
@@ -94,6 +94,8 @@ interface SceneProps {
   /** Index (in the full list) of the brand that is showing */
   active: number;
   pinned: boolean;
+  /** Phone layout: the posts sit either side of the phone, all five different */
+  compact: boolean;
   load: (index: number) => ImgLoad;
   onOpenPost: (brand: SmmEntry, src: string) => void;
   onSeeAll: (brand: SmmEntry) => void;
@@ -104,7 +106,7 @@ interface SceneProps {
  * The scene: label + counter, ONE tilted phone, the fan of 4 posts, stats + SEE ALL.
  * Everything brand-specific is a layer tagged with data-i so GSAP can swap brands in place.
  */
-function SmmScene({ brands, first, active, pinned, load, onOpenPost, onSeeAll, onStep }: SceneProps) {
+function SmmScene({ brands, first, active, pinned, compact, load, onOpenPost, onSeeAll, onStep }: SceneProps) {
   const current = brands[active - first] ?? brands[0];
 
   return (
@@ -119,8 +121,11 @@ function SmmScene({ brands, first, active, pinned, load, onOpenPost, onSeeAll, o
         <div className="smm-rollbox smm-titles">
           {brands.map((brand, i) => (
             <h3 key={brand.slug} className="smm-roll smm-title" data-i={first + i}>
-              <span style={{ fontWeight: 900, fontStretch: '125%' }}>SOCIAL MEDIA — {brand.brand}</span>
-              <span style={{ fontWeight: 400, opacity: 0.75 }}>[ {brand.campaign} ]</span>
+              <span className="smm-title-brand" style={{ fontWeight: 900, fontStretch: '125%' }}>
+                <span className="smm-title-pre">SOCIAL MEDIA — </span>
+                {brand.brand}
+              </span>
+              <span className="smm-title-campaign" style={{ fontWeight: 400, opacity: 0.75 }}>[ {brand.campaign} ]</span>
             </h3>
           ))}
         </div>
@@ -185,8 +190,8 @@ function SmmScene({ brands, first, active, pinned, load, onOpenPost, onSeeAll, o
               style={{ '--ar': smmRatio(brand), '--p': brand.primary } as CSSProperties}
             >
               <div className="smm-fan">
-                {brand.posts.map((src, slot) => (
-                  <div className="smm-slot" key={src}>
+                {(compact && brand.fifth ? [brand.posts[0], brand.fifth, brand.posts[2], brand.posts[3]] : brand.posts).map((src, slot) => (
+                  <div className="smm-slot" key={slot}>
                     <div className="smm-deal">
                       <button
                         type="button"
@@ -210,6 +215,15 @@ function SmmScene({ brands, first, active, pinned, load, onOpenPost, onSeeAll, o
             </div>
           ))}
         </div>
+      </div>
+
+      {/* A line about the work (phones only) */}
+      <div className="smm-rollbox smm-descs">
+        {brands.map((brand, i) => (
+          <p key={brand.slug} className="smm-roll smm-desc" data-i={first + i}>
+            {brand.blurb}
+          </p>
+        ))}
       </div>
 
       {/* Stats + SEE ALL */}
@@ -283,6 +297,7 @@ export default function SmmCreatives() {
   const [active, setActive] = useState(0);
   const [warm, setWarm] = useState<boolean[]>(() => smm.map(() => false));
   const [reduce, setReduce] = useState(() => typeof window !== 'undefined' && window.matchMedia(REDUCE_QUERY).matches);
+  const [compact, setCompact] = useState(() => typeof window !== 'undefined' && !window.matchMedia(DESKTOP_QUERY).matches);
   const [lightbox, setLightbox] = useState<{ slug: string; index: number } | null>(null);
   const [wall, setWall] = useState<string | null>(null);
 
@@ -321,7 +336,13 @@ export default function SmmCreatives() {
     const mq = window.matchMedia(REDUCE_QUERY);
     const onChange = () => setReduce(mq.matches);
     mq.addEventListener('change', onChange);
-    return () => mq.removeEventListener('change', onChange);
+    const wide = window.matchMedia(DESKTOP_QUERY);
+    const onWide = () => setCompact(!wide.matches);
+    wide.addEventListener('change', onWide);
+    return () => {
+      mq.removeEventListener('change', onChange);
+      wide.removeEventListener('change', onWide);
+    };
   }, []);
 
   useIsomorphicLayoutEffect(() => {
@@ -623,6 +644,7 @@ export default function SmmCreatives() {
             first={i}
             active={i}
             pinned={false}
+            compact={compact}
             load={lazyLoad}
             onOpenPost={openPost}
             onSeeAll={openWall}
@@ -634,6 +656,7 @@ export default function SmmCreatives() {
           first={0}
           active={active}
           pinned
+          compact={compact}
           load={pinnedLoad}
           onOpenPost={openPost}
           onSeeAll={openWall}

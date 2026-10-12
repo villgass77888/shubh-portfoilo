@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useIsomorphicLayoutEffect } from '../../hooks/useIsomorphicLayoutEffect';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -6,6 +6,26 @@ import SelectionBox from './SelectionBox';
 import { siteInfo, chapters } from '../../data/portfolio';
 
 gsap.registerPlugin(ScrollTrigger);
+
+const PHONE_QUERY = '(max-width: 767px)';
+/** Longest line a phone title may have before it breaks, in characters */
+const PHONE_LINE = 12;
+
+/** Phones: break the title into short lines, word by word */
+function phoneLines(parts: string[]): string[] {
+  const lines: string[] = [];
+  parts.forEach((part) => {
+    let line = '';
+    part.split(' ').forEach((word) => {
+      if (line && `${line} ${word}`.length > PHONE_LINE) {
+        lines.push(line);
+        line = word;
+      } else line = line ? `${line} ${word}` : word;
+    });
+    if (line) lines.push(line);
+  });
+  return lines;
+}
 
 interface ChapterCardProps {
   chapterIndex: number; // index into `chapters`
@@ -20,6 +40,36 @@ interface ChapterCardProps {
  */
 export default function ChapterCard({ chapterIndex, title, subtitle }: ChapterCardProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [phone, setPhone] = useState(() => typeof window !== 'undefined' && window.matchMedia(PHONE_QUERY).matches);
+
+  useEffect(() => {
+    const mq = window.matchMedia(PHONE_QUERY);
+    const onChange = () => setPhone(mq.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+
+  // Phones: size the title so its longest line fits the screen, centred inside the selection box
+  useIsomorphicLayoutEffect(() => {
+    const root = containerRef.current;
+    if (!root || !phone) return;
+    const fit = () => {
+      root.style.removeProperty('--ch-fs');
+      const lines = Array.from(root.querySelectorAll<HTMLElement>('.chapter-title-char'));
+      if (!lines.length) return;
+      const base = parseFloat(getComputedStyle(lines[0]).fontSize);
+      const widest = Math.max(...lines.map((el) => el.offsetWidth));
+      const room = root.clientWidth - 80;
+      if (widest > room) root.style.setProperty('--ch-fs', `${((base * room) / widest).toFixed(2)}px`);
+    };
+    fit();
+    document.fonts?.ready.then(fit);
+    window.addEventListener('resize', fit);
+    return () => {
+      window.removeEventListener('resize', fit);
+      root.style.removeProperty('--ch-fs');
+    };
+  }, [phone, title, subtitle]);
 
   useIsomorphicLayoutEffect(() => {
     if (!containerRef.current) return;
@@ -67,17 +117,20 @@ export default function ChapterCard({ chapterIndex, title, subtitle }: ChapterCa
     }, containerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [phone]);
 
   const ch = chapters[chapterIndex] || chapters[0];
   const titleWords = title.split(' ');
   const midPoint = Math.ceil(titleWords.length / 2);
   const topLine = subtitle ? title : titleWords.slice(0, midPoint).join(' ');
   const bottomLine = subtitle ?? titleWords.slice(midPoint).join(' ');
+  // desktop: two halves; phones: short lines that leave left / right alternately
+  const lines = phone ? phoneLines(subtitle ? [title, subtitle] : [title]) : [topLine, bottomLine].filter(Boolean);
 
   return (
     <div
       ref={containerRef}
+      className="chapter-card"
       style={{
         position: 'relative',
         width: '100%',
@@ -105,24 +158,9 @@ export default function ChapterCard({ chapterIndex, title, subtitle }: ChapterCa
 
       {/* Title with Selection Box */}
       <SelectionBox>
-        <div style={{ padding: '1rem 2rem' }}>
-          <div className="chapter-title-top" style={{ overflow: 'hidden' }}>
-            <span
-              className="chapter-title-char"
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: subtitle ? 'calc(var(--fs-chapter) * 0.82)' : 'var(--fs-chapter)',
-                whiteSpace: subtitle ? 'nowrap' : undefined,
-                color: 'var(--signal)',
-                display: 'inline-block',
-                lineHeight: 0.85,
-              }}
-            >
-              {topLine}
-            </span>
-          </div>
-          {bottomLine && (
-            <div className="chapter-title-bottom" style={{ overflow: 'hidden' }}>
+        <div className="chapter-title-pad" style={{ padding: '1rem 2rem' }}>
+          {lines.map((line, i) => (
+            <div key={`${i}-${line}`} className={i % 2 ? 'chapter-title-bottom' : 'chapter-title-top'} style={{ overflow: 'hidden' }}>
               <span
                 className="chapter-title-char"
                 style={{
@@ -134,24 +172,24 @@ export default function ChapterCard({ chapterIndex, title, subtitle }: ChapterCa
                   lineHeight: 0.85,
                 }}
               >
-                {bottomLine}
+                {line}
               </span>
             </div>
-          )}
+          ))}
         </div>
       </SelectionBox>
 
       {/* Meta Corners */}
-      <div className="meta-corner chapter-fade" style={{ position: 'absolute', top: '2rem', left: '2rem', fontFamily: 'var(--font-meta)', fontSize: '10px', letterSpacing: '0.08em', color: 'var(--signal)' }}>
+      <div className="meta-corner meta-corner--tl chapter-fade" style={{ position: 'absolute', top: '2rem', left: '2rem', fontFamily: 'var(--font-meta)', fontSize: '10px', letterSpacing: '0.08em', color: 'var(--signal)' }}>
         PORTFOLIO OF {siteInfo.name}
       </div>
-      <div className="meta-corner chapter-fade" style={{ position: 'absolute', top: '2rem', right: '2rem', fontFamily: 'var(--font-meta)', fontSize: '10px', letterSpacing: '0.08em', color: 'var(--signal)', textAlign: 'right' }}>
+      <div className="meta-corner meta-corner--tr chapter-fade" style={{ position: 'absolute', top: '2rem', right: '2rem', fontFamily: 'var(--font-meta)', fontSize: '10px', letterSpacing: '0.08em', color: 'var(--signal)', textAlign: 'right' }}>
         {siteInfo.coordinates}
       </div>
-      <div className="meta-corner chapter-fade" style={{ position: 'absolute', bottom: '2rem', left: '2rem', fontFamily: 'var(--font-meta)', fontSize: '10px', letterSpacing: '0.08em', color: 'var(--signal)' }}>
+      <div className="meta-corner meta-corner--bl chapter-fade" style={{ position: 'absolute', bottom: '2rem', left: '2rem', fontFamily: 'var(--font-meta)', fontSize: '10px', letterSpacing: '0.08em', color: 'var(--signal)' }}>
         CHAPTER {String(ch.num).padStart(2, '0')} / {String(ch.total).padStart(2, '0')}
       </div>
-      <div className="meta-corner chapter-fade" style={{ position: 'absolute', bottom: '2rem', right: '2rem', fontFamily: 'var(--font-meta)', fontSize: '10px', letterSpacing: '0.08em', color: 'var(--signal)', textAlign: 'right' }}>
+      <div className="meta-corner meta-corner--br chapter-fade" style={{ position: 'absolute', bottom: '2rem', right: '2rem', fontFamily: 'var(--font-meta)', fontSize: '10px', letterSpacing: '0.08em', color: 'var(--signal)', textAlign: 'right' }}>
         {siteInfo.year} PORTFOLIO
       </div>
     </div>

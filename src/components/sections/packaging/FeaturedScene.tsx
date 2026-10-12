@@ -15,7 +15,7 @@ type Lenis = { stop: () => void; start: () => void };
 const lenis = () => (window as unknown as { __lenis?: Lenis }).__lenis;
 
 type Props = {
-  /** ≤ 768px: no pin, no scroll lock */
+  /** ≤ 768px: only the stage is pinned (the story stays in the page underneath) */
   compact: boolean;
   reduced: boolean;
   onOpen: (key: string, origin: { x: number; y: number }) => void;
@@ -29,6 +29,7 @@ type Props = {
  */
 export default function FeaturedScene({ compact, reduced, onOpen }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const boxRef = useRef<HTMLDivElement>(null);
   const layers = useRef<Partial<Record<Layer, HTMLElement | null>>>({});
   const v1 = useRef<AlphaVideoHandle>(null);
@@ -48,7 +49,7 @@ export default function FeaturedScene({ compact, reduced, onOpen }: Props) {
   const S = useRef({ step: 0, playing: 0, target: 0, token: 0, locked: false, mark: 0 });
   const timers = useRef<number[]>([]);
   const zoom = compact ? honeyVideo.zoom * 1.12 : honeyVideo.zoom;
-  const mode: 'pin' | 'flow' | 'still' = reduced ? 'still' : compact ? 'flow' : 'pin';
+  const mode: 'pin' | 'flow' | 'still' = reduced ? 'still' : 'pin';
 
   const clearTimers = () => {
     timers.current.forEach((t) => window.clearTimeout(t));
@@ -190,27 +191,16 @@ export default function FeaturedScene({ compact, reduced, onOpen }: Props) {
             else play((s.step + 1) as 1 | 2, true);
           } else if (s.target < s.step) settle(s.target);
         };
+        // phones: the stage alone holds at the top of the screen while the two beats play
+        const pinned = (compact && stageRef.current) || root;
         ScrollTrigger.create({
-          trigger: root,
+          trigger: pinned,
           start: 'top top',
           end: `+=${honeyVideo.pin}%`,
-          pin: true,
+          pin: pinned,
           anticipatePin: 1,
           onUpdate: sync,
           onLeaveBack: () => S.current.step !== 0 && settle(0),
-        });
-      } else if (mode === 'flow') {
-        // phones: the first beat plays when the stage is well in view, the second a quarter-screen later
-        ScrollTrigger.create({
-          trigger: root,
-          start: 'top 35%',
-          end: 'bottom top',
-          onEnter: () => S.current.step === 0 && !S.current.playing && play(1, false),
-          onUpdate: () => {
-            const s = S.current;
-            if (s.step === 1 && !s.playing && window.scrollY - s.mark > window.innerHeight * 0.25) play(2, false);
-          },
-          onLeaveBack: () => settle(0, 0.3),
         });
       } else {
         // reduced motion: the three states crossfade at the thresholds, nothing plays by itself
@@ -231,7 +221,7 @@ export default function FeaturedScene({ compact, reduced, onOpen }: Props) {
       unlock();
       ctx.revert();
     };
-  }, [mode, play, settle, show]);
+  }, [mode, compact, play, settle, show]);
 
   const skip = () => finishRef.current();
   /** The ▶ PLAY sticker (phones, reduced motion): watch the next beat on request */
@@ -262,7 +252,7 @@ export default function FeaturedScene({ compact, reduced, onOpen }: Props) {
       data-step={step}
       style={{ '--zoom': zoom } as CSSProperties}
     >
-      <div className="pkf-stage">
+      <div ref={stageRef} className="pkf-stage">
         <div className="pkf-float">
           <div className="pkf-lift">
             <div ref={boxRef} className="pkf-box" style={{ aspectRatio: String(honeyVideo.aspect) }}>

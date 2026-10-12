@@ -245,3 +245,20 @@ button {
   cursor: pointer;
   font-family: inherit;
 }
+
+/* ── Chapter title cards on phones: centred lines sized to fit (ChapterCard.tsx sets --ch-fs) ── */
+@media (max-width: 767px) {
+  .chapter-card .chapter-title-pad { padding: 0.8rem 1.1rem 0.7rem !important; text-align: center; }
+  .chapter-card .chapter-title-char {
+    font-size: var(--ch-fs, min(var(--fs-chapter), 22vw)) !important;
+    white-space: nowrap !important;
+    line-height: 0.92 !important;
+  }
+  .chapter-card .chapter-kicker { margin-bottom: 1.1rem !important; }
+  /* clear of the fixed nav and the screen edge */
+  .chapter-card .meta-corner { font-size: 9px !important; }
+  .chapter-card .meta-corner--tl, .chapter-card .meta-corner--tr { top: 4.75rem !important; }
+  .chapter-card .meta-corner--bl, .chapter-card .meta-corner--br { bottom: 1.5rem !important; }
+  .chapter-card .meta-corner--tl, .chapter-card .meta-corner--bl { left: 1.25rem !important; }
+  .chapter-card .meta-corner--tr, .chapter-card .meta-corner--br { right: 1.5rem !important; }
+}

@@ -109,8 +109,12 @@ export type SmmEntry = {
   caption: string;
   date: string;
   primary: string;
+  /** One or two lines about the work, shown under the phone on phones */
+  blurb: string;
   /** The 4 posts shown in the fan (picked in smmHero.ts) */
   posts: string[];
+  /** A fifth, different post: on phones it replaces the fan's copy of the post on the phone screen */
+  fifth?: string;
   /** Every post + story, for SEE ALL and the lightbox */
   all: string[];
   reels: string[];
@@ -372,51 +376,51 @@ export const websites: WebsiteEntry[] = [
 
 // ── SMM ──
 
-const smmCopy: Omit<SmmEntry, 'avatar' | 'posts' | 'all' | 'stories' | 'stats'>[] = [
+const smmCopy: Omit<SmmEntry, 'avatar' | 'posts' | 'fifth' | 'all' | 'stories' | 'stats'>[] = [
   {
-    brand: 'Alright TV', slug: 'alright-tv', campaign: 'ENTERTAINMENT 2026',
+    brand: 'Alright TV', slug: 'alright-tv', blurb: 'Show posters and tune-in posts for a streaming channel. Loud type, one colour per show, so each title owns its own lane in the feed.', campaign: 'ENTERTAINMENT 2026',
     handle: '@alrighttv', // TODO: confirm
     caption: 'Streaming something wild this weekend. Stay tuned. 🎬\n#AlrightTV #NewShow #StreamNow',
     date: 'March 2026', primary: '#E53935',
     reels: [],
   },
   {
-    brand: 'Elan Wallcovers', slug: 'elan-wallcovers', campaign: 'WALLS THAT SPEAK 2026',
+    brand: 'Elan Wallcovers', slug: 'elan-wallcovers', blurb: 'Feed posts for a wallcovering studio. Rooms do the talking: big interiors, quiet type and a palette pulled from the walls themselves.', campaign: 'WALLS THAT SPEAK 2026',
     handle: '@elanwallcovers', // TODO: confirm
     caption: 'Your walls deserve better than paint. ✨\n#ElanWallcovers #InteriorDesign #WallArt',
     date: 'February 2026', primary: '#5C6BC0',
     reels: [],
   },
   {
-    brand: 'Vareeka', slug: 'vareeka', campaign: 'JEWELS OF GRACE 2026',
+    brand: 'Vareeka', slug: 'vareeka', blurb: 'A Rakhi campaign for a jewellery label. Soft sibling moments up front, the gift set and the offer right behind them.', campaign: 'JEWELS OF GRACE 2026',
     handle: '@vareeka', // TODO: confirm
     caption: 'Gold, pearls and the confidence to wear them. 💎\n#Vareeka #Jewellery #FineJewels',
     date: 'January 2026', primary: '#FFB300',
     reels: [],
   },
   {
-    brand: 'Udman Square', slug: 'udman-square', campaign: 'LUXURY EVENTS 2026',
+    brand: 'Udman Square', slug: 'udman-square', blurb: 'Posts for a luxury events venue. Chandeliers, banquets and collage layouts that sell the evening before the booking.', campaign: 'LUXURY EVENTS 2026',
     handle: '@udmansquare', // TODO: confirm
     caption: 'Where events become memories. 🏨\n#UdmanSquare #LuxuryVenue #Events',
     date: 'April 2026', primary: '#1565C0',
     reels: [],
   },
   {
-    brand: 'Senquira', slug: 'senquira', campaign: 'SCENT STORIES 2026',
+    brand: 'Senquira', slug: 'senquira', blurb: 'Launch posts for a perfume house. Dark, glossy and a little dangerous, with headlines written like secrets.', campaign: 'SCENT STORIES 2026',
     handle: '@senquira', // TODO: confirm
     caption: 'Own the room before you walk in. 🖤\n#Senquira #LuxuryPerfume #ScentStories',
     date: 'March 2026', primary: '#8B6F4E',
     reels: [],
   },
   {
-    brand: 'Stories for You', slug: 'stories-for-you', campaign: 'MEMORIES FOREVER 2026',
+    brand: 'Stories for You', slug: 'stories-for-you', blurb: 'Posts and stories for a photo-album studio. Warm paper tones and real spreads, built to make people want to print again.', campaign: 'MEMORIES FOREVER 2026',
     handle: '@storiesforyou', // TODO: confirm
     caption: 'Every page holds a memory worth keeping. 📖\n#StoriesForYou #PhotoAlbum #Memories',
     date: 'May 2026', primary: '#8D6E63',
     reels: [],
   },
   {
-    brand: 'Blink Brand Solutions', slug: 'blink-brand-solutions', campaign: 'TRAVEL SMART 2026',
+    brand: 'Blink Brand Solutions', slug: 'blink-brand-solutions', blurb: 'Travel posts for a custom-trips company. Postcard colour, clear offers and one destination per post.', campaign: 'TRAVEL SMART 2026',
     handle: '@blinkbrandsolutions', // TODO: confirm
     caption: 'Your trip, your way. We just make it happen. ✈️\n#BlinkTravel #TravelSmart #Customised',
     date: 'June 2026', primary: '#00ACC1',
@@ -429,11 +433,14 @@ type SmmAssets = { avatar: string | null; posts: string[]; stories: string[] };
 export const smm: SmmEntry[] = smmCopy.map((entry) => {
   const assets = (smmManifest as Record<string, SmmAssets>)[entry.slug];
   const hero = smmHero[entry.slug] ?? [];
+  const all = [...assets.posts, ...assets.stories];
+  const posts = hero.length === 4 ? hero : all.slice(0, 4);
   return {
     ...entry,
     avatar: assets.avatar,
-    posts: hero.length === 4 ? hero : [...assets.posts, ...assets.stories].slice(0, 4),
-    all: [...assets.posts, ...assets.stories],
+    posts,
+    fifth: all.find((src) => !posts.includes(src)),
+    all,
     stories: assets.stories,
     // Counted from the delivered files, never invented
     stats: [`${assets.posts.length} POSTS`, assets.stories.length ? `${assets.stories.length} STORIES` : '']

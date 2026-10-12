@@ -323,45 +323,68 @@ export const smmCss = `
   .smm-slot:has(~ .smm-slot:hover) .smm-card { transform: translateX(-5%); }
 }
 
-/* Mobile: the same single phone, smaller, with the 4 posts as a 2×2 cluster
-   overlapping its lower end. The stage is 36u × 87u. */
+/* phones only (see below) */
+.smm-descs { display: none; }
+
+/* Phones: brand name left, campaign right; the phone stands in the middle with two posts on
+   each side (five different posts in all); a line about the work, stats + SEE ALL and the
+   brand stepper sit underneath. The stage is 58u × 52u. */
 @media (max-width: 767px) {
   .smm-scene {
-    --pt: 4rem;
+    --pt: 4.25rem;
     --pb: 0.9rem;
-    --u: max(4.4px, min(2.3vw, (100svh - var(--pt) - var(--pb) - 10rem) / 88));
-    --w: calc(18 * var(--u));
+    --u: max(4.2px, min((100vw - 20px) / 58, (100svh - var(--pt) - var(--pb) - 16.5rem) / 52));
+    --w: calc(17.4 * var(--u));
     height: 100svh;
-    padding: var(--pt) 16px var(--pb);
+    padding: var(--pt) 10px var(--pb);
   }
   .smm-scene--static {
-    --u: 2.3vw;
+    --u: calc((100vw - 20px) / 58);
     height: auto;
     min-height: 0;
     padding-bottom: 2.5rem;
   }
+
+  .smm-head { display: contents; }
+  .smm-titles { order: 1; position: relative; z-index: 3; flex: none; padding: 0 6px; }
+  .smm-title { flex-wrap: nowrap; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .smm-title-pre { display: none; }
+  .smm-title-brand { flex: 1 1 0; min-width: 0; font-size: 1.3rem; line-height: 1.05; }
+  .smm-title-campaign { flex: 0 1 auto; max-width: 52%; font-size: 0.76rem; line-height: 1.25; text-align: right; text-wrap: balance; }
+
   .smm-stage {
-    width: calc(36 * var(--u));
-    height: calc(87 * var(--u));
+    order: 2;
+    width: calc(58 * var(--u));
+    height: calc(52 * var(--u));
   }
-  .smm-scene--static .smm-stage { margin-top: calc(5 * var(--u)); }
-  .smm-phone-par { left: calc(6.8 * var(--u)); top: 0; }
-  .smm-fanlayer {
-    left: calc(18 * var(--u) - 0.97 * var(--w));
-    top: calc(41.5 * var(--u));
-  }
-  .smm-fan {
-    display: grid;
-    grid-template-columns: repeat(2, var(--w));
-    transform-origin: 50% 50%;
-  }
+  .smm-scene--static .smm-stage { margin-top: 1rem; }
+  .smm-phone-par { left: calc(17.8 * var(--u)); top: calc(1.25 * var(--u)); }
+  .smm-phone { transform: rotate(-4deg); }
+  .smm-fanlayer { left: 0; top: 0; width: 100%; height: 100%; }
+  .smm-fan { display: block; position: relative; width: 100%; height: 100%; transform: none; }
+  .smm-slot { position: absolute; }
   .smm-slot + .smm-slot { margin-left: 0; }
-  .smm-slot:nth-child(even) { margin-left: calc(var(--w) * -0.06); }
-  .smm-slot:nth-child(n + 3) { margin-top: calc(var(--w) * -0.06); }
-  .smm-meta { justify-content: space-between; flex-wrap: nowrap; gap: 0.75rem; margin-top: 0.5rem; }
+  .smm-slot:nth-child(n) { z-index: 1; }
+  .smm-slot:nth-child(1) { left: 0; top: calc(27.5 * var(--u) - var(--h) - 0.4 * var(--u)); rotate: -3deg; }
+  .smm-slot:nth-child(2) { left: calc(0.7 * var(--u)); top: calc(27.9 * var(--u)); rotate: 2deg; }
+  .smm-slot:nth-child(3) { right: 0; top: calc(24.5 * var(--u) - var(--h) - 0.4 * var(--u)); rotate: 3deg; }
+  .smm-slot:nth-child(4) { right: calc(0.7 * var(--u)); top: calc(24.9 * var(--u)); rotate: -2deg; }
+  /* the like-heart belongs to the post on the phone, which is no longer part of the fan here */
+  .smm-heart { display: none; }
+
+  .smm-descs { order: 3; display: grid; flex: none; position: relative; z-index: 3; padding: 0 6px; }
+  .smm-desc {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+  .smm-meta { order: 4; justify-content: space-between; flex-wrap: nowrap; gap: 0.75rem; margin-top: 0.6rem; padding: 0 6px; }
   .smm-stat { justify-self: start; white-space: normal; font-size: 0.66rem; }
-  .smm-step { width: 2.5rem; height: 2.5rem; }
-  .smm-count { gap: 0.4rem; }
+  .sticker.smm-see-all { min-height: 2.6rem; padding: 0.7em 1.1em 0.65em; font-size: 0.8rem; box-shadow: 4px 4px 0 var(--ink); }
+  .smm-count { order: 5; position: relative; z-index: 3; justify-content: center; gap: 1.1rem; margin-top: 0.7rem; font-size: 0.86rem; }
+  .smm-step { width: 3rem; height: 3rem; font-size: 1.7rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

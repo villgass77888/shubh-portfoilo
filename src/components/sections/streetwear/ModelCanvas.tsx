@@ -7,14 +7,15 @@ export type ModelBox = { x: number; y: number; w: number; h: number };
 
 /** Bottom-aligned "contain" box for a model inside the stage, in px. */
 export function modelBox(stageW: number, stageH: number, aspect: number, compact: boolean): ModelBox {
-  let h = compact ? stageH * 0.94 : Math.min(stageH * 0.84, window.innerWidth * 0.6);
+  // phones: room above for the hint chip and below for the floor shadow
+  let h = compact ? stageH * 0.85 : Math.min(stageH * 0.84, window.innerWidth * 0.6);
   let w = h * aspect;
   const maxW = stageW * 0.88;
   if (w > maxW) {
     w = maxW;
     h = w / aspect;
   }
-  const bottom = compact ? stageH * 0.02 : stageH * 0.05;
+  const bottom = compact ? stageH * 0.06 : stageH * 0.05;
   // desktop: the model stands to the right of the stage so the info block has the left side to itself
   const x = compact ? (stageW - w) / 2 : Math.max((stageW - w) / 2, stageW * 0.94 - w);
   return { x, y: stageH - bottom - h, w, h };

@@ -15,6 +15,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const PIN_QUERY = '(min-width: 900px) and (min-height: 560px)';
 const REDUCED_QUERY = '(prefers-reduced-motion: reduce)';
+const PHONE_QUERY = '(max-width: 767px)';
 /** The chapter's own colour (BackgroundStage), shown behind the title card */
 const BASE_STAGE = '#0B0F2E';
 
@@ -125,6 +126,8 @@ export default function Branding() {
   const wide = useMatch(PIN_QUERY);
   const reduced = useMatch(REDUCED_QUERY);
   const pin = wide && !reduced;
+  // phones: each brand is a pinned scene too, its board travelling sideways as the page scrolls
+  const pan = useMatch(PHONE_QUERY) && !reduced;
 
   const models = useMemo(() => brands.map(buildModel), []);
   const [armed, setArmed] = useState<boolean[]>(() => brands.map(() => false));
@@ -196,15 +199,75 @@ export default function Branding() {
           immediateRender: false,
           clearProps: 'transform,opacity',
         });
-        ScrollTrigger.create({
-          trigger: scene,
-          start: 'top 85%',
-          once: true,
-          onEnter: () => introTween.play(),
-        });
+        // phones: the story fades in with the board instead (see the pinned timeline below)
+        if (!pan) {
+          ScrollTrigger.create({
+            trigger: scene,
+            start: 'top 85%',
+            once: true,
+            onEnter: () => introTween.play(),
+          });
+        }
+
+        if (pan) {
+          // ── Phones: pinned scene. The board is wider than the screen: scrolling carries it
+          // sideways, and every frame flies in as its slot comes into view ──
+          const PAN = 4; // timeline length of the sideways travel
+          const LEAD = 0.5; // the first frames land before the board starts to move
+          const view = fit.clientWidth;
+          const width = board.offsetWidth || view;
+          const visible = Math.min(1, view / width);
+          const travel = () => Math.min(0, fit.clientWidth - board.offsetWidth);
+
+          const tl = gsap.timeline({
+            defaults: { overwrite: false },
+            scrollTrigger: {
+              trigger: scene,
+              start: 'top top',
+              end: '+=230%',
+              pin: true,
+              scrub: 0.5,
+              anticipatePin: 1,
+              invalidateOnRefresh: true,
+            },
+          });
+          tl.fromTo(board, { x: 0 }, { x: travel, duration: PAN, ease: 'none' }, LEAD);
+          // the brand story fades up together with the first frames
+          tl.fromTo(introBits, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', stagger: 0.06 }, 0);
+
+          const rand = seeded(hash(brand.slug));
+          // left to right, so the entrances follow the travel
+          const order = frameEls.map((_, i) => i).sort((a, b) => brand.frames[a].x - brand.frames[b].x || model.rank[a] - model.rank[b]);
+          let opening = 0;
+          order.forEach((i) => {
+            const el = frameEls[i];
+            const frame = brand.frames[i];
+            if (!el || !frame) return;
+            const r1 = rand();
+            const r2 = rand();
+            // share of the travel at which this frame's left edge enters the screen
+            const enters = visible >= 1 ? 0 : Math.max(0, (frame.x + frame.w * 0.35 - visible) / (1 - visible));
+            const t0 = enters > 0 ? LEAD + enters * PAN - 0.3 : opening++ * 0.09;
+            const tilt = 8 + r1 * 8;
+            tl.fromTo(
+              el,
+              { x: () => window.innerWidth * (0.55 + r1 * 0.3), y: () => (r2 * 2 - 1) * 0.12 * window.innerHeight, rotation: tilt, scale: 0.85, opacity: 0 },
+              { x: 0, y: 0, rotation: 0, scale: 1, opacity: 1, duration: 0.6, ease: 'power3.out' },
+              t0,
+            );
+            const flash = el.querySelector('.bk-flash');
+            if (flash) {
+              tl.fromTo(flash, { opacity: 0 }, { opacity: 1, duration: 0.05, ease: 'none' }, t0 + 0.55);
+              tl.to(flash, { opacity: 0, duration: 0.2, ease: 'power1.in' }, t0 + 0.62);
+            }
+          });
+          // hold on the far end so the last frames can be read
+          tl.to({}, { duration: 0.7 }, LEAD + PAN);
+          return;
+        }
 
         if (!pin) {
-          // ── Mobile / narrow: no pin, one simple stagger in entrance order ──
+          // ── Narrow / tablet: no pin, one simple stagger in entrance order ──
           const ordered = model.sequence.map((i) => frameEls[i]).filter(Boolean);
           const boardTween = gsap.from(ordered, {
             opacity: 0,
@@ -302,7 +365,7 @@ export default function Branding() {
     createdOnce.current = true;
 
     return () => ctx.revert();
-  }, [pin, reduced, models]);
+  }, [pin, pan, reduced, models]);
 
   const open = lightbox ? brands[lightbox.brand] : null;
   const openModel = lightbox ? models[lightbox.brand] : null;
@@ -311,7 +374,7 @@ export default function Branding() {
     <section
       ref={sectionRef}
       id="section-branding"
-      className={pin ? 'bk bk--pin' : 'bk bk--flow'}
+      className={pin ? 'bk bk--pin' : pan ? 'bk bk--pan' : 'bk bk--flow'}
       style={{ position: 'relative', zIndex: 'var(--z-content)' as any, color: 'var(--bone)' }}
     >
       <MarqueeDivider text="BRANDING ✦✦✦ VISUAL IDENTITY ✦✦✦" />
@@ -677,6 +740,48 @@ export default function Branding() {
           }
           .bk--flow .bk-fit::-webkit-scrollbar { display: none; }
           .bk--flow .bk-board { width: 170vw; max-width: none; }
+        }
+
+        /* ── Phones: pinned scene, the board travels sideways, the brand story sits under it ── */
+        .bk--pan .bk-scene {
+          height: 100svh;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          padding: 4.5rem 0 0.9rem;
+          overflow: hidden;
+        }
+        .bk--pan .bk-fit {
+          --bh: clamp(190px, calc(100svh - 25.5rem), 56svh);
+          order: 1;
+          flex: none;
+          margin: 0 16px;
+        }
+        .bk--pan .bk-board {
+          height: var(--bh);
+          width: calc(var(--bh) * var(--a));
+          margin: 0;
+          will-change: transform;
+        }
+        .bk--pan .bk-intro {
+          order: 2;
+          flex: 1 1 0;
+          min-height: 0;
+          margin: 0;
+          padding: 0 16px;
+          gap: 0.7rem;
+          align-content: start;
+        }
+        .bk--pan .bk-meta { margin-bottom: 0.35rem; font-size: 0.62rem; }
+        .bk--pan .bk-name { font-size: clamp(1.7rem, 8.6vw, 2.3rem); }
+        .bk--pan .bk-hook { font-size: 1.2rem; margin-top: 0.25rem; }
+        .bk--pan .bk-story { grid-template-columns: minmax(0, 1fr); gap: 0.5rem; }
+        .bk--pan .bk-story p { font-size: 0.76rem; line-height: 1.36; }
+        .bk--pan .bk-story strong { margin-bottom: 0.12rem; font-size: 0.58rem; }
+        @media (max-height: 700px) {
+          .bk--pan .bk-fit { --bh: clamp(170px, calc(100svh - 23.5rem), 56svh); }
+          .bk--pan .bk-story p { font-size: 0.7rem; line-height: 1.3; }
+          .bk--pan .bk-hook { font-size: 1.05rem; }
         }
 
         .bk-lightbox { animation: bk-fade 0.25s ease both; }
