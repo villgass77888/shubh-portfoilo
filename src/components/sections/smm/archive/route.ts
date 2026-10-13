@@ -1,9 +1,11 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { syncHead } from '../../../../seo/paths';
 
 /**
- * Where the visitor is inside the creatives archive. Every state has a hash
- * (#archive, #archive/srj, #archive/flyers, #archive/brochures/kangaroo-agency), so the browser's
- * back button steps back one level and a shared link opens straight into that page.
+ * Where the visitor is inside the creatives archive. Every state has a real URL
+ * (/work/archive, /work/archive/srj, /work/archive/flyers, /work/archive/brochures/kangaroo-agency),
+ * so the browser's back button steps back one level. Opened from the home page these are the
+ * overlay; loaded directly, the same URLs are prerendered pages (src/pages/ArchivePages.tsx).
  */
 export type ArchiveRoute =
   | { page: 'menu' }
@@ -12,8 +14,8 @@ export type ArchiveRoute =
   | { page: 'emailers' }
   | { page: 'brochures'; open?: string };
 
-export function parseHash(hash: string): ArchiveRoute | null {
-  const m = /^#archive(?:\/([a-z0-9-]+))?(?:\/([a-z0-9-]+))?\/?$/i.exec(hash);
+export function parseHash(pathname: string): ArchiveRoute | null {
+  const m = /^\/work\/archive(?:\/([a-z0-9-]+))?(?:\/([a-z0-9-]+))?\/?$/i.exec(pathname);
   if (!m) return null;
   const a = m[1]?.toLowerCase();
   const b = m[2]?.toLowerCase();
@@ -27,13 +29,13 @@ export function parseHash(hash: string): ArchiveRoute | null {
 export function toHash(r: ArchiveRoute): string {
   switch (r.page) {
     case 'menu':
-      return '#archive';
+      return '/work/archive';
     case 'brand':
-      return `#archive/${r.slug}`;
+      return `/work/archive/${r.slug}`;
     case 'brochures':
-      return r.open ? `#archive/brochures/${r.open}` : '#archive/brochures';
+      return r.open ? `/work/archive/brochures/${r.open}` : '/work/archive/brochures';
     default:
-      return `#archive/${r.page}`;
+      return `/work/archive/${r.page}`;
   }
 }
 
@@ -70,28 +72,32 @@ export type ArchiveNav = {
 };
 
 export function useArchiveRoute(): { route: ArchiveRoute | null; deep: boolean; nav: ArchiveNav } {
-  const [route, setRoute] = useState<ArchiveRoute | null>(() => (typeof window === 'undefined' ? null : parseHash(window.location.hash)));
+  const [route, setRoute] = useState<ArchiveRoute | null>(() => (typeof window === 'undefined' ? null : parseHash(window.location.pathname)));
   const [deep, setDeep] = useState(false);
 
   useEffect(() => {
     // a session that starts on an archive link: mark the entry so close knows there is nothing behind it
-    if (parseHash(window.location.hash) && !entry()) {
+    if (parseHash(window.location.pathname) && !entry()) {
       history.replaceState({ archive: true, depth: 0, deep: true } satisfies Entry, '', window.location.href);
       setDeep(true);
     }
     const sync = () => {
-      const next = parseHash(window.location.hash);
+      const next = parseHash(window.location.pathname);
       if (next && !entry()) history.replaceState({ archive: true, depth: 0, deep: true } satisfies Entry, '', window.location.href);
       setDeep(!!entry()?.deep);
       setRoute(next);
     };
     window.addEventListener('popstate', sync);
-    window.addEventListener('hashchange', sync);
-    return () => {
-      window.removeEventListener('popstate', sync);
-      window.removeEventListener('hashchange', sync);
-    };
+    return () => window.removeEventListener('popstate', sync);
   }, []);
+
+  // the URL moved without a page load: keep the title and canonical in step with it
+  const touched = useRef(false);
+  useEffect(() => {
+    if (!route && !touched.current) return;
+    touched.current = true;
+    syncHead(route ? toHash(route) : null);
+  }, [route]);
 
   const open = useCallback((r: ArchiveRoute = { page: 'menu' }) => {
     history.pushState({ archive: true, depth: 0 } satisfies Entry, '', toHash(r));
@@ -117,13 +123,13 @@ export function useArchiveRoute(): { route: ArchiveRoute | null; deep: boolean; 
       history.go(-(cur.depth + 1));
       return;
     }
-    history.replaceState(null, '', window.location.pathname + window.location.search);
+    history.replaceState(null, '', '/' + window.location.search);
     setRoute(null);
   }, []);
 
   const back = useCallback(() => {
     const cur = entry();
-    const here = parseHash(window.location.hash);
+    const here = parseHash(window.location.pathname);
     if (cur && cur.depth > 0) {
       history.back();
       return;
@@ -140,7 +146,7 @@ export function useArchiveRoute(): { route: ArchiveRoute | null; deep: boolean; 
 
   const upTo = useCallback((r: ArchiveRoute) => {
     const cur = entry();
-    const here = parseHash(window.location.hash);
+    const here = parseHash(window.location.pathname);
     if (!here) return;
     const steps = levelOf(here) - levelOf(r);
     if (steps <= 0) return;

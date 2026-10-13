@@ -80,3 +80,14 @@ Section 4 above was inaccurate: Branding, Web, SMM and Packaging were still rend
 - **Wording** lives in `src/content/archive.ts` (brand paragraphs, brand colours, flyer titles, emailer subjects, brochure names); `src/data/archive.ts` merges it with the generated data.
 - **What differs from the spec**: Brij Garden's PDF is cover / closed gates (2 panels) / inside (4 panels) / back, so the viewer opens the cover like a book first and then swings the gates. Edulogix is five 525×3833pt sheets, shown in a scroll reader, not as a book. Filter changes glide with CSS transforms instead of GSAP Flip. Emailers are single images (neither is taller than 8000px). Brand colours are set by hand in the content file (the sampler lands on skin / gold tones).
 - **Needs Shubh**: the six brand paragraphs are written only from what the creatives show (`aboutTodo: true`); the Taiwan newsletter has no visible sender ("Travel Newsletter" is a placeholder); confirm Maison Aditi (a 2-page logo sheet) belongs on the shelf, and the WhatsApp export in Jakpower and the ChatGPT image in SRJ.
+
+## SEO build (prerendered pages, real URLs, structured data)
+
+Source of truth: `src/content/site.ts` (identity, contact, profiles) and `src/content/seo.ts` (every route, its one keyword, title, description, breadcrumb, index rule). Page copy lives in `src/content/caseStudies.ts` and `src/content/services.ts` (drafts carry `approved: false`).
+
+- `npm run build` = image sizes → typecheck → `vite build` → `scripts/prerender.mjs`. The prerender writes one static HTML file per route (65 + 404) with its own head and JSON-LD, plus `robots.txt`, `sitemap.xml` (+ pages / images), `llms.txt`, `llms-full.txt`, `site.webmanifest`, the IndexNow key file, `_headers` and one OG image per indexable page (`scripts/og.mjs`). It prints the TODOs, the unapproved drafts and any title / description outside its length range.
+- Home (`/`) boots the same `App` as before on top of its prerendered markup (render, not hydrate, so nothing about the page changes). Inner pages (`src/pages/`) hydrate in place.
+- Overlays use real URLs: the archive is `/work/archive/…`, the packaging viewer `/work/packaging/<slug>`. Opened from the home page they are still the overlays; loaded directly they are prerendered pages. Old `#archive…` / `#packaging/…` links redirect on load.
+- Fonts are self-hosted (`scripts/fetch-fonts.mjs` → `public/fonts`, `src/styles/fonts.css`). Hero poster, portrait and favicon-32 come from `scripts/hero-stills.mjs`.
+- Hashed bundles are emitted to `/_app` (cache forever); `/assets` holds unhashed media (short cache). Host: Vercel (`vercel.json`: clean URLs, www redirect, cache headers).
+- After a deploy: `npm run indexnow`.

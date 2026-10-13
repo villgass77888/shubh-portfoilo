@@ -253,7 +253,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="section-hero" className="hero">
+    <section ref={sectionRef} id="section-hero" className="hero" aria-labelledby="hero-name">
       {/* Cursor-chasing colour wash (behind everything) */}
       <div className="hero-orbs" aria-hidden="true">
         <div className="hero-orb hero-orb--a" />
@@ -281,7 +281,7 @@ export default function Hero() {
             </span>
           </div>
 
-          <h1 className="hero-name" aria-label={siteInfo.name}>
+          <h1 id="hero-name" className="hero-name" aria-label={siteInfo.name}>
             {['SHUBH', 'PANDA'].map((word) => (
               <span key={word} className="hero-name-line" aria-hidden="true">
                 {word.split('').map((c, i) => (
@@ -314,6 +314,7 @@ export default function Hero() {
               <video
                 className="hero-video"
                 src="/assets/hero/shubh-360.webm"
+                poster="/assets/hero/shubh-360-poster.webp"
                 muted
                 loop
                 playsInline

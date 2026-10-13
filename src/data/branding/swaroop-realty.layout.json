@@ -7,8 +7,8 @@
   "radius": 0.0053,
   "frames": [
     {
-      "src": "/assets/branding/swaroop-realty/01.webp",
-      "srcset": "/assets/branding/swaroop-realty/01-sm.webp 510w, /assets/branding/swaroop-realty/01.webp 1020w",
+      "src": "/assets/branding/swaroop-realty/swaroop-realty-brand-identity-logo.webp",
+      "srcset": "/assets/branding/swaroop-realty/swaroop-realty-brand-identity-logo-sm.webp 510w, /assets/branding/swaroop-realty/swaroop-realty-brand-identity-logo.webp 1020w",
       "x": 0.01,
       "y": 0.01,
       "w": 0.2833,
@@ -21,8 +21,8 @@
       "label": "PRIMARY LOGO"
     },
     {
-      "src": "/assets/branding/swaroop-realty/02.webp",
-      "srcset": "/assets/branding/swaroop-realty/02-sm.webp 510w, /assets/branding/swaroop-realty/02.webp 1020w",
+      "src": "/assets/branding/swaroop-realty/swaroop-realty-brand-identity-business-cards.webp",
+      "srcset": "/assets/branding/swaroop-realty/swaroop-realty-brand-identity-business-cards-sm.webp 510w, /assets/branding/swaroop-realty/swaroop-realty-brand-identity-business-cards.webp 1020w",
       "x": 0.01,
       "y": 0.1319,
       "w": 0.2833,
@@ -35,8 +35,8 @@
       "label": "BUSINESS CARDS"
     },
     {
-      "src": "/assets/branding/swaroop-realty/03.webp",
-      "srcset": "/assets/branding/swaroop-realty/03-sm.webp 510w, /assets/branding/swaroop-realty/03.webp 1020w",
+      "src": "/assets/branding/swaroop-realty/swaroop-realty-brand-identity-palette.webp",
+      "srcset": "/assets/branding/swaroop-realty/swaroop-realty-brand-identity-palette-sm.webp 510w, /assets/branding/swaroop-realty/swaroop-realty-brand-identity-palette.webp 1020w",
       "x": 0.01,
       "y": 0.3275,
       "w": 0.2833,
@@ -49,8 +49,8 @@
       "label": "COLOUR PALETTE"
     },
     {
-      "src": "/assets/branding/swaroop-realty/04.webp",
-      "srcset": "/assets/branding/swaroop-realty/04-sm.webp 510w, /assets/branding/swaroop-realty/04.webp 1020w",
+      "src": "/assets/branding/swaroop-realty/swaroop-realty-brand-identity-logo-clear-space.webp",
+      "srcset": "/assets/branding/swaroop-realty/swaroop-realty-brand-identity-logo-clear-space-sm.webp 510w, /assets/branding/swaroop-realty/swaroop-realty-brand-identity-logo-clear-space.webp 1020w",
       "x": 0.01,
       "y": 0.3842,
       "w": 0.2833,
@@ -63,8 +63,8 @@
       "label": "LOGO CLEAR SPACE"
     },
     {
-      "src": "/assets/branding/swaroop-realty/05.webp",
-      "srcset": "/assets/branding/swaroop-realty/05-sm.webp 560w, /assets/branding/swaroop-realty/05.webp 1120w",
+      "src": "/assets/branding/swaroop-realty/swaroop-realty-brand-identity-entrance-gate.webp",
+      "srcset": "/assets/branding/swaroop-realty/swaroop-realty-brand-identity-entrance-gate-sm.webp 560w, /assets/branding/swaroop-realty/swaroop-realty-brand-identity-entrance-gate.webp 1120w",
       "x": 0.3,
       "y": 0.01,
       "w": 0.3111,
@@ -77,8 +77,8 @@
       "label": "ENTRANCE GATE"
     },
     {
-      "src": "/assets/branding/swaroop-realty/06.webp",
-      "srcset": "/assets/branding/swaroop-realty/06-sm.webp 560w, /assets/branding/swaroop-realty/06.webp 1120w",
+      "src": "/assets/branding/swaroop-realty/swaroop-realty-brand-identity-billboard.webp",
+      "srcset": "/assets/branding/swaroop-realty/swaroop-realty-brand-identity-billboard-sm.webp 560w, /assets/branding/swaroop-realty/swaroop-realty-brand-identity-billboard.webp 1120w",
       "x": 0.3,
       "y": 0.2242,
       "w": 0.3111,
@@ -91,8 +91,8 @@
       "label": "BILLBOARD"
     },
     {
-      "src": "/assets/branding/swaroop-realty/07.webp",
-      "srcset": "/assets/branding/swaroop-realty/07-sm.webp 560w, /assets/branding/swaroop-realty/07.webp 1120w",
+      "src": "/assets/branding/swaroop-realty/swaroop-realty-brand-identity-typography.webp",
+      "srcset": "/assets/branding/swaroop-realty/swaroop-realty-brand-identity-typography-sm.webp 560w, /assets/branding/swaroop-realty/swaroop-realty-brand-identity-typography.webp 1120w",
       "x": 0.3,
       "y": 0.4383,
       "w": 0.3111,
@@ -105,8 +105,8 @@
       "label": "TYPOGRAPHY"
     },
     {
-      "src": "/assets/branding/swaroop-realty/08.webp",
-      "srcset": "/assets/branding/swaroop-realty/08-sm.webp 329w, /assets/branding/swaroop-realty/08.webp 658w",
+      "src": "/assets/branding/swaroop-realty/swaroop-realty-brand-identity-villa.webp",
+      "srcset": "/assets/branding/swaroop-realty/swaroop-realty-brand-identity-villa-sm.webp 329w, /assets/branding/swaroop-realty/swaroop-realty-brand-identity-villa.webp 658w",
       "x": 0.6178,
       "y": 0.01,
       "w": 0.1828,
@@ -119,8 +119,8 @@
       "label": "VILLA"
     },
     {
-      "src": "/assets/branding/swaroop-realty/09.webp",
-      "srcset": "/assets/branding/swaroop-realty/09-sm.webp 329w, /assets/branding/swaroop-realty/09.webp 658w",
+      "src": "/assets/branding/swaroop-realty/swaroop-realty-brand-identity-brochure.webp",
+      "srcset": "/assets/branding/swaroop-realty/swaroop-realty-brand-identity-brochure-sm.webp 329w, /assets/branding/swaroop-realty/swaroop-realty-brand-identity-brochure.webp 658w",
       "x": 0.8072,
       "y": 0.01,
       "w": 0.1828,
@@ -133,8 +133,8 @@
       "label": "BROCHURE"
     },
     {
-      "src": "/assets/branding/swaroop-realty/10.webp",
-      "srcset": "/assets/branding/swaroop-realty/10-sm.webp 329w, /assets/branding/swaroop-realty/10.webp 658w",
+      "src": "/assets/branding/swaroop-realty/swaroop-realty-brand-identity-vrindavan-river.webp",
+      "srcset": "/assets/branding/swaroop-realty/swaroop-realty-brand-identity-vrindavan-river-sm.webp 329w, /assets/branding/swaroop-realty/swaroop-realty-brand-identity-vrindavan-river.webp 658w",
       "x": 0.6178,
       "y": 0.2328,
       "w": 0.1828,
@@ -147,8 +147,8 @@
       "label": "VRINDAVAN RIVER"
     },
     {
-      "src": "/assets/branding/swaroop-realty/11.webp",
-      "srcset": "/assets/branding/swaroop-realty/11-sm.webp 329w, /assets/branding/swaroop-realty/11.webp 658w",
+      "src": "/assets/branding/swaroop-realty/swaroop-realty-brand-identity-brand-symbol.webp",
+      "srcset": "/assets/branding/swaroop-realty/swaroop-realty-brand-identity-brand-symbol-sm.webp 329w, /assets/branding/swaroop-realty/swaroop-realty-brand-identity-brand-symbol.webp 658w",
       "x": 0.8072,
       "y": 0.2328,
       "w": 0.1828,
@@ -161,8 +161,8 @@
       "label": "BRAND SYMBOL"
     },
     {
-      "src": "/assets/branding/swaroop-realty/12.webp",
-      "srcset": "/assets/branding/swaroop-realty/12-sm.webp 670w, /assets/branding/swaroop-realty/12.webp 1340w",
+      "src": "/assets/branding/swaroop-realty/swaroop-realty-brand-identity-resort.webp",
+      "srcset": "/assets/branding/swaroop-realty/swaroop-realty-brand-identity-resort-sm.webp 670w, /assets/branding/swaroop-realty/swaroop-realty-brand-identity-resort.webp 1340w",
       "x": 0.6178,
       "y": 0.3761,
       "w": 0.3722,

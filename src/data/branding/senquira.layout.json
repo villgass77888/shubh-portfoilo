@@ -7,8 +7,8 @@
   "radius": 0.0066,
   "frames": [
     {
-      "src": "/assets/branding/senquira/01.webp",
-      "srcset": "/assets/branding/senquira/01-sm.webp 567w, /assets/branding/senquira/01.webp 1134w",
+      "src": "/assets/branding/senquira/senquira-brand-identity-logo.webp",
+      "srcset": "/assets/branding/senquira/senquira-brand-identity-logo-sm.webp 567w, /assets/branding/senquira/senquira-brand-identity-logo.webp 1134w",
       "x": 0.0072,
       "y": 0.006,
       "w": 0.3391,
@@ -21,8 +21,8 @@
       "label": "PRIMARY LOGO"
     },
     {
-      "src": "/assets/branding/senquira/02.webp",
-      "srcset": "/assets/branding/senquira/02-sm.webp 347w, /assets/branding/senquira/02.webp 694w",
+      "src": "/assets/branding/senquira/senquira-brand-identity-perfume-hero.webp",
+      "srcset": "/assets/branding/senquira/senquira-brand-identity-perfume-hero-sm.webp 347w, /assets/branding/senquira/senquira-brand-identity-perfume-hero.webp 694w",
       "x": 0.3517,
       "y": 0.0054,
       "w": 0.2075,
@@ -35,8 +35,8 @@
       "label": "PERFUME HERO"
     },
     {
-      "src": "/assets/branding/senquira/03.webp",
-      "srcset": "/assets/branding/senquira/03-sm.webp 388w, /assets/branding/senquira/03.webp 776w",
+      "src": "/assets/branding/senquira/senquira-brand-identity-packaging.webp",
+      "srcset": "/assets/branding/senquira/senquira-brand-identity-packaging-sm.webp 388w, /assets/branding/senquira/senquira-brand-identity-packaging.webp 776w",
       "x": 0.564,
       "y": 0.0054,
       "w": 0.2321,
@@ -49,8 +49,8 @@
       "label": "PACKAGING"
     },
     {
-      "src": "/assets/branding/senquira/04.webp",
-      "srcset": "/assets/branding/senquira/04-sm.webp 321w, /assets/branding/senquira/04.webp 642w",
+      "src": "/assets/branding/senquira/senquira-brand-identity-campaign.webp",
+      "srcset": "/assets/branding/senquira/senquira-brand-identity-campaign-sm.webp 321w, /assets/branding/senquira/senquira-brand-identity-campaign.webp 642w",
       "x": 0.8014,
       "y": 0.0054,
       "w": 0.192,
@@ -63,8 +63,8 @@
       "label": "CAMPAIGN"
     },
     {
-      "src": "/assets/branding/senquira/05.webp",
-      "srcset": "/assets/branding/senquira/05-sm.webp 321w, /assets/branding/senquira/05.webp 642w",
+      "src": "/assets/branding/senquira/senquira-brand-identity-palette.webp",
+      "srcset": "/assets/branding/senquira/senquira-brand-identity-palette-sm.webp 321w, /assets/branding/senquira/senquira-brand-identity-palette.webp 642w",
       "x": 0.8014,
       "y": 0.1645,
       "w": 0.192,
@@ -77,8 +77,8 @@
       "label": "COLOUR PALETTE"
     },
     {
-      "src": "/assets/branding/senquira/06.webp",
-      "srcset": "/assets/branding/senquira/06-sm.webp 567w, /assets/branding/senquira/06.webp 1134w",
+      "src": "/assets/branding/senquira/senquira-brand-identity-billboard.webp",
+      "srcset": "/assets/branding/senquira/senquira-brand-identity-billboard-sm.webp 567w, /assets/branding/senquira/senquira-brand-identity-billboard.webp 1134w",
       "x": 0.0072,
       "y": 0.2315,
       "w": 0.3391,
@@ -91,8 +91,8 @@
       "label": "BILLBOARD"
     },
     {
-      "src": "/assets/branding/senquira/07.webp",
-      "srcset": "/assets/branding/senquira/07-sm.webp 569w, /assets/branding/senquira/07.webp 1138w",
+      "src": "/assets/branding/senquira/senquira-brand-identity-typography.webp",
+      "srcset": "/assets/branding/senquira/senquira-brand-identity-typography-sm.webp 569w, /assets/branding/senquira/senquira-brand-identity-typography.webp 1138w",
       "x": 0.3517,
       "y": 0.2482,
       "w": 0.3403,
@@ -105,8 +105,8 @@
       "label": "TYPOGRAPHY"
     },
     {
-      "src": "/assets/branding/senquira/08.webp",
-      "srcset": "/assets/branding/senquira/08-sm.webp 495w, /assets/branding/senquira/08.webp 990w",
+      "src": "/assets/branding/senquira/senquira-brand-identity-glass-macro.webp",
+      "srcset": "/assets/branding/senquira/senquira-brand-identity-glass-macro-sm.webp 495w, /assets/branding/senquira/senquira-brand-identity-glass-macro.webp 990w",
       "x": 0.6974,
       "y": 0.2482,
       "w": 0.2961,
@@ -119,8 +119,8 @@
       "label": "GLASS MACRO"
     },
     {
-      "src": "/assets/branding/senquira/09.webp",
-      "srcset": "/assets/branding/senquira/09-sm.webp 372w, /assets/branding/senquira/09.webp 744w",
+      "src": "/assets/branding/senquira/senquira-brand-identity-logo-safe-zone.webp",
+      "srcset": "/assets/branding/senquira/senquira-brand-identity-logo-safe-zone-sm.webp 372w, /assets/branding/senquira/senquira-brand-identity-logo-safe-zone.webp 744w",
       "x": 0.0078,
       "y": 0.4061,
       "w": 0.2225,
@@ -133,8 +133,8 @@
       "label": "LOGO SAFE ZONE"
     },
     {
-      "src": "/assets/branding/senquira/10.webp",
-      "srcset": "/assets/branding/senquira/10-sm.webp 478w, /assets/branding/senquira/10.webp 956w",
+      "src": "/assets/branding/senquira/senquira-brand-identity-discovery-set.webp",
+      "srcset": "/assets/branding/senquira/senquira-brand-identity-discovery-set-sm.webp 478w, /assets/branding/senquira/senquira-brand-identity-discovery-set.webp 956w",
       "x": 0.2356,
       "y": 0.4061,
       "w": 0.2859,
@@ -147,8 +147,8 @@
       "label": "DISCOVERY SET"
     },
     {
-      "src": "/assets/branding/senquira/11.webp",
-      "srcset": "/assets/branding/senquira/11-sm.webp 202w, /assets/branding/senquira/11.webp 404w",
+      "src": "/assets/branding/senquira/senquira-brand-identity-signed-by-her.webp",
+      "srcset": "/assets/branding/senquira/senquira-brand-identity-signed-by-her-sm.webp 202w, /assets/branding/senquira/senquira-brand-identity-signed-by-her.webp 404w",
       "x": 0.5263,
       "y": 0.4061,
       "w": 0.1208,
@@ -161,8 +161,8 @@
       "label": "SIGNED BY HER"
     },
     {
-      "src": "/assets/branding/senquira/12.webp",
-      "srcset": "/assets/branding/senquira/12-sm.webp 570w, /assets/branding/senquira/12.webp 1140w",
+      "src": "/assets/branding/senquira/senquira-brand-identity-perfume-collection.webp",
+      "srcset": "/assets/branding/senquira/senquira-brand-identity-perfume-collection-sm.webp 570w, /assets/branding/senquira/senquira-brand-identity-perfume-collection.webp 1140w",
       "x": 0.6525,
       "y": 0.4061,
       "w": 0.3409,

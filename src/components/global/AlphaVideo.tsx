@@ -29,7 +29,7 @@ type Props = {
 
 /** VP9 WebM with alpha plays transparently in Chromium and Firefox, not in Safari or any iOS browser. */
 export function alphaWebmSupported() {
-  if (typeof navigator === 'undefined') return true;
+  if (typeof navigator === 'undefined' || typeof document === 'undefined') return true;
   const ua = navigator.userAgent;
   const safari = /^((?!chrome|android|crios|fxios|edg).)*safari/i.test(ua) || /iPad|iPhone|iPod/.test(ua);
   if (safari) return false;

@@ -239,7 +239,11 @@ export default function ContactScene() {
           ✦ ✧ ✱
         </div>
 
-        <h2 className="ct-item ct-heading">LET'S MAKE SOMETHING LOUD</h2>
+        <h2 className="ct-item ct-heading">
+          <a href="/contact" data-cursor="CONTACT">
+            LET'S MAKE SOMETHING LOUD
+          </a>
+        </h2>
 
         {/* Giant line — a link to the active channel */}
         <div className="ct-item">

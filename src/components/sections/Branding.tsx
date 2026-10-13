@@ -16,6 +16,8 @@ gsap.registerPlugin(ScrollTrigger);
 const PIN_QUERY = '(min-width: 900px) and (min-height: 560px)';
 const REDUCED_QUERY = '(prefers-reduced-motion: reduce)';
 const PHONE_QUERY = '(max-width: 767px)';
+/** Brands whose case study lives under a longer slug */
+const CASE_SLUG: Record<string, string> = { dbkd: 'do-bhaion-ki-dukan' };
 /** The chapter's own colour (BackgroundStage), shown behind the title card */
 const BASE_STAGE = '#0B0F2E';
 
@@ -374,11 +376,12 @@ export default function Branding() {
     <section
       ref={sectionRef}
       id="section-branding"
+      aria-labelledby="ch-branding"
       className={pin ? 'bk bk--pin' : pan ? 'bk bk--pan' : 'bk bk--flow'}
       style={{ position: 'relative', zIndex: 'var(--z-content)' as any, color: 'var(--bone)' }}
     >
       <MarqueeDivider text="BRANDING ✦✦✦ VISUAL IDENTITY ✦✦✦" />
-      <ChapterCard chapterIndex={2} title="BRANDING / VISUAL IDENTITY" />
+      <ChapterCard chapterIndex={2} title="BRANDING / VISUAL IDENTITY" id="ch-branding" href="/services/brand-identity-design" />
 
       {brands.map((brand, bIdx) => {
         const model = models[bIdx];
@@ -402,7 +405,11 @@ export default function Branding() {
                     ))}
                   </span>
                 </div>
-                <h3 className="bk-intro-bit bk-name">{brand.name}</h3>
+                <h3 className="bk-intro-bit bk-name">
+                  <a href={`/work/${CASE_SLUG[brand.slug] ?? brand.slug}`} data-cursor="CASE STUDY">
+                    {brand.name}
+                  </a>
+                </h3>
                 <p className="bk-intro-bit bk-hook">{brand.hookLine}</p>
               </div>
 
@@ -467,7 +474,9 @@ export default function Branding() {
                           srcSet={frame.srcset}
                           // the board is ~170vw wide on phones (it scrolls), ~92vw on tablets, ~76vw beside the story column
                           sizes={frame.srcset ? `(max-width: 639px) ${(frame.w * 170).toFixed(1)}vw, (max-width: 899px) ${(frame.w * 92).toFixed(1)}vw, ${(frame.w * 76).toFixed(1)}vw` : undefined}
-                          alt={`${brand.name} brand identity — ${label.toLowerCase()}`}
+                          alt={`${label.charAt(0)}${label.slice(1).toLowerCase()} for ${brand.name}, ${brand.industry.toLowerCase()} brand identity by Shubh Panda`}
+                          width={Math.round(frame.w * 1672)}
+                          height={Math.round(frame.h * 1672)}
                           loading={armed[bIdx] ? 'eager' : 'lazy'}
                           decoding="async"
                           draggable={false}

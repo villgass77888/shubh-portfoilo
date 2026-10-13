@@ -74,8 +74,9 @@ export default function Nav() {
   const ch = chapters[currentChapter] || chapters[0];
 
   return (
-    <>
+    <header>
       <nav
+        aria-label="Chapters"
         ref={navRef}
         style={{
           position: 'fixed',
@@ -94,7 +95,8 @@ export default function Nav() {
         }}
       >
         {/* Logo */}
-        <div
+        <a
+          href="/"
           style={{
             fontFamily: 'var(--font-heading)',
             fontWeight: 900,
@@ -103,11 +105,14 @@ export default function Nav() {
             color: 'var(--bone)',
             cursor: 'pointer',
           }}
-          onClick={() => scrollToSection(0)}
+          onClick={(e) => {
+            e.preventDefault();
+            scrollToSection(0);
+          }}
           data-cursor="TOP"
         >
           {siteInfo.name} ✦
-        </div>
+        </a>
 
         {/* Chapter indicator */}
         <div
@@ -182,9 +187,13 @@ export default function Nav() {
           }}
         >
           {chapters.map((ch, i) => (
-            <button
+            <a
               key={i}
-              onClick={() => scrollToSection(i)}
+              href={`#section-${sectionIds[i]}`}
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection(i);
+              }}
               style={{
                 fontFamily: 'var(--font-display)',
                 // every chapter has to fit on one screen, whatever its height or width
@@ -213,7 +222,7 @@ export default function Nav() {
                 {String(ch.num).padStart(2, '0')}
               </span>
               {ch.title}
-            </button>
+            </a>
           ))}
         </div>
       )}
@@ -228,6 +237,6 @@ export default function Nav() {
           to   { clip-path: inset(0 0 0 0); }
         }
       `}</style>
-    </>
+    </header>
   );
 }

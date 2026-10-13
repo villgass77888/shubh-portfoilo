@@ -123,7 +123,9 @@ function SmmScene({ brands, first, active, pinned, compact, load, onOpenPost, on
             <h3 key={brand.slug} className="smm-roll smm-title" data-i={first + i}>
               <span className="smm-title-brand" style={{ fontWeight: 900, fontStretch: '125%' }}>
                 <span className="smm-title-pre">SOCIAL MEDIA — </span>
-                {brand.brand}
+                <a href={`/work/${brand.slug}`} data-cursor="CASE STUDY">
+                  {brand.brand}
+                </a>
               </span>
               <span className="smm-title-campaign" style={{ fontWeight: 400, opacity: 0.75 }}>[ {brand.campaign} ]</span>
             </h3>
@@ -202,7 +204,7 @@ function SmmScene({ brands, first, active, pinned, compact, load, onOpenPost, on
                       >
                         <img
                           {...imgLoad(src, load(first + i))}
-                          alt={`${brand.brand} social media ${creativeLabel(src)}`}
+                          alt={`Social media ${creativeLabel(src)} for ${brand.brand}, social media design by Shubh Panda`}
                           decoding="async"
                           draggable={false}
                         />
@@ -621,6 +623,7 @@ export default function SmmCreatives() {
     <section
       ref={sectionRef}
       id="section-smm"
+      aria-labelledby="ch-smm"
       style={{
         position: 'relative',
         zIndex: 'var(--z-content)' as any,
@@ -631,7 +634,7 @@ export default function SmmCreatives() {
       }}
     >
       <MarqueeDivider text="SOCIAL MEDIA ✦✦✦ CREATIVES ✦✦✦" />
-      <ChapterCard chapterIndex={4} title="SOCIAL MEDIA CREATIVES" />
+      <ChapterCard chapterIndex={4} title="SOCIAL MEDIA CREATIVES" id="ch-smm" href="/services/social-media-design" />
 
       <style>{smmCss}</style>
 

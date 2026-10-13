@@ -8,10 +8,12 @@ import ByeScene from './outro/ByeScene';
  */
 export default function Outro() {
   return (
-    <section id="section-outro" style={{ position: 'relative', zIndex: 'var(--z-content)' as any }}>
+    <section id="section-outro" aria-label="Contact" style={{ position: 'relative', zIndex: 'var(--z-content)' as any }}>
       <ThankYouScene />
       <ContactScene />
-      <ByeScene />
+      <footer>
+        <ByeScene />
+      </footer>
     </section>
   );
 }

@@ -229,6 +229,7 @@ export default function Logos() {
     <section
       ref={sectionRef}
       id="section-logos"
+      aria-labelledby="ch-logos"
       style={{
         position: 'relative',
         zIndex: 'var(--z-content)' as any,
@@ -239,7 +240,7 @@ export default function Logos() {
       }}
     >
       <MarqueeDivider text="LOGOS & MARKS ✦✦✦ LOGOS & MARKS ✦✦✦" />
-      <ChapterCard chapterIndex={1} title="LOGOS & MARKS" />
+      <ChapterCard chapterIndex={1} title="LOGOS & MARKS" id="ch-logos" href="/services/brand-identity-design" />
 
       <div className="logo-wrap" style={{ maxWidth: '1200px', margin: '0 auto' }}>
         {/* Header */}
@@ -313,7 +314,7 @@ export default function Logos() {
                     <img
                       className={`logo-true${logo.solid ? ' logo-true--solid' : ''}`}
                       src={logo.src}
-                      alt={`${logo.name} logo`}
+                      alt={`${logo.tag.charAt(0)}${logo.tag.slice(1).toLowerCase()} logo for ${logo.name}, logo design by Shubh Panda`}
                       loading="lazy"
                       decoding="async"
                       draggable={false}

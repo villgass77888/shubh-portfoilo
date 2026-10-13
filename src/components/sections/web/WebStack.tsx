@@ -156,7 +156,9 @@ export default function WebStack({ reducedMotion, paused, onOpen }: WebStackProp
                       letterSpacing: '-0.01em',
                     }}
                   >
-                    {site.name}
+                    <a href={`/work/${site.slug}`} data-cursor="CASE STUDY">
+                      {site.name}
+                    </a>
                   </h3>
                   <span style={{ fontFamily: 'var(--font-meta)', fontSize: '0.7rem', color: 'var(--signal)', whiteSpace: 'nowrap' }}>
                     {pad(i + 1)} / {pad(websites.length)}

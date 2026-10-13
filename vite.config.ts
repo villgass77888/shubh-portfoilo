@@ -11,4 +11,10 @@ export default defineConfig({
   server: {
     host: true,
   },
+  build: {
+    // hashed bundles live apart from the (unhashed) media in /assets, so they can be cached forever
+    assetsDir: '_app',
+    // read by scripts/prerender.mjs to preload each route's chunks
+    manifest: true,
+  },
 })

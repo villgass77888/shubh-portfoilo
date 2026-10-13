@@ -62,7 +62,7 @@ function Tile({ media, swap, project, index, onOpen }: TileProps) {
       }}
     >
       <span className="pkm-media" style={media.flat ? undefined : { backgroundImage: `url(${image.lqip})` }}>
-        <img src={image.src} alt={`${project.name} packaging: ${media.label.toLowerCase()}`} loading="lazy" decoding="async" draggable={false} />
+        <img src={image.src} alt={`${media.label} for ${project.name}, packaging design by Shubh Panda`} loading="lazy" decoding="async" draggable={false} />
         {swap && (
           <span className={`pkm-swap${swap.flat ? ' pkm-swap--flat' : ''}`} aria-hidden="true">
             <img src={swap.image.src} alt="" loading="lazy" decoding="async" draggable={false} />
@@ -112,7 +112,11 @@ export default function MoreGrid({ reduced, onOpen }: Props) {
         return (
           <section key={project.slug} className="pkm-cluster" aria-label={project.name}>
             <header className="pkm-head">
-              <h4 className="pkm-name">{project.name}</h4>
+              <h4 className="pkm-name">
+                <a href={`/work/${project.slug}`} data-cursor="CASE STUDY">
+                  {project.name}
+                </a>
+              </h4>
               <div className="pkm-about">
                 <p className="pkm-meta">{project.meta}</p>
                 <p className="pkm-line">{project.line}</p>

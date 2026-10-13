@@ -201,7 +201,7 @@ export default function Streetwear() {
   const boxStyle: CSSProperties | undefined = box ? { left: box.x, top: box.y, width: box.w, height: box.h } : undefined;
 
   return (
-    <section ref={sectionRef} id="section-streetwear" className={`sw${entered ? ' is-entered' : ''}`} style={{ position: 'relative', zIndex: 'var(--z-content)' as any }}>
+    <section ref={sectionRef} id="section-streetwear" aria-labelledby="ch-streetwear" className={`sw${entered ? ' is-entered' : ''}`} style={{ position: 'relative', zIndex: 'var(--z-content)' as any }}>
       {/* Halftone dot wipe out of the Packaging cardboard */}
       <div className="sw-wipe" aria-hidden="true">
         <canvas ref={wipeRef} />
@@ -211,7 +211,7 @@ export default function Streetwear() {
         <div className="sw-noise" aria-hidden="true" />
 
         <MarqueeDivider text={streetwearCopy.marquee} />
-        <ChapterCard chapterIndex={6} title="STREETWEAR" subtitle="TEE GRAPHICS" />
+        <ChapterCard chapterIndex={6} title="STREETWEAR" subtitle="TEE GRAPHICS" id="ch-streetwear" href="/services/streetwear-design" />
 
         <StreetwearIntro reduced={reduced} />
 

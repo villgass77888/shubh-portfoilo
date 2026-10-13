@@ -350,9 +350,9 @@ export default function WebDesigns() {
   }, [desktop, inView, shown, hov, openIndex]);
 
   return (
-    <section ref={sectionRef} id="section-web" style={{ position: 'relative', zIndex: 'var(--z-content)' as any }}>
+    <section ref={sectionRef} id="section-web" aria-labelledby="ch-web" style={{ position: 'relative', zIndex: 'var(--z-content)' as any }}>
       <MarqueeDivider text="WEB DESIGN ✦✦✦ DEVELOPMENT ✦✦✦" />
-      <ChapterCard chapterIndex={3} title="WEB DESIGN & DEVELOPMENT" />
+      <ChapterCard chapterIndex={3} title="WEB DESIGN & DEVELOPMENT" id="ch-web" href="/services/website-design-development" />
 
       {desktop ? (
         <div className="web-desktop">

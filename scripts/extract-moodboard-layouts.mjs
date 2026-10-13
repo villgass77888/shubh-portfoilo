@@ -26,6 +26,9 @@ const BRANDS = {
   'Chemist Box': 'chemist-box',
 };
 
+/** Output files are named for what they show: <brand>-brand-identity-<card>.webp */
+const FILE_SLUG = { senquira: 'senquira', dbkd: 'do-bhaion-ki-dukan', 'swaroop-realty': 'swaroop-realty', 'chemist-box': 'chemist-box' };
+
 /** Width the coarse search runs at */
 const COARSE_W = 420;
 /** Boards wider than this are 2x artwork: their cards get a half-size copy too */
@@ -132,14 +135,15 @@ async function run() {
       const [, num, words] = f.match(/^(\d+)_(.+)\.png$/i);
       if (hit.s > 12) console.warn(`  ! weak match for ${slug}/${f} (diff ${hit.s.toFixed(1)})`);
       const webp = { quality: 82, alphaQuality: 90, effort: 6 };
-      await sharp(path.join(dir, f)).webp(webp).toFile(path.join(dest, `${num}.webp`));
+      const name = `${FILE_SLUG[slug] ?? slug}-brand-identity-${words.replace(/_/g, '-').toLowerCase()}`;
+      await sharp(path.join(dir, f)).webp(webp).toFile(path.join(dest, `${name}.webp`));
       let srcset;
       if (W > HIDPI_W) {
         const half = Math.round(hit.w / 2);
-        await sharp(path.join(dir, f)).resize({ width: half }).webp(webp).toFile(path.join(dest, `${num}-sm.webp`));
-        srcset = `/assets/branding/${slug}/${num}-sm.webp ${half}w, /assets/branding/${slug}/${num}.webp ${hit.w}w`;
+        await sharp(path.join(dir, f)).resize({ width: half }).webp(webp).toFile(path.join(dest, `${name}-sm.webp`));
+        srcset = `/assets/branding/${slug}/${name}-sm.webp ${half}w, /assets/branding/${slug}/${name}.webp ${hit.w}w`;
       }
-      frames.push({ num, words: words.replace(/_/g, ' ').toLowerCase(), srcset, ...hit });
+      frames.push({ num, file: name, words: words.replace(/_/g, ' ').toLowerCase(), srcset, ...hit });
     }
     await sharp(refPath).resize({ width: 1920, withoutEnlargement: true }).webp({ quality: 78, effort: 6 }).toFile(path.join(dest, 'board.webp'));
 
@@ -159,7 +163,7 @@ async function run() {
         const cx = (f.x + f.w / 2) / W;
         const near = Math.abs(cx - 0.5) < 0.1;
         return {
-          src: `/assets/branding/${slug}/${f.num}.webp`,
+          src: `/assets/branding/${slug}/${f.file}.webp`,
           ...(f.srcset ? { srcset: f.srcset } : {}),
           x: r4(f.x / W),
           y: r4(f.y / W),

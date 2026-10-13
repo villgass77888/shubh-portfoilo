@@ -8,6 +8,7 @@ import swaroopLayout from './branding/swaroop-realty.layout.json';
 import chemistBoxLayout from './branding/chemist-box.layout.json';
 import smmManifest from './smm.manifest.json';
 import { smmHero } from './smmHero';
+import { site } from '../content/site';
 
 // ── Types ──
 
@@ -131,11 +132,11 @@ export const siteInfo = {
   intro: 'I’m a multidisciplinary Graphic Designer with 4+ years of experience building bold visual identities, campaigns and digital experiences designed to stand out. My work spans branding, brand strategy, social media, advertising, packaging, e-commerce, web UI/UX and motion graphics, while I’m equally obsessed with exploring what’s next. I work extensively with AI-driven creative tools, from image and video generation to prompt engineering, ControlNet and LoRA training, blending strong design thinking with emerging technology to create work that feels fresh, experimental and ahead of the curve. For me, design isn’t just about making things look good; it’s about creating a visual world people remember.',
   coordinates: '20.27° N, 73.01° E',
   year: 2026,
-  email: 'shubhpanda8@gmail.com',
-  phone: '+91 92651 30339',
+  email: site.email,
+  phone: site.phone,
   socials: {
-    instagram: 'https://instagram.com/1xshubh',
-    linkedin: 'https://linkedin.com/in/shubhpanda',
+    instagram: site.socials.instagram,
+    linkedin: site.socials.linkedin,
   },
 };
 
@@ -153,10 +154,10 @@ export type ContactChannel = {
 };
 
 export const contacts: ContactChannel[] = [
-  { key: 'email', label: 'EMAIL', display: 'shubhpanda8@gmail.com', href: 'mailto:shubhpanda8@gmail.com', action: 'MAIL', hint: 'CLICK TO SEND A MAIL' },
-  { key: 'phone', label: 'PHONE', display: '+91 92651 30339', href: 'tel:+919265130339', action: 'CALL', hint: 'CLICK TO CALL' },
-  { key: 'instagram', label: 'INSTAGRAM', display: '@1xshubh', href: 'https://instagram.com/1xshubh', action: 'OPEN', hint: 'CLICK TO OPEN INSTAGRAM' },
-  { key: 'linkedin', label: 'LINKEDIN', display: 'in/shubhpanda', href: 'https://linkedin.com/in/shubhpanda', action: 'OPEN', hint: 'CLICK TO OPEN LINKEDIN' },
+  { key: 'email', label: 'EMAIL', display: site.email, href: `mailto:${site.email}`, action: 'MAIL', hint: 'CLICK TO SEND A MAIL' },
+  { key: 'phone', label: 'PHONE', display: site.phone, href: `tel:${site.phone.replace(/\s/g, '')}`, action: 'CALL', hint: 'CLICK TO CALL' },
+  { key: 'instagram', label: 'INSTAGRAM', display: '@1xshubh', href: site.socials.instagram, action: 'OPEN', hint: 'CLICK TO OPEN INSTAGRAM' },
+  { key: 'linkedin', label: 'LINKEDIN', display: 'in/shubhpanda', href: site.socials.linkedin, action: 'OPEN', hint: 'CLICK TO OPEN LINKEDIN' },
 ];
 
 // ── Chapter Meta ──

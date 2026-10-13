@@ -32,13 +32,17 @@ interface ChapterCardProps {
   title: string;
   /** Optional second line, set as large as the first; when given, `title` stays on one line */
   subtitle?: string;
+  /** id of the heading: the chapter's <section> points at it with aria-labelledby */
+  id?: string;
+  /** The service page this chapter stands for: the title links to it (same look) */
+  href?: string;
 }
 
 /**
  * Chapter Title Card — full-screen title with selection box,
  * kicker, meta corners. Timed entrance, then a pinned hold and scrubbed exit.
  */
-export default function ChapterCard({ chapterIndex, title, subtitle }: ChapterCardProps) {
+export default function ChapterCard({ chapterIndex, title, subtitle, id, href }: ChapterCardProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [phone, setPhone] = useState(() => typeof window !== 'undefined' && window.matchMedia(PHONE_QUERY).matches);
 
@@ -127,6 +131,24 @@ export default function ChapterCard({ chapterIndex, title, subtitle }: ChapterCa
   // desktop: two halves; phones: short lines that leave left / right alternately
   const lines = phone ? phoneLines(subtitle ? [title, subtitle] : [title]) : [topLine, bottomLine].filter(Boolean);
 
+  const titleLines = lines.map((line, i) => (
+            <div key={`${i}-${line}`} className={i % 2 ? 'chapter-title-bottom' : 'chapter-title-top'} aria-hidden="true" style={{ overflow: 'hidden' }}>
+              <span
+                className="chapter-title-char"
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontSize: subtitle ? 'calc(var(--fs-chapter) * 0.82)' : 'var(--fs-chapter)',
+                  whiteSpace: subtitle ? 'nowrap' : undefined,
+                  color: 'var(--signal)',
+                  display: 'inline-block',
+                  lineHeight: 0.85,
+                }}
+              >
+                {line}
+              </span>
+            </div>
+          ));
+
   return (
     <div
       ref={containerRef}
@@ -158,40 +180,30 @@ export default function ChapterCard({ chapterIndex, title, subtitle }: ChapterCa
 
       {/* Title with Selection Box */}
       <SelectionBox>
-        <div className="chapter-title-pad" style={{ padding: '1rem 2rem' }}>
-          {lines.map((line, i) => (
-            <div key={`${i}-${line}`} className={i % 2 ? 'chapter-title-bottom' : 'chapter-title-top'} style={{ overflow: 'hidden' }}>
-              <span
-                className="chapter-title-char"
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: subtitle ? 'calc(var(--fs-chapter) * 0.82)' : 'var(--fs-chapter)',
-                  whiteSpace: subtitle ? 'nowrap' : undefined,
-                  color: 'var(--signal)',
-                  display: 'inline-block',
-                  lineHeight: 0.85,
-                }}
-              >
-                {line}
-              </span>
-            </div>
-          ))}
-        </div>
+        <h2 id={id} className="chapter-title-pad" aria-label={subtitle ? `${title} ${subtitle}` : title} style={{ padding: '1rem 2rem' }}>
+          {href ? (
+            <a href={href} data-cursor="SERVICE" aria-label={`${subtitle ? `${title} ${subtitle}` : title}: the service`} style={{ display: 'block' }}>
+              {titleLines}
+            </a>
+          ) : (
+            titleLines
+          )}
+        </h2>
       </SelectionBox>
 
       {/* Meta Corners */}
-      <div className="meta-corner meta-corner--tl chapter-fade" style={{ position: 'absolute', top: '2rem', left: '2rem', fontFamily: 'var(--font-meta)', fontSize: '10px', letterSpacing: '0.08em', color: 'var(--signal)' }}>
+      <a href="/about" data-cursor="ABOUT" className="meta-corner meta-corner--tl chapter-fade" style={{ position: 'absolute', top: '2rem', left: '2rem', fontFamily: 'var(--font-meta)', fontSize: '10px', letterSpacing: '0.08em', color: 'var(--signal)' }}>
         PORTFOLIO OF {siteInfo.name}
-      </div>
+      </a>
       <div className="meta-corner meta-corner--tr chapter-fade" style={{ position: 'absolute', top: '2rem', right: '2rem', fontFamily: 'var(--font-meta)', fontSize: '10px', letterSpacing: '0.08em', color: 'var(--signal)', textAlign: 'right' }}>
         {siteInfo.coordinates}
       </div>
       <div className="meta-corner meta-corner--bl chapter-fade" style={{ position: 'absolute', bottom: '2rem', left: '2rem', fontFamily: 'var(--font-meta)', fontSize: '10px', letterSpacing: '0.08em', color: 'var(--signal)' }}>
         CHAPTER {String(ch.num).padStart(2, '0')} / {String(ch.total).padStart(2, '0')}
       </div>
-      <div className="meta-corner meta-corner--br chapter-fade" style={{ position: 'absolute', bottom: '2rem', right: '2rem', fontFamily: 'var(--font-meta)', fontSize: '10px', letterSpacing: '0.08em', color: 'var(--signal)', textAlign: 'right' }}>
+      <a href="/work" data-cursor="WORK" className="meta-corner meta-corner--br chapter-fade" style={{ position: 'absolute', bottom: '2rem', right: '2rem', fontFamily: 'var(--font-meta)', fontSize: '10px', letterSpacing: '0.08em', color: 'var(--signal)', textAlign: 'right' }}>
         {siteInfo.year} PORTFOLIO
-      </div>
+      </a>
     </div>
   );
 }

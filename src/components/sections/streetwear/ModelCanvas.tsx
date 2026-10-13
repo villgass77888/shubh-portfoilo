@@ -126,7 +126,8 @@ const ModelCanvas = forwardRef<ModelCanvasHandle, Props>(function ModelCanvas({ 
   // Alpha masks for silhouette hit-testing (also used by the fallback path)
   useEffect(() => {
     let cancelled = false;
-    designs.forEach((d, i) => {
+    // ten model photos: fetched when the showroom is getting close, not with the first page load
+    const start = () => designs.forEach((d, i) => {
       const img = new Image();
       img.onload = () => {
         if (cancelled) return;
@@ -144,8 +145,25 @@ const ModelCanvas = forwardRef<ModelCanvasHandle, Props>(function ModelCanvas({ 
       };
       img.src = d.model;
     });
+    const el = wrapRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      start();
+      return () => {
+        cancelled = true;
+      };
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        io.disconnect();
+        start();
+      },
+      { rootMargin: '3000px 0px' },
+    );
+    io.observe(el);
     return () => {
       cancelled = true;
+      io.disconnect();
     };
   }, [designs]);
 
@@ -335,9 +353,25 @@ const ModelCanvas = forwardRef<ModelCanvasHandle, Props>(function ModelCanvas({ 
     ro.observe(wrap);
     resize();
 
-    // first paint, then warm the rest while idle
+    // first paint, then warm the rest once the showroom is getting close (it is the last chapter)
     whenLoaded(state.to, render);
-    const idle = window.setTimeout(() => designs.forEach((_, i) => load(i)), 1200);
+    let idle = 0;
+    const warm = () => {
+      idle = window.setTimeout(() => designs.forEach((_, i) => load(i)), 1200);
+    };
+    const nearIo =
+      typeof IntersectionObserver === 'undefined'
+        ? null
+        : new IntersectionObserver(
+            ([entry]) => {
+              if (!entry.isIntersecting) return;
+              nearIo?.disconnect();
+              warm();
+            },
+            { rootMargin: '3000px 0px' },
+          );
+    if (nearIo) nearIo.observe(canvas);
+    else warm();
 
     const onLost = (e: Event) => {
       e.preventDefault();
@@ -347,6 +381,7 @@ const ModelCanvas = forwardRef<ModelCanvasHandle, Props>(function ModelCanvas({ 
 
     return () => {
       window.clearTimeout(idle);
+      nearIo?.disconnect();
       canvas.removeEventListener('webglcontextlost', onLost);
       ro.disconnect();
       tween?.kill();

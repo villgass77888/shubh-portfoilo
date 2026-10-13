@@ -5,6 +5,7 @@ import gsap from 'gsap';
 import AlphaVideo from '../../global/AlphaVideo';
 import type { AlphaVideoHandle } from '../../global/AlphaVideo';
 import { avifSet, honeyVideo } from '../../../data/packaging';
+import { syncHead } from '../../../seo/paths';
 import type { PackImage, PackProject } from '../../../data/packaging';
 import PackInfo from './PackInfo';
 
@@ -66,8 +67,9 @@ export default function PackViewer({ project, start, origin, onClose }: Props) {
   useLayoutEffect(() => {
     const root = rootRef.current;
     lenis()?.stop();
-    const hash = `#packaging/${project.slug}`;
-    if (window.location.hash !== hash) history.pushState({ pack: project.slug }, '', hash);
+    const url = `/work/packaging/${project.slug}`;
+    if (window.location.pathname !== url) history.pushState({ pack: project.slug }, '', url);
+    syncHead(url);
     const x = origin ? `${origin.x}px` : '50%';
     const y = origin ? `${origin.y}px` : '50%';
     const tl = gsap.timeline({ onComplete: () => gsap.set(root, { clearProps: 'clipPath' }) });
@@ -86,6 +88,7 @@ export default function PackViewer({ project, start, origin, onClose }: Props) {
       tl.kill();
       window.clearTimeout(t);
       lenis()?.start();
+      syncHead(null);
       previous?.focus?.({ preventScroll: true });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -106,14 +109,14 @@ export default function PackViewer({ project, start, origin, onClose }: Props) {
     // leave through history when this view pushed an entry, so Back and Close agree
     if (history.state && history.state.pack) history.back();
     else {
-      if (window.location.hash.startsWith('#packaging')) history.replaceState(null, '', window.location.pathname + window.location.search);
+      if (window.location.pathname.startsWith('/work/packaging')) history.replaceState(null, '', '/' + window.location.search);
       finish();
     }
   }, [finish]);
 
   useEffect(() => {
     const onPop = () => {
-      if (!window.location.hash.startsWith('#packaging')) finish();
+      if (!window.location.pathname.startsWith('/work/packaging')) finish();
     };
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {

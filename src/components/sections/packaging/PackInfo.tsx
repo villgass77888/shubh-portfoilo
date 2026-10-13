@@ -42,7 +42,9 @@ export default function PackInfo({ project, kicker, active, entered, className =
     <div className={`pki${entered ? ' is-in' : ''}${className ? ` ${className}` : ''}`}>
       <p className="pki-kicker">{kicker}</p>
       <h3 className="pki-title" aria-label={project.name}>
-        <Chars text={project.name} />
+        <a href={`/work/${project.slug}`} data-cursor="CASE STUDY" aria-label={`${project.name}: case study`}>
+          <Chars text={project.name} />
+        </a>
       </h3>
 
       <ol className="pki-steps">

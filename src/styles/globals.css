@@ -3,7 +3,7 @@
    ═══════════════════════════════════════════════════ */
 
 /* ── Google Fonts ── */
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Space+Mono:wght@400;700&family=Caveat:wght@400;700&display=swap');
+@import './fonts.css';
 
 @import './tokens.css';
 @import "tailwindcss";

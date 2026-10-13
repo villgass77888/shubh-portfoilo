@@ -76,7 +76,7 @@ export default function StudioShelf({ reduced, onOpen }: Props) {
                         src={image.src}
                         srcSet={image.srcset}
                         sizes="(max-width: 768px) 92vw, 46vw"
-                        alt={`${honey.name}: ${shot.media.label.toLowerCase()}`}
+                        alt={`${shot.media.label} for ${honey.name}, packaging design by Shubh Panda`}
                         loading="lazy"
                         decoding="async"
                         draggable={false}

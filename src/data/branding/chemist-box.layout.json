@@ -7,7 +7,7 @@
   "radius": 0.0078,
   "frames": [
     {
-      "src": "/assets/branding/chemist-box/01.webp",
+      "src": "/assets/branding/chemist-box/chemist-box-brand-identity-logo.webp",
       "x": 0.0078,
       "y": 0.0084,
       "w": 0.2853,
@@ -20,7 +20,7 @@
       "label": "PRIMARY LOGO"
     },
     {
-      "src": "/assets/branding/chemist-box/02.webp",
+      "src": "/assets/branding/chemist-box/chemist-box-brand-identity-value-campaign.webp",
       "x": 0.0078,
       "y": 0.195,
       "w": 0.2853,
@@ -33,7 +33,7 @@
       "label": "VALUE CAMPAIGN"
     },
     {
-      "src": "/assets/branding/chemist-box/03.webp",
+      "src": "/assets/branding/chemist-box/chemist-box-brand-identity-pharmacy-exterior.webp",
       "x": 0.299,
       "y": 0.0072,
       "w": 0.3923,
@@ -46,7 +46,7 @@
       "label": "PHARMACY EXTERIOR"
     },
     {
-      "src": "/assets/branding/chemist-box/04.webp",
+      "src": "/assets/branding/chemist-box/chemist-box-brand-identity-pharmacist.webp",
       "x": 0.698,
       "y": 0.0072,
       "w": 0.2949,
@@ -59,7 +59,7 @@
       "label": "PHARMACIST"
     },
     {
-      "src": "/assets/branding/chemist-box/05.webp",
+      "src": "/assets/branding/chemist-box/chemist-box-brand-identity-home-delivery.webp",
       "x": 0.299,
       "y": 0.2572,
       "w": 0.3026,
@@ -72,7 +72,7 @@
       "label": "HOME DELIVERY"
     },
     {
-      "src": "/assets/branding/chemist-box/06.webp",
+      "src": "/assets/branding/chemist-box/chemist-box-brand-identity-colour-palette.webp",
       "x": 0.6071,
       "y": 0.2584,
       "w": 0.198,
@@ -85,7 +85,7 @@
       "label": "COLOUR PALETTE"
     },
     {
-      "src": "/assets/branding/chemist-box/07.webp",
+      "src": "/assets/branding/chemist-box/chemist-box-brand-identity-typography.webp",
       "x": 0.8104,
       "y": 0.2584,
       "w": 0.1824,
@@ -98,7 +98,7 @@
       "label": "TYPOGRAPHY"
     },
     {
-      "src": "/assets/branding/chemist-box/08.webp",
+      "src": "/assets/branding/chemist-box/chemist-box-brand-identity-shopping-bag.webp",
       "x": 0.0084,
       "y": 0.3882,
       "w": 0.2093,
@@ -111,7 +111,7 @@
       "label": "SHOPPING BAG"
     },
     {
-      "src": "/assets/branding/chemist-box/09.webp",
+      "src": "/assets/branding/chemist-box/chemist-box-brand-identity-stationery-and-staff-id.webp",
       "x": 0.2237,
       "y": 0.3882,
       "w": 0.1782,
@@ -124,7 +124,7 @@
       "label": "STATIONERY AND STAFF ID"
     },
     {
-      "src": "/assets/branding/chemist-box/10.webp",
+      "src": "/assets/branding/chemist-box/chemist-box-brand-identity-care-essentials.webp",
       "x": 0.4073,
       "y": 0.3882,
       "w": 0.1621,
@@ -137,7 +137,7 @@
       "label": "CARE ESSENTIALS"
     },
     {
-      "src": "/assets/branding/chemist-box/11.webp",
+      "src": "/assets/branding/chemist-box/chemist-box-brand-identity-billboard.webp",
       "x": 0.5754,
       "y": 0.3882,
       "w": 0.3278,
@@ -150,7 +150,7 @@
       "label": "BILLBOARD"
     },
     {
-      "src": "/assets/branding/chemist-box/12.webp",
+      "src": "/assets/branding/chemist-box/chemist-box-brand-identity-graphic-system.webp",
       "x": 0.9091,
       "y": 0.3882,
       "w": 0.0837,

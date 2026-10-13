@@ -16,7 +16,7 @@ type PageLenis = { scrollTo: (target: number, options?: { immediate?: boolean; f
 
 /**
  * Creatives Archive — the subsection that closes the Social Media chapter.
- * Renders the trigger in the page and, while a #archive… route is active, the full-screen overlay.
+ * Renders the trigger in the page and, while a /work/archive… route is active, the full-screen overlay.
  * `tint` is the last brand's colour: its vignette carries on behind the trigger.
  */
 export default function SmmArchive({ tint }: { tint?: string }) {

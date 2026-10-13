@@ -7,7 +7,7 @@
   "radius": 0.0066,
   "frames": [
     {
-      "src": "/assets/branding/dbkd/01.webp",
+      "src": "/assets/branding/dbkd/do-bhaion-ki-dukan-brand-identity-logo.webp",
       "x": 0.0054,
       "y": 0.0054,
       "w": 0.3433,
@@ -20,7 +20,7 @@
       "label": "PRIMARY LOGO"
     },
     {
-      "src": "/assets/branding/dbkd/02.webp",
+      "src": "/assets/branding/dbkd/do-bhaion-ki-dukan-brand-identity-heritage.webp",
       "x": 0.0054,
       "y": 0.2075,
       "w": 0.3433,
@@ -33,7 +33,7 @@
       "label": "HERITAGE"
     },
     {
-      "src": "/assets/branding/dbkd/03.webp",
+      "src": "/assets/branding/dbkd/do-bhaion-ki-dukan-brand-identity-ethnic-fashion.webp",
       "x": 0.3541,
       "y": 0.0054,
       "w": 0.2727,
@@ -46,7 +46,7 @@
       "label": "ETHNIC FASHION"
     },
     {
-      "src": "/assets/branding/dbkd/04.webp",
+      "src": "/assets/branding/dbkd/do-bhaion-ki-dukan-brand-identity-storefront.webp",
       "x": 0.6322,
       "y": 0.0054,
       "w": 0.3618,
@@ -59,7 +59,7 @@
       "label": "STOREFRONT"
     },
     {
-      "src": "/assets/branding/dbkd/05.webp",
+      "src": "/assets/branding/dbkd/do-bhaion-ki-dukan-brand-identity-shopping-bag-and-packaging.webp",
       "x": 0.5401,
       "y": 0.25,
       "w": 0.2745,
@@ -72,7 +72,7 @@
       "label": "SHOPPING BAG AND PACKAGING"
     },
     {
-      "src": "/assets/branding/dbkd/06.webp",
+      "src": "/assets/branding/dbkd/do-bhaion-ki-dukan-brand-identity-colour-palette.webp",
       "x": 0.8194,
       "y": 0.25,
       "w": 0.1746,
@@ -85,7 +85,7 @@
       "label": "COLOUR PALETTE"
     },
     {
-      "src": "/assets/branding/dbkd/07.webp",
+      "src": "/assets/branding/dbkd/do-bhaion-ki-dukan-brand-identity-typography.webp",
       "x": 0.8194,
       "y": 0.3427,
       "w": 0.1746,
@@ -98,7 +98,7 @@
       "label": "TYPOGRAPHY"
     },
     {
-      "src": "/assets/branding/dbkd/08.webp",
+      "src": "/assets/branding/dbkd/do-bhaion-ki-dukan-brand-identity-modern-fashion.webp",
       "x": 0.0054,
       "y": 0.3935,
       "w": 0.2237,
@@ -111,7 +111,7 @@
       "label": "MODERN FASHION"
     },
     {
-      "src": "/assets/branding/dbkd/09.webp",
+      "src": "/assets/branding/dbkd/do-bhaion-ki-dukan-brand-identity-stationery-and-tags.webp",
       "x": 0.2339,
       "y": 0.3935,
       "w": 0.1908,
@@ -124,7 +124,7 @@
       "label": "STATIONERY AND TAGS"
     },
     {
-      "src": "/assets/branding/dbkd/10.webp",
+      "src": "/assets/branding/dbkd/do-bhaion-ki-dukan-brand-identity-brand-pattern.webp",
       "x": 0.4294,
       "y": 0.3935,
       "w": 0.1059,
@@ -137,7 +137,7 @@
       "label": "BRAND PATTERN"
     },
     {
-      "src": "/assets/branding/dbkd/11.webp",
+      "src": "/assets/branding/dbkd/do-bhaion-ki-dukan-brand-identity-fabric-details.webp",
       "x": 0.5401,
       "y": 0.4318,
       "w": 0.1633,
@@ -150,7 +150,7 @@
       "label": "FABRIC DETAILS"
     },
     {
-      "src": "/assets/branding/dbkd/12.webp",
+      "src": "/assets/branding/dbkd/do-bhaion-ki-dukan-brand-identity-billboard.webp",
       "x": 0.7081,
       "y": 0.4318,
       "w": 0.2859,

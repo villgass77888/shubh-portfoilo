@@ -27,6 +27,23 @@ export default function StreetwearIntro({ reduced }: Props) {
     setUseVideo(streetwearIntro.available && canPlayAlphaWebm());
   }, []);
 
+  // the chapter sits at the end of the page: its video is only fetched once the visitor is getting close
+  const [near, setNear] = useState(false);
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root || typeof IntersectionObserver === 'undefined') return setNear(true);
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setNear(true);
+        io.disconnect();
+      },
+      { rootMargin: '3000px 0px' },
+    );
+    io.observe(root);
+    return () => io.disconnect();
+  }, []);
+
   // play while any of it is on screen, rest otherwise
   useEffect(() => {
     const root = rootRef.current;
@@ -55,7 +72,7 @@ export default function StreetwearIntro({ reduced }: Props) {
             muted
             loop
             playsInline
-            preload="auto"
+            preload={near ? 'auto' : 'none'}
             aria-hidden="true"
           />
         ) : (
