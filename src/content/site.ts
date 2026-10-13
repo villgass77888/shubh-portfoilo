@@ -33,7 +33,7 @@ export const site = {
     linkedin: 'https://linkedin.com/in/shubhpanda',
     behance: '', // TODO(Shubh)
     dribbble: '', // TODO(Shubh)
-    pinterest: '', // TODO(Shubh)
+    pinterest: 'https://in.pinterest.com/1xshubh/',
   },
 
   /** Square photo, cut from the hero video by scripts/prerender.mjs */
