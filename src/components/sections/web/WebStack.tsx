@@ -1,4 +1,6 @@
 import { useEffect, useRef } from 'react';
+import { isIOS } from '../../../lib/device';
+import { releaseVideo, restoreVideo } from '../../../lib/media';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useIsomorphicLayoutEffect } from '../../../hooks/useIsomorphicLayoutEffect';
@@ -60,6 +62,8 @@ export default function WebStack({ reducedMotion, paused, onOpen }: WebStackProp
 
   useEffect(() => {
     const vids = videoRefs.current;
+    // iOS only decodes a few videos at once: a card that leaves the screen gives its decoder back
+    const ios = isIOS();
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -68,7 +72,10 @@ export default function WebStack({ reducedMotion, paused, onOpen }: WebStackProp
           visibleRef.current[i] = entry.isIntersecting;
           const v = vids[i];
           if (!v) return;
-          if (entry.isIntersecting && !pausedRef.current && !reducedMotion) v.play().catch(() => {});
+          if (entry.isIntersecting && !pausedRef.current && !reducedMotion) {
+            if (ios) restoreVideo(v);
+            v.play().catch(() => {});
+          } else if (ios && !entry.isIntersecting) releaseVideo(v);
           else v.pause();
         });
       },

@@ -531,6 +531,10 @@ export default function Logos() {
           .logo-meta { font-size: 0.62rem; }
           .logo-foot { bottom: 1rem; }
         }
+        /* phone held sideways: four small squares a row instead of two screen-high ones */
+        @media (orientation: landscape) and (max-height: 500px) {
+          .logo-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+        }
         @media (prefers-reduced-motion: reduce) {
           .logo-flood, .logo-ink, .logo-true, .logo-select, .logo-handle,
           .logo-name, .logo-meta, .logo-tag { transition-duration: 0.01ms !important; transition-delay: 0s !important; }

@@ -1,10 +1,42 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { isIOS } from '../../lib/device';
+
+/** iOS: one small noise tile, repeated, jumping about on the compositor (no per-frame redraw) */
+function StaticGrain() {
+  const [tile, setTile] = useState('');
+  useEffect(() => {
+    const c = document.createElement('canvas');
+    c.width = c.height = 160;
+    const ctx = c.getContext('2d');
+    if (!ctx) return;
+    const img = ctx.createImageData(160, 160);
+    for (let i = 0; i < img.data.length; i += 4) {
+      const v = Math.random() * 255;
+      img.data[i] = img.data[i + 1] = img.data[i + 2] = v;
+      img.data[i + 3] = 255;
+    }
+    ctx.putImageData(img, 0, 0);
+    setTile(c.toDataURL('image/png'));
+  }, []);
+  if (!tile) return null;
+  return (
+    <div aria-hidden="true" style={{ position: 'fixed', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 'var(--z-grain)' as any, opacity: 0.07, mixBlendMode: 'overlay' }}>
+      <style>{'@keyframes grainJump{0%{transform:translate(0,0)}25%{transform:translate(-53px,-97px)}50%{transform:translate(-121px,-31px)}75%{transform:translate(-17px,-139px)}}'}</style>
+      <div style={{ position: 'absolute', inset: '-160px', backgroundImage: `url(${tile})`, animation: 'grainJump 0.33s steps(1) infinite' }} />
+    </div>
+  );
+}
 
 /**
  * Full-screen canvas noise overlay drawn at 12fps.
  * Sits above all content except the cursor.
  */
 export default function GrainOverlay() {
+  const [ios] = useState(isIOS);
+  return ios ? <StaticGrain /> : <CanvasGrain />;
+}
+
+function CanvasGrain() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {

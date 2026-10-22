@@ -112,8 +112,10 @@ export default function ChapterCard({ chapterIndex, title, subtitle, id, href }:
       });
 
       exit.to({}, { duration: 0.45 });
-      exit.to('.chapter-title-top', { xPercent: -60, opacity: 0, duration: 0.55 }, 0.45);
-      exit.to('.chapter-title-bottom', { xPercent: 60, opacity: 0, duration: 0.55 }, 0.45);
+      // phones: a shorter slide that has faded out before the lines reach the screen edges
+      const travel = phone ? 18 : 60;
+      exit.to('.chapter-title-top', { xPercent: -travel, opacity: 0, duration: phone ? 0.4 : 0.55 }, 0.45);
+      exit.to('.chapter-title-bottom', { xPercent: travel, opacity: 0, duration: phone ? 0.4 : 0.55 }, 0.45);
       // fromTo with explicit starts: these props are also touched by the entrance
       exit.fromTo('.chapter-fade', { opacity: 1 }, { opacity: 0, duration: 0.35, immediateRender: false }, 0.45);
       exit.fromTo('.selection-box', { borderColor: 'rgba(255,43,28,1)' }, { borderColor: 'rgba(255,43,28,0)', duration: 0.35, immediateRender: false }, 0.45);

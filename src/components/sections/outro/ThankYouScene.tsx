@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useIsomorphicLayoutEffect } from '../../../hooks/useIsomorphicLayoutEffect';
+import { isIOS } from '../../../lib/device';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -71,6 +72,8 @@ export default function ThankYouScene() {
     if (!lettering || !bigs) return;
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // iOS: a 30px blur on letters this size is a huge offscreen layer Safari can drop (the black screen)
+    const ios = isIOS();
 
     /* ── Viewfinder state (scene coordinates, px) ── */
     const st = {
@@ -243,7 +246,7 @@ export default function ThankYouScene() {
       // (scrolling back above the scene) hides the viewfinder before the words.
       const tl = gsap.timeline({ paused: true });
       tl.from('.ty-word', {
-        filter: 'blur(30px)',
+        ...(ios ? {} : { filter: 'blur(30px)' }),
         scaleY: 2,
         opacity: 0,
         stagger: 0.3,

@@ -1,5 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
+import { isSafari } from '../../lib/device';
 
 export type AlphaVideoHandle = {
   play: () => Promise<void>;
@@ -27,12 +28,13 @@ type Props = {
   style?: CSSProperties;
 };
 
-/** VP9 WebM with alpha plays transparently in Chromium and Firefox, not in Safari or any iOS browser. */
+/**
+ * VP9 WebM with alpha plays transparently in Chromium and Firefox. Safari (and so every iOS
+ * browser) says it can play the WebM but drops the alpha, so it never gets it.
+ */
 export function alphaWebmSupported() {
   if (typeof navigator === 'undefined' || typeof document === 'undefined') return true;
-  const ua = navigator.userAgent;
-  const safari = /^((?!chrome|android|crios|fxios|edg).)*safari/i.test(ua) || /iPad|iPhone|iPod/.test(ua);
-  if (safari) return false;
+  if (isSafari()) return false;
   return document.createElement('video').canPlayType('video/webm; codecs="vp9"') !== '';
 }
 
@@ -55,6 +57,8 @@ const AlphaVideo = forwardRef<AlphaVideoHandle, Props>(function AlphaVideo(
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const painted = useRef<Array<() => void>>([]);
   const [native] = useState(alphaWebmSupported);
+  // canvas path: the (transparent) poster shows until the first frame is drawn
+  const [drawn, setDrawn] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -105,6 +109,7 @@ const AlphaVideo = forwardRef<AlphaVideoHandle, Props>(function AlphaVideo(
       }
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      setDrawn(true);
       painted.current.splice(0).forEach((cb) => cb());
     };
     const loop = () => {
@@ -117,9 +122,22 @@ const AlphaVideo = forwardRef<AlphaVideoHandle, Props>(function AlphaVideo(
     video.addEventListener('seeked', draw);
     video.addEventListener('loadeddata', draw);
     video.addEventListener('ended', draw);
+    // autoplay blocked (Low Power Mode): keep the poster and start on the first touch
+    const kick = () => video.autoplay && video.paused && video.play().catch(() => {});
+    window.addEventListener('touchstart', kick, { once: true, passive: true });
+    // a looping autoplay video only decodes while it is within a screen of the viewport
+    const io =
+      video.autoplay && typeof IntersectionObserver !== 'undefined'
+        ? new IntersectionObserver(([e]) => (e.isIntersecting ? video.play().catch(() => {}) : video.pause()), { rootMargin: '100% 0px' })
+        : null;
+    io?.observe(canvas);
     return () => {
       alive = false;
       cancelAnimationFrame(raf);
+      window.removeEventListener('touchstart', kick);
+      io?.disconnect();
+      // free the GPU memory now rather than when the garbage collector gets to it
+      gl.getExtension('WEBGL_lose_context')?.loseContext();
       video.removeEventListener('play', loop);
       video.removeEventListener('seeked', draw);
       video.removeEventListener('loadeddata', draw);
@@ -159,7 +177,7 @@ const AlphaVideo = forwardRef<AlphaVideoHandle, Props>(function AlphaVideo(
 
   const fill: CSSProperties = { display: 'block', width: '100%', height: '100%', objectFit: fit };
   return (
-    <span className={className} style={{ display: 'block', ...style }} aria-hidden="true">
+    <span className={className} style={{ display: 'block', ...(poster && !native ? { position: 'relative' as const } : {}), ...style }} aria-hidden="true">
       <video
         ref={videoRef}
         src={native ? `${src}.webm` : `${src}-stacked.mp4`}
@@ -172,6 +190,7 @@ const AlphaVideo = forwardRef<AlphaVideoHandle, Props>(function AlphaVideo(
         onEnded={onEnded}
         style={native ? fill : { position: 'absolute', width: 1, height: 1, opacity: 0, pointerEvents: 'none' }}
       />
+      {!native && poster && !drawn && <img src={poster} alt="" style={{ ...fill, position: 'absolute', inset: 0 }} />}
       {!native && <canvas ref={canvasRef} style={fill} />}
     </span>
   );

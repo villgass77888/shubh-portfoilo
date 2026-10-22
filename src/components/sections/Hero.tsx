@@ -1,4 +1,5 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import AlphaVideo, { alphaWebmSupported } from '../global/AlphaVideo';
 import type { ReactNode } from 'react';
 import { useIsomorphicLayoutEffect } from '../../hooks/useIsomorphicLayoutEffect';
 import gsap from 'gsap';
@@ -59,6 +60,7 @@ const tools: { name: string; icon: ReactNode }[] = [
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const displaceRef = useRef<SVGFEDisplacementMapElement>(null);
+  const [alphaWebm] = useState(alphaWebmSupported);
 
   useIsomorphicLayoutEffect(() => {
     if (!sectionRef.current) return;
@@ -311,16 +313,21 @@ export default function Hero() {
         <div className="hero-right">
           <div className="hero-video-wrap" data-cursor="HI THERE">
             <div className="hero-video-glitch">
-              <video
-                className="hero-video"
-                src="/assets/hero/shubh-360.webm"
-                poster="/assets/hero/shubh-360-poster.webp"
-                muted
-                loop
-                playsInline
-                autoPlay
-                preload="auto"
-              />
+              {alphaWebm ? (
+                <video
+                  className="hero-video"
+                  src="/assets/hero/shubh-360.webm"
+                  poster="/assets/hero/shubh-360-poster.webp"
+                  muted
+                  loop
+                  playsInline
+                  autoPlay
+                  preload="auto"
+                />
+              ) : (
+                // Safari / iOS drop the WebM's alpha (black box): the stacked MP4 on a canvas instead
+                <AlphaVideo className="hero-video" src="/assets/hero/shubh-360" poster="/assets/hero/shubh-360-poster.webp" autoplay loop preload="auto" />
+              )}
             </div>
           </div>
           <div className="hero-fade hero-note">← that's me. yes, i'm a bit dizzy</div>
@@ -516,6 +523,14 @@ export default function Hero() {
           .hero-intro { grid-row: 4; max-width: none; margin-top: 1.1rem; }
           .hero-intro-text { font-size: 0.86rem; }
           .hero-scroll { display: none; }
+        }
+        /* phone held sideways: the figure fills the height, the name stays beside it */
+        @media (orientation: landscape) and (max-height: 500px) {
+          .hero-grid { padding: 3.75rem 6vw 2.75rem; min-height: 100svh; }
+          .hero-video-wrap { height: calc(100svh - 6.5rem); }
+          .hero-right { translate: none; }
+          .hero-intro-text { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+          .hero-note { display: none; }
         }
         @media (prefers-reduced-motion: reduce) {
           .hero-ticker-track { animation: none; }

@@ -524,6 +524,9 @@ export default function ContactScene() {
           .ct-small { flex-direction: column; gap: 0.35rem; }
           .ct-small-sep { display: none; }
           .ct-top { padding: 0.6rem 0.75rem; }
+          /* the fixed nav (about 4.5rem tall) never covers the heading or the pills */
+          .ct-root { scroll-margin-top: 5rem; }
+          .ct-main { padding-top: calc(4.5rem + 24px); }
         }
       `}</style>
     </div>

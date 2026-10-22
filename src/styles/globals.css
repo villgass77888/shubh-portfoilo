@@ -18,6 +18,9 @@
 }
 
 html {
+  /* iOS must not inflate text after a rotation */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -261,4 +264,15 @@ button {
   .chapter-card .meta-corner--bl, .chapter-card .meta-corner--br { bottom: 1.5rem !important; }
   .chapter-card .meta-corner--tl, .chapter-card .meta-corner--bl { left: 1.25rem !important; }
   .chapter-card .meta-corner--tr, .chapter-card .meta-corner--br { right: 1.5rem !important; }
+}
+
+/* ── Phones held sideways (wide but very short): display type follows the short side ── */
+@media (orientation: landscape) and (max-height: 500px) {
+  :root {
+    --fs-hero: clamp(3rem, 24vmin, 22rem);
+    --fs-chapter: clamp(2.5rem, 18vmin, 16rem);
+  }
+  .chapter-card .chapter-title-char { font-size: min(var(--fs-chapter), 18vmin) !important; white-space: nowrap !important; }
+  .chapter-card .meta-corner--tl, .chapter-card .meta-corner--tr { top: 4rem !important; }
+  .chapter-card .meta-corner--bl, .chapter-card .meta-corner--br { bottom: 1rem !important; }
 }
