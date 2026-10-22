@@ -1,13 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { streetwear, streetwearIntro } from '../../../data/streetwear';
+import AlphaVideo, { alphaWebmSupported } from '../../global/AlphaVideo';
+import type { AlphaVideoHandle } from '../../global/AlphaVideo';
 
-/** VP9 WebM with alpha plays transparently in Chromium and Firefox, not in Safari / iOS. */
-function canPlayAlphaWebm() {
-  const ua = navigator.userAgent;
-  const safari = /^((?!chrome|android|crios|fxios|edg).)*safari/i.test(ua) || /iPad|iPhone|iPod/.test(ua);
-  if (safari) return false;
-  return document.createElement('video').canPlayType('video/webm; codecs="vp9"') !== '';
-}
+/** webm: the VP9 alpha video (Chromium, Firefox) · canvas: the stacked MP4 drawn transparent (Safari / iOS) · type: no video at all */
+type Mode = 'webm' | 'canvas' | 'type';
 
 type Props = {
   reduced: boolean;
@@ -21,10 +18,12 @@ type Props = {
 export default function StreetwearIntro({ reduced }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [useVideo, setUseVideo] = useState(false);
+  const alphaRef = useRef<AlphaVideoHandle>(null);
+  const [mode, setMode] = useState<Mode>('type');
 
   useEffect(() => {
-    setUseVideo(streetwearIntro.available && canPlayAlphaWebm());
+    // the kinetic type is only for "no video": never for a browser without WebM alpha
+    setMode(!streetwearIntro.available ? 'type' : alphaWebmSupported() ? 'webm' : 'canvas');
   }, []);
 
   // the chapter sits at the end of the page: its video is only fetched once the visitor is getting close
@@ -49,22 +48,23 @@ export default function StreetwearIntro({ reduced }: Props) {
     const root = rootRef.current;
     if (!root || reduced) return;
     const io = new IntersectionObserver(([entry]) => {
-      const video = videoRef.current;
+      const video = mode === 'canvas' ? alphaRef.current : videoRef.current;
       root.classList.toggle('is-playing', entry.isIntersecting);
       if (!video) return;
-      if (entry.isIntersecting) video.play().catch(() => {});
+      // a refused play() (Low Power Mode) keeps the transparent poster; the first touch retries
+      if (entry.isIntersecting) video.play().catch(() => window.addEventListener('touchstart', () => video.play().catch(() => {}), { once: true, passive: true }));
       else video.pause();
     });
     io.observe(root);
     return () => io.disconnect();
-  }, [useVideo, reduced]);
+  }, [mode, reduced]);
 
   const names = streetwear.map((d) => d.name.toUpperCase());
 
   return (
     <div ref={rootRef} className={`sw-intro${reduced ? '' : ' sw-intro--tuck'}`}>
       <div className="sw-intro-media">
-        {useVideo ? (
+        {mode === 'webm' ? (
           <video
             ref={videoRef}
             src={streetwearIntro.src}
@@ -74,6 +74,16 @@ export default function StreetwearIntro({ reduced }: Props) {
             playsInline
             preload={near ? 'auto' : 'none'}
             aria-hidden="true"
+          />
+        ) : mode === 'canvas' ? (
+          <AlphaVideo
+            ref={alphaRef}
+            src={streetwearIntro.src.replace(/\.webm$/, '')}
+            poster={streetwearIntro.poster}
+            loop
+            preload={near ? 'auto' : 'none'}
+            onError={() => setMode('type')}
+            style={{ width: '100%', height: '100%' }}
           />
         ) : (
           <div className="sw-intro-type" aria-hidden="true">

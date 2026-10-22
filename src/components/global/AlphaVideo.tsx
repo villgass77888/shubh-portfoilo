@@ -24,6 +24,8 @@ type Props = {
   playbackRate?: number;
   preload?: 'none' | 'metadata' | 'auto';
   onEnded?: () => void;
+  /** The source could not be loaded */
+  onError?: () => void;
   className?: string;
   style?: CSSProperties;
 };
@@ -50,7 +52,7 @@ const FRAG =
  * drawn to a canvas by a tiny shader (left half = colour, right half = alpha).
  */
 const AlphaVideo = forwardRef<AlphaVideoHandle, Props>(function AlphaVideo(
-  { src, poster, fit = 'contain', muted = true, playsInline = true, autoplay = false, loop = false, playbackRate = 1, preload = 'metadata', onEnded, className, style },
+  { src, poster, fit = 'contain', muted = true, playsInline = true, autoplay = false, loop = false, playbackRate = 1, preload = 'metadata', onEnded, onError, className, style },
   ref,
 ) {
   const videoRef = useRef<FrameVideo>(null);
@@ -188,6 +190,7 @@ const AlphaVideo = forwardRef<AlphaVideoHandle, Props>(function AlphaVideo(
         loop={loop}
         preload={preload}
         onEnded={onEnded}
+        onError={onError}
         style={native ? fill : { position: 'absolute', width: 1, height: 1, opacity: 0, pointerEvents: 'none' }}
       />
       {!native && poster && !drawn && <img src={poster} alt="" style={{ ...fill, position: 'absolute', inset: 0 }} />}
